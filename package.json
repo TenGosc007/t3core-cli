@@ -1,6 +1,6 @@
 {
   "name": "t3core-cli",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Interactive Tic Tac Toe CLI — play in your terminal via npx t3core-cli",
   "main": "dist/index.js",
   "preferGlobal": true,
@@ -45,6 +45,7 @@
     "eslint-plugin-import-x": "^4.16.2",
     "eslint-plugin-perfectionist": "^5.9.0",
     "globals": "^17.6.0",
+    "jiti": "^2.6.1",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "tsc-alias": "^1.8.17",
@@ -53,6 +54,6 @@
     "typescript-eslint": "^8.59.1"
   },
   "dependencies": {
-    "t3core": "^1.1.4"
+    "t3core": "^1.2.0"
   }
 }
