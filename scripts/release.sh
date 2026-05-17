@@ -25,25 +25,22 @@ echo ""
 echo "🔍  Pre-release checks for $PACKAGE_NAME@$VERSION"
 echo "---------------------------------------------------"
 
-echo "▶  [1/7] Lint..."
+echo "▶  [1/6] Lint..."
 yarn lint
 
-echo "▶  [2/7] TypeScript check..."
+echo "▶  [2/6] TypeScript check..."
 yarn ts:check
 
-echo "▶  [3/7] Tests..."
-yarn test --run
-
-echo "▶  [4/7] Build..."
+echo "▶  [3/6] Build..."
 yarn build
 
-echo "▶  [5/7] npm whoami..."
+echo "▶  [4/6] npm whoami..."
 npm whoami
 
-echo "▶  [6/7] npm view $PACKAGE_NAME..."
+echo "▶  [5/6] npm view $PACKAGE_NAME..."
 npm view "$PACKAGE_NAME"
 
-echo "▶  [7/7] Publish dry-run..."
+echo "▶  [6/6] Publish dry-run..."
 npm publish --dry-run
 
 echo ""

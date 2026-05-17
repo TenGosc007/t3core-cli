@@ -1622,6 +1622,13 @@ supports-preserve-symlinks-flag@^1.0.0:
   resolved "https://registry.yarnpkg.com/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz#6eda4bd344a3c94aea376d4cc31bc77311039e09"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
 
+t3core@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/t3core/-/t3core-1.1.4.tgz#f12ab9ee9e4b35b7d098022ae32ae35e42ec08a1"
+  integrity sha512-BuI7rIrYwEgE+gOePbYOXBgXY9fsl1beuQYuxyeEUSyqHCueLslThkTCsA/KKLqEaZrXKyz0CyIdbYviEavwlQ==
+  dependencies:
+    eventemitter3 "^5.0.4"
+
 tinybench@^2.9.0:
   version "2.9.0"
   resolved "https://registry.yarnpkg.com/tinybench/-/tinybench-2.9.0.tgz#103c9f8ba6d7237a47ab6dd1dcff77251863426b"

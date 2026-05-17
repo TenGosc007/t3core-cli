@@ -114,7 +114,7 @@ Brief description of the release.
 ### Changed
 - 
 
-[$NEW_VERSION]: https://github.com/TenGosc007/t3core/compare/$PREV_TAG...v$NEW_VERSION
+[$NEW_VERSION]: https://github.com/TenGosc007/t3core-cli/compare/$PREV_TAG...v$NEW_VERSION
 EOF
 
 echo "Created: $RELEASE_FILE"

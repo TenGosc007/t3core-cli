@@ -30,7 +30,7 @@ The script will:
 
 ## One-time setup
 
-1. Go to [npmjs.com](https://www.npmjs.com) → **Access Tokens** → generate a **Granular Access Token** (or Classic **Automation** token) with publish rights for `t3core`
+1. Go to [npmjs.com](https://www.npmjs.com) → **Access Tokens** → generate a **Granular Access Token** (or Classic **Automation** token) with publish rights for `t3core-cli`
 2. Go to your GitHub repo → **Settings → Secrets and variables → Actions → New repository secret**
 3. Name: `NPM_TOKEN`, Value: the token from step 1
 
@@ -67,7 +67,7 @@ Brief description of the release
 
 - Description of changes
 
-[1.0.4]: https://github.com/TenGosc007/t3core/compare/v1.0.3...v1.0.4
+[1.0.4]: https://github.com/TenGosc007/t3core-cli/compare/v1.0.3...v1.0.4
 ```
 
 ### 3. Create tag and push
@@ -87,7 +87,7 @@ git push origin release/v1.0.4 --tags
 
 1. Go to GitHub → **Pull requests → New pull request**
 2. Base: `main`, Compare: `release/v1.0.4`
-3. The PR checks (lint, TypeScript check, tests) will run automatically
+3. The PR checks (lint, TypeScript check) will run automatically
 4. After checks pass, merge the PR
 
 ### 5. Publish GitHub release

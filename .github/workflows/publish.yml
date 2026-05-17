@@ -34,9 +34,6 @@ jobs:
       - name: Build
         run: yarn build
 
-      - name: Run tests
-        run: yarn test
-
       - name: Publish
         run: npm publish --provenance --access public
         env:

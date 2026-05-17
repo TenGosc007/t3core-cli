@@ -1,5 +1,5 @@
-import { navigateTo } from "./ui/navigation";
-import { ROUTES } from "./ui/navigation/routes";
+import { navigateTo } from "./navigation";
+import { ROUTES } from "./navigation/routes";
 
 export const app = () => {
   navigateTo(ROUTES.MENU);
