@@ -1,8 +1,6 @@
-import type { PlayerSymbol } from "t3core";
+import type { BoardField, PlayerSymbol } from "t3core";
 
 import { DEFAULT_GAME_SYMBOLS } from "t3core";
-
-type BoardField = number | PlayerSymbol;
 
 const colorCodes = new Map<PlayerSymbol, number>([
   [DEFAULT_GAME_SYMBOLS[0], 32],

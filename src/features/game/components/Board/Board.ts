@@ -1,10 +1,8 @@
-import type { PlayerSymbol } from "t3core";
+import type { BoardField } from "t3core";
 
 import { getGame } from "@/features/game/services/gameSession";
 import { colorLabelSymbol } from "@/features/game/util/colorLabelSymbol";
 import { styledLabel } from "@/utils/styledLabel";
-
-type BoardField = number | PlayerSymbol;
 
 const borderStyle = { color: "grey", textStyle: "bold" } as const;
 
