@@ -18,7 +18,8 @@
     "tic-tac-toe",
     "game",
     "typescript",
-    "nodejs"
+    "nodejs",
+    "cli"
   ],
   "author": "tengosc",
   "license": "ISC",
