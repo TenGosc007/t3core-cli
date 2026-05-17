@@ -1,6 +1,6 @@
 # t3core-cli
 
-Interactive Tic Tac Toe game for your terminal, powered by [t3core](https://www.npmjs.com/package/t3core).
+Interactive Tic Tac Toe game for your terminal, powered by [t3core](https://github.com/TenGosc007/t3core).
 
 ## Play instantly — no installation needed
 
