@@ -30,6 +30,6 @@ export const PlayerEntry = async (callback: () => void) => {
   const answer = await getPlayerAnswer();
   if (answer == null) return;
 
-  game.savePlayerSelection(answer);
+  game.savePlayerMove(answer);
   callback();
 };
