@@ -17,7 +17,7 @@ export const getPlayerAnswer = async (): Promise<number | null> => {
     return null;
   }
 
-  const answerNumeric = Number(answer);
+  const answerNumeric = Number(answer) - 1;
   if (validatePlayerEntry(answerNumeric)) {
     return answerNumeric;
   }

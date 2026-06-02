@@ -54,6 +54,6 @@
     "typescript-eslint": "^8.59.1"
   },
   "dependencies": {
-    "t3core": "^1.2.1"
+    "t3core": "^1.3.0"
   }
 }
