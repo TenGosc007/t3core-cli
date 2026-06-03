@@ -1,4 +1,4 @@
-import { navigateTo } from "./navigation";
+import { navigateTo } from "./navigation/actions";
 import { ROUTES } from "./navigation/routes";
 
 export const app = () => {

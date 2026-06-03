@@ -4,7 +4,7 @@ import {
   toggleBeep,
   toggleStyle,
 } from "@/global/settings.global";
-import { goToMenu, navigateTo } from "@/navigation";
+import { goToMenu, navigateTo } from "@/navigation/actions";
 import { ROUTES } from "@/navigation/routes";
 import { styledLabel } from "@/utils/styledLabel";
 

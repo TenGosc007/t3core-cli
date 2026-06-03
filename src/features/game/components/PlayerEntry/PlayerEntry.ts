@@ -1,6 +1,6 @@
 import { getGame } from "@/features/game/services/gameSession";
 import { colorLabelSymbol } from "@/features/game/util/colorLabelSymbol";
-import { navigateTo } from "@/navigation";
+import { navigateTo } from "@/navigation/actions";
 import { styledLabel } from "@/utils/styledLabel";
 
 import { getPlayerAnswer } from "./utils/getPlayerAnswer";

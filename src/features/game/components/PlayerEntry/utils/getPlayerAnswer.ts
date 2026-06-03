@@ -1,5 +1,5 @@
 import { UserInput } from "@/components/UserInput";
-import { goToMenu, navigateTo } from "@/navigation";
+import { goToMenu, navigateTo } from "@/navigation/actions";
 import { styledLabel } from "@/utils/styledLabel";
 
 import { getGame, resetGame } from "../../../services/gameSession";
