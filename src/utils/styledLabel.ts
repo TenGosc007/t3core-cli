@@ -99,18 +99,11 @@ const getTextStyleCode = (style?: TextStyles): number | undefined => {
 };
 
 const buildAnsiStyles = (options?: StyledLabelOptions): number[] => {
-  const styles: number[] = [];
-
-  const colorCode = getColorCode(options?.color);
-  if (colorCode) styles.push(colorCode);
-
-  const bgCode = getBackgroundColorCode(options?.backgroundColor);
-  if (bgCode) styles.push(bgCode);
-
-  const styleCode = getTextStyleCode(options?.textStyle);
-  if (styleCode) styles.push(styleCode);
-
-  return styles;
+  return [
+    getColorCode(options?.color),
+    getBackgroundColorCode(options?.backgroundColor),
+    getTextStyleCode(options?.textStyle),
+  ].filter((code) => code !== undefined);
 };
 
 const applyAnsiStyles = (label: string | number, styles: number[]): string => {
