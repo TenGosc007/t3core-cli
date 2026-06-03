@@ -26,3 +26,6 @@ jobs:
 
       - name: Run TypeScript check
         run: yarn ts:check
+
+      - name: Run tests
+        run: yarn test --run
