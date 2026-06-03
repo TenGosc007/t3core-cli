@@ -23,13 +23,17 @@ export const PlayerEntry = async () => {
   console.log(
     `${styledLabel("Select the number of the field (1-9)", { color: "white" })}`,
   );
+  if (game.movesCount > 0) {
+    console.log(
+      `${styledLabel('Press "h" to show game history', { textStyle: "dim" })}`,
+    );
+  }
   console.log(
     `${styledLabel('Press "q" to back to the main menu', { textStyle: "dim" })}`,
   );
   console.log(`\t`);
 
   const answer = await getPlayerAnswer();
-  console.log("answer", answer);
   if (answer == null) return;
 
   game.savePlayerMove(answer);
