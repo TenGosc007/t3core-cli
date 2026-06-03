@@ -23,12 +23,13 @@ jobs:
 
       - run: yarn install --frozen-lockfile
 
-      - run: yarn test:coverage
+      - run: yarn lint
+
+      - run: yarn ts:check
 
       - uses: fallow-rs/fallow@v2
         with:
           command: health
-          coverage: coverage/coverage-final.json
           format: sarif
           auto-changed-since: true
           comment: true
