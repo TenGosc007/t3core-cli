@@ -15,6 +15,11 @@ npm install -g t3core-cli
 t3core-cli
 ```
 
+## Screenshots
+
+![Menu](docs/menu.png)
+![Game](docs/game.png)
+
 ## Features
 
 - Two-player Tic Tac Toe in the terminal

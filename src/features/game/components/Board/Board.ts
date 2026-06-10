@@ -8,7 +8,7 @@ const borderStyle = { color: "grey", textStyle: "bold" } as const;
 
 export const Board = () => {
   const game = getGame();
-  const fields = game.getBoard();
+  const fields = game.board;
 
   const border = styledLabel("-------------", borderStyle);
   const fieldBorder = styledLabel("|", borderStyle);

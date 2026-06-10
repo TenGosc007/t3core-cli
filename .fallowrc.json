@@ -1,0 +1,18 @@
+{
+  "$schema": "https://raw.githubusercontent.com/fallow-rs/fallow/main/schema.json",
+  "entry": ["index.ts"],
+  "ignoreDependencies": [
+    "jiti",
+    "eslint-import-resolver-typescript",
+    "tsconfig-paths"
+  ],
+  "ignorePatterns": ["**/*.generated.ts", "**/*.d.ts", "./package.json"],
+  "duplicates": {
+    "minOccurrences": 3
+  },
+  "rules": {
+    "unused-dependencies": "warn",
+    "unused-files": "warn",
+    "unused-exports": "warn"
+  }
+}

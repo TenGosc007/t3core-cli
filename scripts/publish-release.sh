@@ -114,7 +114,7 @@ Brief description of the release.
 ### Changed
 - 
 
-[$NEW_VERSION]: https://github.com/TenGosc007/t3core-cli/compare/$PREV_TAG...v$NEW_VERSION
+[$NEW_VERSION]: https://github.com/TenGosc007/t3core/compare/$PREV_TAG...v$NEW_VERSION
 EOF
 
 echo "Created: $RELEASE_FILE"
@@ -123,6 +123,10 @@ echo "Please edit the release notes before continuing."
 # Open editor for release notes
 if [[ -n "${EDITOR:-}" ]]; then
   $EDITOR "$RELEASE_FILE"
+elif command -v windsurf &> /dev/null; then
+  windsurf "$RELEASE_FILE"
+elif command -v devin-desktop &> /dev/null; then
+  devin-desktop "$RELEASE_FILE"
 elif command -v code &> /dev/null; then
   code "$RELEASE_FILE"
 elif command -v vim &> /dev/null; then

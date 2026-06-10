@@ -81,6 +81,7 @@ export default defineConfig([
         "error",
         {
           ignoreExternal: true,
+          maxDepth: 10,
         },
       ],
     },

@@ -1,3 +1,7 @@
 node_modules
 dist
+.cache/
 package-lock.json
+.fallow/
+.devin/
+.DS_Store

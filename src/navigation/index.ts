@@ -1,11 +1,10 @@
-import type { Routes } from "./routes";
-
 import { GameScreen } from "../screens/Game.screen";
 import { MenuScreen } from "../screens/Menu.screen";
 import { SettingsScreen } from "../screens/Settings.screen";
-import { ROUTES } from "./routes";
+import { registerNavigation } from "./actions";
+import { ROUTES, type Routes } from "./routes";
 
-export const navigateTo = (route: Routes) => {
+const navigateTo = (route: Routes) => {
   switch (route) {
     case ROUTES.MENU:
       MenuScreen();
@@ -22,6 +21,8 @@ export const navigateTo = (route: Routes) => {
   }
 };
 
-export const goToMenu = () => {
+const goToMenu = () => {
   return navigateTo(ROUTES.MENU);
 };
+
+registerNavigation({ navigateTo, goToMenu });

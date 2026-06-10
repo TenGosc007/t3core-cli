@@ -1,5 +1,5 @@
 import { closeInput, UserInput } from "@/components/UserInput";
-import { goToMenu, navigateTo } from "@/navigation";
+import { goToMenu, navigateTo } from "@/navigation/actions";
 import { ROUTES } from "@/navigation/routes";
 import { beepSound } from "@/utils/beepSound";
 

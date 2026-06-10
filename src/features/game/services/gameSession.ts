@@ -2,15 +2,19 @@ import { Game } from "t3core";
 
 let game: Game | null = null;
 
-const createNewGame = () => {
-  return new Game();
-};
-
 export const getGame = () => {
   if (!game) {
-    game = createNewGame();
+    game = new Game();
   }
   return game;
+};
+
+export const setGame = (newGame: Game) => {
+  game = newGame;
+};
+
+export const clearGame = () => {
+  game = null;
 };
 
 export const resetGame = () => {

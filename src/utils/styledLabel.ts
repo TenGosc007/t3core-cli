@@ -86,35 +86,41 @@ type StyledLabelOptions = {
   textStyle?: TextStyles;
 };
 
+const getColorCode = (color?: Colors): number | undefined => {
+  return colorCodes.get(color ?? "default") || undefined;
+};
+
+const getBackgroundColorCode = (color?: Colors): number | undefined => {
+  return backgroundColorCodes.get(color ?? "default") || undefined;
+};
+
+const getTextStyleCode = (style?: TextStyles): number | undefined => {
+  return textStyleCodes.get(style ?? "default") || undefined;
+};
+
+const buildAnsiStyles = (options?: StyledLabelOptions): number[] => {
+  return [
+    getColorCode(options?.color),
+    getBackgroundColorCode(options?.backgroundColor),
+    getTextStyleCode(options?.textStyle),
+  ].filter((code) => code !== undefined);
+};
+
+const applyAnsiStyles = (label: string | number, styles: number[]): string => {
+  if (styles.length === 0) {
+    return label.toString();
+  }
+  return `\x1b[${styles.join(";")}m${label}\x1b[0m`;
+};
+
 export const styledLabel = (
   label: string | number,
   options?: StyledLabelOptions,
-) => {
+): string => {
   if (!getSettings().style) {
     return label.toString();
   }
 
-  const colorCode = colorCodes.get(options?.color ?? "default");
-  const backgroundColorCode = backgroundColorCodes.get(
-    options?.backgroundColor ?? "default",
-  );
-  const textStyleCode = textStyleCodes.get(options?.textStyle ?? "default");
-
-  const styles = [];
-
-  if (colorCode) {
-    styles.push(colorCode);
-  }
-  if (backgroundColorCode) {
-    styles.push(backgroundColorCode);
-  }
-  if (textStyleCode) {
-    styles.push(textStyleCode);
-  }
-
-  if (styles.length === 0) {
-    return label.toString();
-  }
-
-  return `\x1b[${styles.join(";")}m${label}\x1b[0m`;
+  const styles = buildAnsiStyles(options);
+  return applyAnsiStyles(label, styles);
 };

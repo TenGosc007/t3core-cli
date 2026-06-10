@@ -1,16 +1,17 @@
 import { getGame } from "@/features/game/services/gameSession";
 import { colorLabelSymbol } from "@/features/game/util/colorLabelSymbol";
+import { navigateTo } from "@/navigation/actions";
 import { styledLabel } from "@/utils/styledLabel";
 
 import { getPlayerAnswer } from "./utils/getPlayerAnswer";
 import { playAgain } from "./utils/playAgain";
 
-export const PlayerEntry = async (callback: () => void) => {
+export const PlayerEntry = async () => {
   const game = getGame();
 
   if (game.gameStatus.status !== "running") {
     await playAgain();
-    callback();
+    navigateTo("game");
     return;
   }
 
@@ -22,6 +23,11 @@ export const PlayerEntry = async (callback: () => void) => {
   console.log(
     `${styledLabel("Select the number of the field (1-9)", { color: "white" })}`,
   );
+  if (game.movesCount > 0) {
+    console.log(
+      `${styledLabel('Press "h" to show game history', { textStyle: "dim" })}`,
+    );
+  }
   console.log(
     `${styledLabel('Press "q" to back to the main menu', { textStyle: "dim" })}`,
   );
@@ -30,6 +36,6 @@ export const PlayerEntry = async (callback: () => void) => {
   const answer = await getPlayerAnswer();
   if (answer == null) return;
 
-  game.savePlayerSelection(answer);
-  callback();
+  game.savePlayerMove(answer);
+  navigateTo("game");
 };
