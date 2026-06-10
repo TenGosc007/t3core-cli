@@ -7,7 +7,8 @@
   "scripts": {
     "start": "node -r tsconfig-paths/register -r ts-node/register index.ts",
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn index.ts",
-    "build": "tsc && tsc-alias && chmod +x dist/index.js",
+    "build": "rm -rf dist && tsup",
+    "build:watch": "tsup --watch",
     "lint": "eslint ./src/**/*.ts",
     "ts:check": "tsc --noEmit",
     "fallow": "fallow health",
@@ -50,12 +51,12 @@
     "jiti": "^2.6.1",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
-    "tsc-alias": "^1.8.17",
     "tsconfig-paths": "^4.2.0",
+    "tsup": "^8.5.1",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.59.1"
   },
   "dependencies": {
-    "t3core": "^1.4.2"
+    "t3core": "^1.4.4"
   }
 }
