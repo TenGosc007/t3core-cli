@@ -1,8 +1,16 @@
-import { navigateTo } from "./navigation/actions";
-import { ROUTES } from "./navigation/routes";
+import { closeInput } from "./components/UserInput";
+import { renderRoute } from "./navigation";
+import { ROUTES, type AppRoute } from "./navigation/routes";
+import { beepSound } from "./utils/beepSound";
 
-import "./navigation/index";
+export const app = async () => {
+  let currentRoute: AppRoute = ROUTES.MENU;
 
-export const app = () => {
-  navigateTo(ROUTES.MENU);
+  while (currentRoute !== "exit") {
+    currentRoute = await renderRoute(currentRoute);
+  }
+
+  closeInput();
+  beepSound();
+  console.log("Exiting the app");
 };

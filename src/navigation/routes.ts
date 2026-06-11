@@ -4,3 +4,4 @@ export const ROUTES = {
   SETTINGS: "settings",
 } as const;
 export type Routes = (typeof ROUTES)[keyof typeof ROUTES];
+export type AppRoute = Routes | "exit";

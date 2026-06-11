@@ -1,6 +1,5 @@
 import { UserInput } from "@/components/UserInput";
-import { goToMenu, navigateTo } from "@/navigation/actions";
-import { styledLabel } from "@/utils/styledLabel";
+import { s } from "@/utils/styledLabel";
 
 import { getGame, resetGame } from "../../../services/gameSession";
 import {
@@ -8,22 +7,40 @@ import {
   validatePlayerEntry,
 } from "./validatePlayerEntry";
 
-export const getPlayerAnswer = async (): Promise<number | null> => {
-  const question = styledLabel("Your choice: ", {
-    color: "yellow",
-  });
-  const answer = await UserInput(question.toString());
+const askPlayer = async (): Promise<string> => {
+  const question = s.yellow("Your choice: ");
+  return (await UserInput(question.toString())) as string;
+};
 
-  if (answer === "q") {
-    goToMenu();
-    resetGame();
+const handleHistory = async (): Promise<null> => {
+  const game = getGame();
+  console.log("\t");
+  console.log(
+    `Back to previous move from 0 to ${game.movesCount} (0 is start from the beginning)`,
+  );
+
+  const question = s.yellowBright("Select a nuber: ");
+  const answer = await UserInput(question.toString());
+  const answerNumeric = Number(answer);
+
+  if (validateGameHistoryEntry(answerNumeric)) {
+    game.backToMove(answerNumeric);
     return null;
   }
 
-  const game = getGame();
-  if (answer === "h" && game.movesCount > 0) {
-    await showGameHistory();
-    return null;
+  return handleHistory();
+};
+
+export const getPlayerAnswer = async (): Promise<number | "quit" | null> => {
+  const answer = await askPlayer();
+
+  if (answer === "q") {
+    resetGame();
+    return "quit";
+  }
+
+  if (answer === "h" && getGame().movesCount > 0) {
+    return handleHistory();
   }
 
   const answerNumeric = Number(answer) - 1;
@@ -31,27 +48,5 @@ export const getPlayerAnswer = async (): Promise<number | null> => {
     return answerNumeric;
   }
 
-  return await getPlayerAnswer();
-};
-
-const showGameHistory = async () => {
-  const game = getGame();
-  console.log("\t");
-  console.log(
-    `Back to previous move from 0 to ${game.movesCount} (0 is start from the beginning)`,
-  );
-
-  const question = styledLabel("Select a nuber: ", {
-    color: "lightYellow",
-  });
-
-  const answer = await UserInput(question.toString());
-  const answerNumeric = Number(answer);
-  if (validateGameHistoryEntry(answerNumeric)) {
-    game.backToMove(answerNumeric);
-    navigateTo("game");
-    return null;
-  }
-
-  return await showGameHistory();
+  return getPlayerAnswer();
 };

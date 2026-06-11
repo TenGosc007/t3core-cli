@@ -1,9 +1,7 @@
-import { Header } from "../components/Header";
-import { SettingsView } from "../features/settings/settings";
-import { beepAndClear } from "../utils/beepAndClear";
+import type { AppRoute } from "../navigation/routes";
 
-export const SettingsScreen = () => {
-  beepAndClear();
-  Header();
-  SettingsView();
+import { SettingsView } from "../features/settings/settings";
+
+export const SettingsScreen = async (): Promise<AppRoute> => {
+  return SettingsView();
 };

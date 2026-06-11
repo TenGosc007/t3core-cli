@@ -1,21 +1,17 @@
-import { closeInput, UserInput } from "@/components/UserInput";
-import { goToMenu, navigateTo } from "@/navigation/actions";
-import { ROUTES } from "@/navigation/routes";
-import { beepSound } from "@/utils/beepSound";
+import type { AppRoute } from "@/navigation/routes";
 
-export const MenuEntry = async () => {
+import { UserInput } from "@/components/UserInput";
+import { ROUTES } from "@/navigation/routes";
+
+export const MenuEntry = async (): Promise<AppRoute> => {
   console.log("\t");
   const answer = await UserInput("Enter your choice (1-3): ");
   if (answer === "1") {
-    navigateTo(ROUTES.GAME);
+    return ROUTES.GAME;
   } else if (answer === "2") {
-    navigateTo(ROUTES.SETTINGS);
+    return ROUTES.SETTINGS;
   } else if (answer === "3") {
-    closeInput();
-    beepSound();
-    console.log("Exiting the app");
-    process.exit(0);
-  } else {
-    goToMenu();
+    return "exit";
   }
+  return ROUTES.MENU;
 };

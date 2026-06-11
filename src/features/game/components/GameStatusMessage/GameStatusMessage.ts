@@ -2,20 +2,16 @@ import type { GameStatus } from "t3core";
 
 import { getGame } from "@/features/game/services/gameSession";
 import { colorLabelSymbol } from "@/features/game/util/colorLabelSymbol";
-import { styledLabel } from "@/utils/styledLabel";
-
-const textStyle = { color: "lightWhite" } as const;
+import { s } from "@/utils/styledLabel";
 
 function messageForGameStatus(gameStatus: GameStatus): string | undefined {
   switch (gameStatus.status) {
     case "running":
       return undefined;
     case "draw":
-      return styledLabel("The game is a draw 🤝", textStyle).toString();
+      return s.whiteBright("The game is a draw 🤝");
     case "win":
-      return `${styledLabel("Player", textStyle).toString()} ${colorLabelSymbol(
-        gameStatus.winner,
-      )} ${styledLabel("wins! 🎉", textStyle).toString()}`;
+      return `${s.whiteBright("Player")} ${colorLabelSymbol(gameStatus.winner)} ${s.whiteBright("wins! 🎉")}`;
 
     default:
       throw new Error(`Unknown game status: ${gameStatus satisfies never}`);

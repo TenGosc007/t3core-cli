@@ -1,9 +1,7 @@
-import { Header } from "../components/Header";
-import { MenuView } from "../features/menu/menu";
-import { beepAndClear } from "../utils/beepAndClear";
+import type { AppRoute } from "../navigation/routes";
 
-export const MenuScreen = async () => {
-  beepAndClear();
-  Header();
-  MenuView();
+import { MenuView } from "../features/menu/menu";
+
+export const MenuScreen = async (): Promise<AppRoute> => {
+  return MenuView();
 };

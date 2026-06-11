@@ -1,10 +1,7 @@
-import { beepAndClear } from "@/utils/beepAndClear";
+import type { AppRoute } from "../navigation/routes";
 
-import { Header } from "../components/Header";
 import { GameView } from "../features/game/game";
 
-export const GameScreen = () => {
-  beepAndClear();
-  Header();
-  GameView();
+export const GameScreen = async (): Promise<AppRoute> => {
+  return GameView();
 };
