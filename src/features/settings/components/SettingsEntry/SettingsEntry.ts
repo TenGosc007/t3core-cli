@@ -9,8 +9,8 @@ import { ROUTES } from "@/navigation/routes";
 import { s } from "@/utils/styledLabel";
 
 const entryMessage = () => {
-  console.log(`${s.white("Select option from the list (1-4)")}`);
-  console.log(`${s.dim('Press "q" to back to the main menu')}`);
+  console.log(s.white("Select option from the list (1-4)"));
+  console.log(s.dim('Press "q" to back to the main menu'));
   console.log("\t");
 };
 
