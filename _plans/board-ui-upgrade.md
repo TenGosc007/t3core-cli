@@ -86,15 +86,6 @@ Opcjonalnie: nowy toggle `settings.arrows` w `settings.global.ts`.
 
 ---
 
-## Kolejność implementacji
-
-1. `Board.ts` — Unicode rendering (wizualna zmiana, niezależna)
-2. `arrowKeyInput.ts` — nowy util z raw mode + siatka 3x3
-3. `PlayerEntry.ts` — podmiana callsite
-4. Opcjonalnie: `settings.global.ts` + Settings toggle dla arrow mode
-
----
-
 ## Ryzyko / uwagi
 
 - `setRawMode` nie działa w środowiskach bez TTY (CI, pipe) — wymagany guard `process.stdin.isTTY`

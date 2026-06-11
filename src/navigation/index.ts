@@ -1,28 +1,18 @@
 import { GameScreen } from "../screens/Game.screen";
 import { MenuScreen } from "../screens/Menu.screen";
 import { SettingsScreen } from "../screens/Settings.screen";
-import { registerNavigation } from "./actions";
-import { ROUTES, type Routes } from "./routes";
+import { ROUTES, type AppRoute, type Routes } from "./routes";
 
-const navigateTo = (route: Routes) => {
+export const renderRoute = async (route: Routes): Promise<AppRoute> => {
   switch (route) {
     case ROUTES.MENU:
-      MenuScreen();
-      break;
+      return MenuScreen();
     case ROUTES.GAME:
-      GameScreen();
-      break;
+      return GameScreen();
     case ROUTES.SETTINGS:
-      SettingsScreen();
-      break;
+      return SettingsScreen();
 
     default:
       throw new Error(`Unknown route: ${route satisfies never}`);
   }
 };
-
-const goToMenu = () => {
-  return navigateTo(ROUTES.MENU);
-};
-
-registerNavigation({ navigateTo, goToMenu });
