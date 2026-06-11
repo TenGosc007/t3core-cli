@@ -1,7 +1,7 @@
 import { getGame } from "@/features/game/services/gameSession";
 import { colorLabelSymbol } from "@/features/game/util/colorLabelSymbol";
 import { navigateTo } from "@/navigation/actions";
-import { styledLabel } from "@/utils/styledLabel";
+import { s } from "@/utils/styledLabel";
 
 import { getPlayerAnswer } from "./utils/getPlayerAnswer";
 import { playAgain } from "./utils/playAgain";
@@ -17,20 +17,14 @@ export const PlayerEntry = async () => {
 
   console.log(`\t`);
   console.log(
-    `${styledLabel("Player:", { textStyle: "underline", color: "white" })} (${colorLabelSymbol(game.currentPlayer)})`,
+    `${s.white.underline("Player:")} (${colorLabelSymbol(game.currentPlayer)})`,
   );
   console.log(`\t`);
-  console.log(
-    `${styledLabel("Select the number of the field (1-9)", { color: "white" })}`,
-  );
+  console.log(`${s.white("Select the number of the field (1-9)")}`);
   if (game.movesCount > 0) {
-    console.log(
-      `${styledLabel('Press "h" to show game history', { textStyle: "dim" })}`,
-    );
+    console.log(`${s.dim('Press "h" to show game history')}`);
   }
-  console.log(
-    `${styledLabel('Press "q" to back to the main menu', { textStyle: "dim" })}`,
-  );
+  console.log(`${s.dim('Press "q" to back to the main menu')}`);
   console.log(`\t`);
 
   const answer = await getPlayerAnswer();

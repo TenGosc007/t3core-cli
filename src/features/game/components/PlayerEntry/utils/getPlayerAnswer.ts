@@ -1,6 +1,6 @@
 import { UserInput } from "@/components/UserInput";
 import { goToMenu, navigateTo } from "@/navigation/actions";
-import { styledLabel } from "@/utils/styledLabel";
+import { s } from "@/utils/styledLabel";
 
 import { getGame, resetGame } from "../../../services/gameSession";
 import {
@@ -9,9 +9,7 @@ import {
 } from "./validatePlayerEntry";
 
 export const getPlayerAnswer = async (): Promise<number | null> => {
-  const question = styledLabel("Your choice: ", {
-    color: "yellow",
-  });
+  const question = s.yellow("Your choice: ");
   const answer = await UserInput(question.toString());
 
   if (answer === "q") {
@@ -41,9 +39,7 @@ const showGameHistory = async () => {
     `Back to previous move from 0 to ${game.movesCount} (0 is start from the beginning)`,
   );
 
-  const question = styledLabel("Select a nuber: ", {
-    color: "lightYellow",
-  });
+  const question = s.yellowBright("Select a nuber: ");
 
   const answer = await UserInput(question.toString());
   const answerNumeric = Number(answer);

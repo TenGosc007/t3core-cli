@@ -1,12 +1,10 @@
-import { styledLabel } from "@/utils/styledLabel";
+import { s } from "@/utils/styledLabel";
 
 export const GameEntryMessage = () => {
-  const border = styledLabel("--------------------------------------------", {
-    color: "yellow",
-  });
+  const border = s.yellow("--------------------------------------------");
 
   console.log(border);
-  const gameEntryMessage = styledLabel(
+  const gameEntryMessage = s.grey.italic(
     `Tic-tac-toe is a simple two-player game 
 played on a 3×3 grid. Players take turns 
 marking a square with X or O, trying to get 
@@ -15,7 +13,6 @@ or diagonally.
 
 The game ends when one player wins or all 
 squares are filled, resulting in a draw.`,
-    { textStyle: "italic", color: "grey" },
   );
   console.log(gameEntryMessage);
   console.log(border);
