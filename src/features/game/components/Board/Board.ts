@@ -8,20 +8,21 @@ export const Board = () => {
   const game = getGame();
   const fields = game.board;
 
-  const border = s.grey.bold("-------------");
-  const fieldBorder = s.grey.bold("|");
+  const top = s.grey.bold("┌───┬───┬───┐");
+  const mid = s.grey.bold("├───┼───┼───┤");
+  const bot = s.grey.bold("└───┴───┴───┘");
+  const col = s.grey.bold("│");
 
-  console.log(border);
+  console.log(top);
   fields.forEach((i: BoardField, idx: number) => {
     if (idx % 3 === 0) {
+      const row = idx / 3;
       console.log(
-        `${fieldBorder} ${colorLabelSymbol(
-          i,
-        )} ${fieldBorder} ${colorLabelSymbol(
+        `${col} ${colorLabelSymbol(i)} ${col} ${colorLabelSymbol(
           fields[idx + 1],
-        )} ${fieldBorder} ${colorLabelSymbol(fields[idx + 2])} ${fieldBorder}`,
+        )} ${col} ${colorLabelSymbol(fields[idx + 2])} ${col}`,
       );
-      console.log(border);
+      console.log(row < 2 ? mid : bot);
     }
   });
 };
