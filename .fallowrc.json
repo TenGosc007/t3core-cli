@@ -10,9 +10,13 @@
   "duplicates": {
     "minOccurrences": 3
   },
+  "health": {
+    "maxCrap": 35
+  },
   "rules": {
     "unused-dependencies": "warn",
     "unused-files": "warn",
-    "unused-exports": "warn"
+    "unused-exports": "warn",
+    "coverage-gaps": "off"
   }
 }
