@@ -1,4 +1,4 @@
-import { getSettings } from "@/global/settings.global";
+import { getSettings, isSupportInteractivity } from "@/global/settings.global";
 import { s } from "@/utils/styledLabel";
 
 import { SETTINGS_OPTIONS } from "../../constants/settingsOptions";
@@ -16,10 +16,15 @@ export const SettingsOptions = () => {
 
     const itemValue = value ? ` - ${value}` : "";
 
-    console.log(`[${itemNumber}] ${itemLabel}${itemValue}`);
+    let label = `${itemLabel}${itemValue}`;
+    if (item.key === "arrowKeyNavigation" && !isSupportInteractivity) {
+      label = s.dim(label);
+    }
+
+    console.log(`[${itemNumber}] ${label}`);
   });
 
-  const resetToDefault = `[${s.yellowBright.bold((SETTINGS_OPTIONS.length + 1).toString())}] ${s.grey("Reset to default")}`;
+  const resetToDefault = `[${s.yellowBright.bold((SETTINGS_OPTIONS.length + 1).toString())}] ${"Reset to default"}`;
 
   console.log("\t");
   console.log(resetToDefault);

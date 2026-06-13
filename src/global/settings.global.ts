@@ -6,10 +6,12 @@ export type Settings = {
 
 export type SettingsKey = keyof Settings;
 
+export const isSupportInteractivity = process.stdin.isTTY;
+
 const initialSettings: Settings = {
   beep: true,
   style: true,
-  arrowKeyNavigation: true,
+  arrowKeyNavigation: isSupportInteractivity,
 };
 
 let settings = { ...initialSettings };
@@ -31,5 +33,6 @@ export const toggleStyle = () => {
 };
 
 export const toggleArrowKeyNavigation = () => {
+  if (!isSupportInteractivity) return;
   settings.arrowKeyNavigation = !settings.arrowKeyNavigation;
 };
