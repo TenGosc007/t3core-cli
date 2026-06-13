@@ -16,27 +16,21 @@ const entryMessage = () => {
   console.log("\t");
 };
 
+const ACTIONS: Record<string, () => void> = {
+  "1": toggleBeep,
+  "2": toggleStyle,
+  "3": toggleArrowKeyNavigation,
+  "4": resetSettings,
+};
+
 export const SettingsEntry = async (): Promise<AppRoute> => {
   entryMessage();
 
   const answer = await UserInput("Enter your choice: ");
 
-  switch (answer) {
-    case "1":
-      toggleBeep();
-      break;
-    case "2":
-      toggleStyle();
-      break;
-    case "3":
-      toggleArrowKeyNavigation();
-      break;
-    case "4":
-      resetSettings();
-      break;
-    case "q":
-      return ROUTES.MENU;
-  }
+  if (answer === "q") return ROUTES.MENU;
+
+  ACTIONS[answer]?.();
 
   return ROUTES.SETTINGS;
 };
