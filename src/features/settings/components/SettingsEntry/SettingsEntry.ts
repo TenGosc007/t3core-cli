@@ -3,6 +3,7 @@ import type { AppRoute } from "@/navigation/routes";
 import { UserInput } from "@/components/UserInput";
 import {
   resetSettings,
+  toggleArrowKeyNavigation,
   toggleBeep,
   toggleStyle,
 } from "@/global/settings.global";
@@ -28,6 +29,9 @@ export const SettingsEntry = async (): Promise<AppRoute> => {
       toggleStyle();
       break;
     case "3":
+      toggleArrowKeyNavigation();
+      break;
+    case "4":
       resetSettings();
       break;
     case "q":

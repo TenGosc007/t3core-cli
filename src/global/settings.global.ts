@@ -1,6 +1,7 @@
 export type Settings = {
   beep: boolean;
   style: boolean;
+  arrowKeyNavigation: boolean;
 };
 
 export type SettingsKey = keyof Settings;
@@ -8,6 +9,7 @@ export type SettingsKey = keyof Settings;
 const initialSettings: Settings = {
   beep: true,
   style: true,
+  arrowKeyNavigation: true,
 };
 
 let settings = { ...initialSettings };
@@ -26,4 +28,8 @@ export const toggleBeep = () => {
 
 export const toggleStyle = () => {
   settings.style = !settings.style;
+};
+
+export const toggleArrowKeyNavigation = () => {
+  settings.arrowKeyNavigation = !settings.arrowKeyNavigation;
 };
