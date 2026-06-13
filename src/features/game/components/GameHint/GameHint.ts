@@ -4,7 +4,7 @@ import { s } from "@/utils/styledLabel";
 import { getGame } from "../../services/gameSession";
 import { gameState } from "../../services/gameState";
 
-export const GameHint = () => {
+const showInstructionMessage = () => {
   const game = getGame();
   const isHistoryMode = gameState.historyMode;
   const settings = getSettings();
@@ -18,10 +18,21 @@ export const GameHint = () => {
       : "Select the number of the field (1-9)";
 
   console.log(s.white(instruction));
+};
+
+const showHistoryHint = () => {
+  const game = getGame();
+  const isHistoryMode = gameState.historyMode;
+
   if (game.movesCount > 0)
     console.log(
       s.dim(`Press "h" to ${isHistoryMode ? "hide" : "show"} game history`),
     );
+};
+
+export const GameHint = () => {
+  showInstructionMessage();
+  showHistoryHint();
   console.log(s.dim('Press "q" to back to the main menu'));
   console.log(`\t`);
 };
