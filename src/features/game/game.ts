@@ -1,8 +1,6 @@
 import type { AppRoute } from "@/navigation/routes";
 
-import { Header } from "@/components/Header";
 import { ROUTES } from "@/navigation/routes";
-import { beepAndClear } from "@/utils/beepAndClear";
 
 import { Board } from "./components/Board";
 import { GameEntryMessage } from "./components/GameEntryMessage";
@@ -14,8 +12,6 @@ import { PlayerPrompt } from "./components/PlayerPrompt";
 import { getGame } from "./services/gameSession";
 
 const renderBoard = () => {
-  beepAndClear();
-  Header();
   GameHeader();
   GameEntryMessage();
   Board();
@@ -25,20 +21,20 @@ const renderBoard = () => {
 export const GameView = async (): Promise<AppRoute> => {
   const game = getGame();
 
-  while (true) {
-    renderBoard();
+  renderBoard();
 
-    if (game.gameStatus.status !== "running") {
-      await playAgain();
-      return ROUTES.GAME;
-    }
-
-    PlayerPrompt(game);
-
-    const answer = await getPlayerAnswer();
-    if (answer === "quit") return ROUTES.MENU;
-    if (answer === null) continue;
-
-    game.savePlayerMove(answer);
+  if (game.gameStatus.status !== "running") {
+    await playAgain();
+    return ROUTES.GAME;
   }
+
+  PlayerPrompt(game);
+
+  const answer = await getPlayerAnswer();
+  if (answer === "quit") return ROUTES.MENU;
+  if (answer === null) return ROUTES.GAME;
+
+  game.savePlayerMove(answer);
+
+  return ROUTES.GAME;
 };
