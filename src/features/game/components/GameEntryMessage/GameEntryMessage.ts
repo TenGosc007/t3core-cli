@@ -1,5 +1,7 @@
 import { s } from "@/utils/styledLabel";
 
+import { gameState } from "../../services/gameState";
+
 export const GameEntryMessage = () => {
   const border = s.yellow("--------------------------------------------");
 
@@ -12,9 +14,14 @@ three in a row horizontally, vertically,
 or diagonally. 
 
 The game ends when one player wins or all 
-squares are filled, resulting in a draw.`,
+squares are filled, resulting in a draw.
+
+Press "i" to hide game info`,
   );
-  console.log(gameEntryMessage);
+
+  if (gameState.info) console.log(gameEntryMessage);
+  else console.log(s.dim('Press "i" to show game info'));
+
   console.log(border);
   console.log(`\t`);
 };

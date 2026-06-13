@@ -1,9 +1,12 @@
+import type { AppRoute } from "@/navigation/routes";
+
 import { UserInput } from "@/components/UserInput";
 import {
   resetSettings,
   toggleBeep,
   toggleStyle,
 } from "@/global/settings.global";
+import { ROUTES } from "@/navigation/routes";
 import { s } from "@/utils/styledLabel";
 
 const entryMessage = () => {
@@ -12,7 +15,7 @@ const entryMessage = () => {
   console.log("\t");
 };
 
-export const SettingsEntry = async (): Promise<"quit" | "continue"> => {
+export const SettingsEntry = async (): Promise<AppRoute> => {
   entryMessage();
 
   const answer = await UserInput("Enter your choice: ");
@@ -28,8 +31,8 @@ export const SettingsEntry = async (): Promise<"quit" | "continue"> => {
       resetSettings();
       break;
     case "q":
-      return "quit";
+      return ROUTES.MENU;
   }
 
-  return "continue";
+  return ROUTES.SETTINGS;
 };
