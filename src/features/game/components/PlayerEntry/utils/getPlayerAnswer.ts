@@ -1,4 +1,5 @@
 import { UserInput } from "@/components/UserInput";
+import { gameState } from "@/features/game/services/gameState";
 import { s } from "@/utils/styledLabel";
 
 import { getGame, resetGame } from "../../../services/gameSession";
@@ -20,6 +21,11 @@ export const getPlayerAnswer = async (): Promise<number | "quit" | null> => {
 
   if (answer === "h" && getGame().movesCount > 0) {
     return handleHistory();
+  }
+
+  if (answer === "i") {
+    gameState.infoToggle();
+    return null;
   }
 
   const answerNumeric = Number(answer) - 1;
