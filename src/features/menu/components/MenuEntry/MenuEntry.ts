@@ -6,6 +6,7 @@ import { ROUTES } from "@/navigation/routes";
 export const MenuEntry = async (): Promise<AppRoute> => {
   console.log("\t");
   const answer = await UserInput("Enter your choice (1-3): ");
+
   if (answer === "1") {
     return ROUTES.GAME;
   } else if (answer === "2") {
