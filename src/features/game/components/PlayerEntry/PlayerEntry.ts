@@ -1,14 +1,23 @@
 import type { AppRoute } from "@/navigation/routes";
 
 import { getGame } from "@/features/game/services/gameSession";
+import { getSettings } from "@/global/settings.global";
 import { ROUTES } from "@/navigation/routes";
 
 import { gameState } from "../../services/gameState";
 import { GameHint } from "../GameHint";
 import { InputErrorMessage } from "../InputErrorMessage";
 import { PlayerPrompt } from "../PlayerPrompt";
+import { arrowKeyInput } from "./utils/arrowKeyInput";
 import { getPlayerAnswer } from "./utils/getPlayerAnswer";
 import { playAgain } from "./utils/playAgain";
+
+const getAnswer = async () => {
+  const settings = getSettings();
+  const useArrowKeys = settings.arrowKeyNavigation && !gameState.historyMode;
+  if (useArrowKeys) return await arrowKeyInput();
+  return await getPlayerAnswer();
+};
 
 export const PlayerEntry = async (): Promise<AppRoute> => {
   const game = getGame();
@@ -22,11 +31,10 @@ export const PlayerEntry = async (): Promise<AppRoute> => {
   GameHint();
   InputErrorMessage();
 
-  const answer = await getPlayerAnswer();
+  const answer = await getAnswer();
   if (answer === "quit") return ROUTES.MENU;
 
   if (answer != null) {
-    gameState.inputError = null;
     if (gameState.historyMode) {
       game.backToMove(answer);
       gameState.toggleState("historyMode");
