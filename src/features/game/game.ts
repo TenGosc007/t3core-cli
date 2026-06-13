@@ -1,5 +1,4 @@
-import type { AppRoute } from "@/navigation/routes";
-
+import { ROUTES, type AppRoute } from "@/navigation/routes";
 import { clearDown, restoreCursor, saveCursor } from "@/utils/viewUtils";
 
 import { Board } from "./components/Board";
@@ -21,6 +20,6 @@ export const GameView = async (): Promise<AppRoute> => {
     GameStatusMessage();
     const entry = await PlayerEntry();
 
-    if (entry === "menu") return entry;
+    if (entry === ROUTES.MENU) return entry;
   }
 };

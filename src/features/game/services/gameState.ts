@@ -1,19 +1,33 @@
+type ToggleableKeys = "info" | "historyMode";
+
 type GameState = {
   info: boolean;
-  infoToggle: () => void;
+  historyMode: boolean;
+  inputError?: string | null;
+  toggleState: (key: ToggleableKeys) => void;
 };
 
-export const gameState = new Proxy<GameState>(
-  { info: false, infoToggle: () => {} },
-  {
-    get(target, prop: keyof GameState) {
-      if (prop === "infoToggle") {
-        return () => {
-          target.info = !target.info;
-        };
-      }
+const gameStateDefault = {
+  info: false,
+  historyMode: false,
+  inputError: undefined,
+  toggleState: () => {},
+} satisfies GameState;
 
-      return target[prop];
-    },
+export const gameState = new Proxy<GameState>(gameStateDefault, {
+  get(target, prop: keyof GameState) {
+    if (prop === "toggleState") {
+      return (key: ToggleableKeys) => {
+        target[key] = !target[key];
+      };
+    }
+    return target[prop];
   },
-);
+  set(target, prop: keyof GameState, value: string | undefined) {
+    if (prop === "inputError") {
+      target.inputError = value;
+      return true;
+    }
+    return false;
+  },
+});
