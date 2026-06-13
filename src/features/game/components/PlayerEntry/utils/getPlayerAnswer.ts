@@ -5,13 +5,8 @@ import { s } from "@/utils/styledLabel";
 import { getGame, resetGame } from "../../../services/gameSession";
 import { validatePlayerEntry } from "./validatePlayerEntry";
 
-const askPlayer = async (): Promise<string> => {
-  const question = s.yellow("Your choice: ");
-  return (await UserInput(question.toString())) as string;
-};
-
 export const getPlayerAnswer = async (): Promise<number | "quit" | null> => {
-  const answer = await askPlayer();
+  const answer = await UserInput(s.yellow("Your choice: "));
 
   gameState.inputError = null;
 
@@ -30,9 +25,5 @@ export const getPlayerAnswer = async (): Promise<number | "quit" | null> => {
     return null;
   }
 
-  const answerNumeric = Number(answer);
-  if (validatePlayerEntry(answerNumeric)) {
-    return answerNumeric;
-  }
-  return null;
+  return validatePlayerEntry(Number(answer));
 };

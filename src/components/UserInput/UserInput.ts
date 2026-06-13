@@ -6,7 +6,7 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-export const UserInput = (query: string) => {
+export const UserInput = (query: string): Promise<string> => {
   return new Promise((resolve) => rl.question(query, resolve));
 };
 

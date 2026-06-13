@@ -5,14 +5,18 @@ import { gameState } from "../../services/gameState";
 
 export const GameHint = () => {
   const game = getGame();
+  const isHistoryMode = gameState.historyMode;
 
-  const instruction = gameState.historyMode
+  const instruction = isHistoryMode
     ? `Back to previous move from 0 to ${game.movesCount}.
 (0 is start from the beginning)`
     : "Select the number of the field (1-9)";
 
   console.log(s.white(instruction));
-  if (game.movesCount > 0) console.log(s.dim('Press "h" to show game history'));
+  if (game.movesCount > 0)
+    console.log(
+      s.dim(`Press "h" to ${isHistoryMode ? "hide" : "show"} game history`),
+    );
   console.log(s.dim('Press "q" to back to the main menu'));
   console.log(`\t`);
 };
