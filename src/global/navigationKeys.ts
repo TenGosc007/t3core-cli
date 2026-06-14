@@ -19,6 +19,7 @@ export const NAV_KEYS = {
   // Special
   Q: "q",
   H: "h",
+  I: "i",
 } as const;
 
 export type NavKey = (typeof NAV_KEYS)[keyof typeof NAV_KEYS];
