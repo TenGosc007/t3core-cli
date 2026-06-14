@@ -1,3 +1,5 @@
+import { isTTYAvailable } from "./tty.global";
+
 export type Settings = {
   beep: boolean;
   style: boolean;
@@ -6,12 +8,10 @@ export type Settings = {
 
 export type SettingsKey = keyof Settings;
 
-export const isSupportInteractivity = process.stdin.isTTY;
-
 const initialSettings: Settings = {
   beep: true,
   style: true,
-  arrowKeyNavigation: isSupportInteractivity,
+  arrowKeyNavigation: isTTYAvailable,
 };
 
 let settings = { ...initialSettings };
@@ -33,6 +33,6 @@ export const toggleStyle = () => {
 };
 
 export const toggleArrowKeyNavigation = () => {
-  if (!isSupportInteractivity) return;
+  if (!isTTYAvailable) return;
   settings.arrowKeyNavigation = !settings.arrowKeyNavigation;
 };

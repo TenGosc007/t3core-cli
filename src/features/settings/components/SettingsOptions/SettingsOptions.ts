@@ -1,4 +1,5 @@
-import { getSettings, isSupportInteractivity } from "@/global/settings.global";
+import { getSettings } from "@/global/settings.global";
+import { isTTYAvailable } from "@/global/tty.global";
 import { s } from "@/utils/styledLabel";
 
 import { SETTINGS_OPTIONS } from "../../constants/settingsOptions";
@@ -17,7 +18,7 @@ export const SettingsOptions = () => {
     const itemValue = value ? ` - ${value}` : "";
 
     let label = `${itemLabel}${itemValue}`;
-    if (item.key === "arrowKeyNavigation" && !isSupportInteractivity) {
+    if (item.key === "arrowKeyNavigation" && !isTTYAvailable) {
       label = s.dim(label);
     }
 
