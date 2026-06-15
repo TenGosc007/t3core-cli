@@ -13,7 +13,7 @@ const showInstructionMessage = () => {
     ? `Back to previous move from 0 to ${game.movesCount}.
 (0 is start from the beginning)`
     : useArrowKeys
-      ? "Use arrow keys to navigate, Enter to confirm"
+      ? "Use arrow keys to navigate,\nEnter to confirm"
       : "Select the number of the field (1-9)";
 
   console.log(s.white(instruction));
