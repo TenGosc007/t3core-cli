@@ -1,8 +1,7 @@
+import { getGame } from "@/features/game/services/gameSession";
+import { gameState } from "@/features/game/services/gameState";
 import { getSettings } from "@/services/settings/settings";
 import { s } from "@/utils/styledLabel";
-
-import { getGame } from "../../services/gameSession";
-import { gameState } from "../../services/gameState";
 
 const showInstructionMessage = () => {
   const game = getGame();

@@ -1,13 +1,11 @@
-import type { AppRoute } from "@/navigation/routes";
-
-import { UserInput } from "@/components/UserInput";
+import { ROUTES, type AppRoute } from "@/navigation/routes";
+import { waitForInput } from "@/services/inputService";
 import {
   resetSettings,
   toggleArrowKeyNavigation,
   toggleBeep,
   toggleStyle,
 } from "@/services/settings/settings";
-import { ROUTES } from "@/navigation/routes";
 import { s } from "@/utils/styledLabel";
 
 const entryMessage = () => {
@@ -26,7 +24,7 @@ const ACTIONS: Record<string, () => void> = {
 export const SettingsEntry = async (): Promise<AppRoute> => {
   entryMessage();
 
-  const answer = await UserInput("Enter your choice: ");
+  const answer = await waitForInput("Enter your choice: ");
 
   if (answer === "q") return ROUTES.MENU;
 

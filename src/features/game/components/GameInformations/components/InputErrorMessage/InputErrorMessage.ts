@@ -1,6 +1,5 @@
+import { gameState } from "@/features/game/services/gameState";
 import { s } from "@/utils/styledLabel";
-
-import { gameState } from "../../services/gameState";
 
 export const InputErrorMessage = () => {
   const error = gameState.inputError;

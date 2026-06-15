@@ -1,7 +1,6 @@
+import { getGame } from "@/features/game/services/gameSession";
+import { colorLabelSymbol } from "@/features/game/util/colorLabelSymbol";
 import { s } from "@/utils/styledLabel";
-
-import { getGame } from "../../services/gameSession";
-import { colorLabelSymbol } from "../../util/colorLabelSymbol";
 
 export const PlayerPrompt = () => {
   const game = getGame();

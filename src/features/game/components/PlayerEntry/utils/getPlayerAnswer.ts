@@ -1,5 +1,5 @@
-import { UserInput } from "@/components/UserInput";
 import { gameState } from "@/features/game/services/gameState";
+import { waitForInput } from "@/services/inputService";
 import { ArrowKeyInstance } from "@/services/keyHandlerService/navInstances/arrowKeyInstance";
 import { getSettings } from "@/services/settings/settings";
 import { s } from "@/utils/styledLabel";
@@ -13,7 +13,7 @@ const getAnswer = async () => {
   const handler = ArrowKeyInstance.get();
 
   if (useArrowKeys && handler) return await handler.waitForKeyPress();
-  return await UserInput(s.yellow("Your choice: "));
+  return await waitForInput(s.yellow("Your choice: "));
 };
 
 export const getPlayerAnswer = async (): Promise<number | "quit" | null> => {
