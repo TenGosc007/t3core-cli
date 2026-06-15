@@ -1,4 +1,4 @@
-import { isTTYAvailable } from "./tty.global";
+import { isTTYAvailable } from "@/global/tty.global";
 
 export type Settings = {
   beep: boolean;

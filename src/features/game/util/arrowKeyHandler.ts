@@ -1,5 +1,5 @@
-import type { KeyHandlerProps } from "@/components/KeyHandler";
 import type { NavKey } from "@/global/navigationKeys";
+import type { KeyHandlerProps } from "@/services/keyHandlerService";
 
 import { NAV_KEYS } from "@/global/navigationKeys";
 

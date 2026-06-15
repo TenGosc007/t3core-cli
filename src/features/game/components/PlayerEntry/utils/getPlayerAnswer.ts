@@ -1,16 +1,16 @@
 import { UserInput } from "@/components/UserInput";
 import { gameState } from "@/features/game/services/gameState";
-import { getSettings } from "@/global/settings.global";
-import { ArrowKeyNavInstance } from "@/navigation/arrowKeyNav";
+import { ArrowKeyInstance } from "@/services/keyHandlerService/navInstances/arrowKeyInstance";
+import { getSettings } from "@/services/settings/settings";
 import { s } from "@/utils/styledLabel";
 
 import { getGame, resetGame } from "../../../services/gameSession";
-import { validatePlayerEntry } from "./validatePlayerEntry";
+import { validatePlayerEntry } from "../validation/validatePlayerEntry";
 
 const getAnswer = async () => {
   const settings = getSettings();
   const useArrowKeys = settings.arrowKeyNavigation && !gameState.historyMode;
-  const handler = ArrowKeyNavInstance.get();
+  const handler = ArrowKeyInstance.get();
 
   if (useArrowKeys && handler) return await handler.waitForKeyPress();
   return await UserInput(s.yellow("Your choice: "));

@@ -1,4 +1,4 @@
-import type { SettingsKey } from "@/global/settings.global";
+import type { SettingsKey } from "@/services/settings/settings";
 
 type Option = { id: string; label: string; key: SettingsKey };
 

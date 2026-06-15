@@ -6,7 +6,7 @@ import {
   toggleArrowKeyNavigation,
   toggleBeep,
   toggleStyle,
-} from "@/global/settings.global";
+} from "@/services/settings/settings";
 import { ROUTES } from "@/navigation/routes";
 import { s } from "@/utils/styledLabel";
 

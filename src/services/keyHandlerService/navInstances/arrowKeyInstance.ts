@@ -1,4 +1,6 @@
-import type { KeyHandler } from "@/components/KeyHandler/KeyHandler";
+import type { KeyHandlerOptions } from "@/services/keyHandlerService";
+
+import { KeyHandler } from "@/services/keyHandlerService";
 
 let handler: KeyHandler | null = null;
 
@@ -7,8 +9,10 @@ const getArrowKeyNav = () => {
   return handler;
 };
 
-const setArrowKeyNav = (newHandler: KeyHandler) => {
-  handler = newHandler;
+const setArrowKeyNav = (options: KeyHandlerOptions) => {
+  if (handler?.running) handler.stop();
+
+  handler = new KeyHandler(options);
   handler.start();
   return handler;
 };
@@ -20,7 +24,7 @@ const clearArrowKeyNav = () => {
   handler = null;
 };
 
-export const ArrowKeyNavInstance = {
+export const ArrowKeyInstance = {
   get: getArrowKeyNav,
   set: setArrowKeyNav,
   clear: clearArrowKeyNav,

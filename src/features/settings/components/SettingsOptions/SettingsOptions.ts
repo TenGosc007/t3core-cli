@@ -1,4 +1,4 @@
-import { getSettings } from "@/global/settings.global";
+import { getSettings } from "@/services/settings/settings";
 import { isTTYAvailable } from "@/global/tty.global";
 import { s } from "@/utils/styledLabel";
 

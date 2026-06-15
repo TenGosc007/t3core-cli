@@ -1,4 +1,4 @@
-import { getSettings } from "../global/settings.global";
+import { getSettings } from "../services/settings/settings";
 
 export const beepSound = () => {
   if (getSettings().beep) {

@@ -1,4 +1,4 @@
-import { getSettings } from "@/global/settings.global";
+import { getSettings } from "@/services/settings/settings";
 
 const fgCodes = {
   black: 30,
