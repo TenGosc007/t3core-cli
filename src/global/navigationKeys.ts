@@ -20,6 +20,7 @@ export const NAV_KEYS = {
   Q: "q",
   H: "h",
   I: "i",
+  C: "c",
 } as const;
 
 export type NavKey = (typeof NAV_KEYS)[keyof typeof NAV_KEYS];
