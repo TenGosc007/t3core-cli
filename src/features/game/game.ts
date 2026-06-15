@@ -4,12 +4,9 @@ import { clearDown, restoreCursor, saveCursor } from "@/utils/viewUtils";
 import { Board } from "./components/Board";
 import { GameEntryMessage } from "./components/GameEntryMessage";
 import { GameHeader } from "./components/GameHeader";
-import { GameHint } from "./components/GameHint";
+import { GameInformations } from "./components/GameInformations";
 import { GameStatusMessage } from "./components/GameStatusMessage";
-import { InputErrorMessage } from "./components/InputErrorMessage";
 import { PlayerEntry } from "./components/PlayerEntry";
-import { PlayerPrompt } from "./components/PlayerPrompt";
-import { getGame } from "./services/gameSession";
 
 export const GameView = async (): Promise<AppRoute> => {
   GameHeader();
@@ -30,13 +27,3 @@ export const GameView = async (): Promise<AppRoute> => {
     if (entry === ROUTES.MENU) return entry;
   }
 };
-
-function GameInformations() {
-  const game = getGame();
-
-  if (game.gameStatus.status === "running") {
-    PlayerPrompt();
-    GameHint();
-    InputErrorMessage();
-  }
-}
