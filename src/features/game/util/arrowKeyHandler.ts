@@ -2,8 +2,11 @@ import type { NavKey } from "@/global/navigationKeys";
 import type { KeyHandlerProps } from "@/services/keyHandlerService";
 
 import { NAV_KEYS } from "@/global/navigationKeys";
+import { ROUTES } from "@/navigation/routes";
 
 import { getGame } from "../services/gameSession";
+import { gameState } from "../services/gameState";
+import { validateInputEntry } from "../validation/validateInputEntry";
 
 type CursorPosition = { row: number; col: number };
 const defaultCursorPosition: CursorPosition = { row: 1, col: 1 };
@@ -53,17 +56,38 @@ export const arrowKeyHandler = (props: KeyHandlerProps) => {
   const { key, position, handler } = props;
   if (!key.name) return null;
 
+  const game = getGame();
+
   const currentPos = getCursorFromIndex(position) ?? defaultCursorPosition;
   const nextPos = nextPosition(currentPos, key.name);
 
   if (ReturnKeys.some((k) => k === key.name)) {
-    getGame().savePlayerMove(nextPos);
+    if (game.gameStatus.status !== "running") {
+      game.reset();
+      handler.resetPosition();
+      return handler.initialPosition;
+    }
+
+    gameState.inputError = null;
+    validateInputEntry(nextPos);
+    game.savePlayerMove(nextPos);
     return nextPos;
   }
 
   if (QuitKeys.some((k) => k === key.name)) {
     handler.stop();
-    return NAV_KEYS.Q;
+    game.reset();
+    return ROUTES.MENU;
+  }
+
+  if (key.name === NAV_KEYS.H && game.movesCount > 0) {
+    gameState.toggleState("historyMode");
+    return null;
+  }
+
+  if (key.name === NAV_KEYS.I) {
+    gameState.toggleState("info");
+    return null;
   }
 
   return nextPos;

@@ -17,6 +17,10 @@ const initialSettings: Settings = {
 let settings = { ...initialSettings };
 
 export const getSettings = () => {
+  if (!settings.style) {
+    return { ...settings, arrowKeyNavigation: false };
+  }
+
   return settings;
 };
 
@@ -33,6 +37,6 @@ export const toggleStyle = () => {
 };
 
 export const toggleArrowKeyNavigation = () => {
-  if (!isTTYAvailable) return;
+  if (!isTTYAvailable && settings.style) return;
   settings.arrowKeyNavigation = !settings.arrowKeyNavigation;
 };

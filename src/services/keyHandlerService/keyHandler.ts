@@ -21,6 +21,7 @@ export interface KeyHandlerOptions {
   handleCtrlC?: boolean;
   /** Custom action for Ctrl+C (default: process.exit(0)) */
   onCtrlC?: () => void;
+  initialPosition?: number | string | null;
 }
 
 /**
@@ -46,12 +47,13 @@ export class KeyHandler {
   private isRunning = false;
   private boundKeyListener: (_str: string, key: ReadlineKey) => void;
   private _position: number | string | null = null;
-  private _prevPosition: number | string | null = null;
+  private _initialPosition: number | string | null = null;
   private _resolveKeyPress:
     | ((position: number | string | null) => void)
     | null = null;
 
   constructor(options: KeyHandlerOptions) {
+    this._position = this._initialPosition = options.initialPosition ?? null;
     this.onKeyPress = options.onKeyPress;
     this.handleCtrlC = options.handleCtrlC ?? true;
     this.onCtrlC = options.onCtrlC ?? (() => process.exit(0));
@@ -73,10 +75,10 @@ export class KeyHandler {
   }
 
   /**
-   * Gets the previous position
+   * Gets the initial position
    */
-  get prevPosition() {
-    return this._prevPosition;
+  get initialPosition() {
+    return this._initialPosition;
   }
 
   /**
@@ -89,7 +91,6 @@ export class KeyHandler {
       return;
     }
 
-    this._prevPosition = this._position;
     this._position = this.onKeyPress({
       key,
       position: this._position,
@@ -134,8 +135,8 @@ export class KeyHandler {
   }
 
   /**
-   * Zatrzymuje nasłuchiwanie klawiszy.
-   * Wyłącza raw mode i usuwa listener.
+   * Stops listening for keypresses.
+   * Disables raw mode and removes the listener.
    */
   stop(): void {
     if (!this.isRunning) return;
@@ -143,5 +144,12 @@ export class KeyHandler {
     process.stdin.removeListener("keypress", this.boundKeyListener);
     disableRawMode();
     this.isRunning = false;
+  }
+
+  /**
+   * Resets the position to the initial position
+   */
+  resetPosition(): void {
+    this._position = this._initialPosition;
   }
 }

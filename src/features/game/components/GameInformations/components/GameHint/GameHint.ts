@@ -1,13 +1,13 @@
 import { getGame } from "@/features/game/services/gameSession";
 import { gameState } from "@/features/game/services/gameState";
-import { getSettings } from "@/services/settings/settings";
+import { ArrowKeyInstance } from "@/services/keyHandlerService/navInstances/arrowKeyInstance";
 import { s } from "@/utils/styledLabel";
 
 const showInstructionMessage = () => {
   const game = getGame();
   const isHistoryMode = gameState.historyMode;
-  const settings = getSettings();
-  const useArrowKeys = settings.arrowKeyNavigation && !isHistoryMode;
+  const akInstance = ArrowKeyInstance.get();
+  const useArrowKeys = akInstance?.running && !isHistoryMode;
 
   const instruction = isHistoryMode
     ? `Back to previous move from 0 to ${game.movesCount}.

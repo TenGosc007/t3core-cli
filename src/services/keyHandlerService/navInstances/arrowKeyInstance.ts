@@ -1,6 +1,7 @@
 import type { KeyHandlerOptions } from "@/services/keyHandlerService";
 
 import { KeyHandler } from "@/services/keyHandlerService";
+import { getSettings } from "@/services/settings";
 
 let handler: KeyHandler | null = null;
 
@@ -10,6 +11,9 @@ const getArrowKeyNav = () => {
 };
 
 const setArrowKeyNav = (options: KeyHandlerOptions) => {
+  const settings = getSettings();
+  if (!settings.arrowKeyNavigation) return null;
+
   if (handler?.running) handler.stop();
 
   handler = new KeyHandler(options);

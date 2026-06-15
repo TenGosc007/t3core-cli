@@ -6,20 +6,10 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-const waitForInput = (query?: string): Promise<string> => {
+export const waitForInput = (query?: string): Promise<string> | null => {
   return new Promise((resolve) => rl.question(query ?? "", resolve));
 };
 
-const closeInput = () => {
+export const closeInput = () => {
   rl.close();
 };
-
-const pauseInput = () => {
-  rl.pause();
-};
-
-const resumeInput = () => {
-  rl.resume();
-};
-
-export { waitForInput, closeInput, pauseInput, resumeInput };

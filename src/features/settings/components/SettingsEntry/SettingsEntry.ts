@@ -28,7 +28,9 @@ export const SettingsEntry = async (): Promise<AppRoute> => {
 
   if (answer === "q") return ROUTES.MENU;
 
-  ACTIONS[answer]?.();
+  if (answer) {
+    ACTIONS[answer]?.();
+  }
 
   return ROUTES.SETTINGS;
 };
