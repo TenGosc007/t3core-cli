@@ -63,7 +63,6 @@ export const arrowKeyHandler = (props: KeyHandlerProps) => {
 
   if (ReturnKeys.some((k) => k === key.name)) {
     if (game.gameStatus.status !== "running") {
-      game.reset();
       handler.resetPosition();
       return handler.initialPosition;
     }

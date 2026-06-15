@@ -10,7 +10,9 @@ import { GameHeader } from "./components/GameHeader";
 import { GameInformations } from "./components/GameInformations";
 import { GameStatusMessage } from "./components/GameStatusMessage";
 import { InputEntry } from "./components/InputEntry";
+import { getGame } from "./services/gameSession";
 import { arrowKeyHandler } from "./util/arrowKeyHandler";
+import { playAgain } from "./util/playAgain";
 
 export const GameView = async (): Promise<AppRoute> => {
   GameHeader();
@@ -37,6 +39,13 @@ export const GameView = async (): Promise<AppRoute> => {
 
 async function entryHandler(akInstance?: KeyHandler | null) {
   if (akInstance?.running) {
+    const game = getGame();
+    const isGameRunning = game.gameStatus.status === "running";
+
+    if (!isGameRunning) {
+      playAgain();
+    }
+
     return await akInstance?.waitForKeyPress();
   }
 
