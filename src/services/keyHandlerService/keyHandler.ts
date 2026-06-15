@@ -4,6 +4,8 @@ import { NAV_KEYS, type NavKey } from "@/global/navigationKeys";
 import { isTTYAvailable } from "@/global/tty.global";
 import { enableRawMode, disableRawMode } from "@/utils/rawMode";
 
+import { refreshInput } from "../inputService";
+
 export type ReadlineKey = Omit<readline.Key, "name"> & { name: NavKey };
 export type KeyHandlerProps = {
   key: ReadlineKey;
@@ -144,6 +146,7 @@ export class KeyHandler {
     process.stdin.removeListener("keypress", this.boundKeyListener);
     disableRawMode();
     this.isRunning = false;
+    refreshInput();
   }
 
   /**
