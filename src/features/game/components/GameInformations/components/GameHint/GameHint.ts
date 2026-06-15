@@ -3,15 +3,24 @@ import { gameState } from "@/features/game/services/gameState";
 import { ArrowKeyInstance } from "@/services/keyHandlerService/navInstances/arrowKeyInstance";
 import { s } from "@/utils/styledLabel";
 
-const showInstructionMessage = () => {
+const getHistoryInstruction = () => {
   const game = getGame();
+  const akInstance = ArrowKeyInstance.get();
+  const useArrowKeys = akInstance?.running;
+
+  return useArrowKeys
+    ? "SelectPrevious move"
+    : `Back to previous move from 0 to ${game.movesCount}.
+(0 is start from the beginning)`;
+};
+
+const showInstructionMessage = () => {
   const isHistoryMode = gameState.historyMode;
   const akInstance = ArrowKeyInstance.get();
   const useArrowKeys = akInstance?.running && !isHistoryMode;
 
   const instruction = isHistoryMode
-    ? `Back to previous move from 0 to ${game.movesCount}.
-(0 is start from the beginning)`
+    ? getHistoryInstruction()
     : useArrowKeys
       ? "Use arrow keys to navigate,\nEnter to confirm"
       : "Select the number of the field (1-9)";

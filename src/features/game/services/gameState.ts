@@ -5,13 +5,15 @@ type GameState = {
   historyMode: boolean;
   inputError?: string | null;
   toggleState: (key: ToggleableKeys) => void;
+  reset: () => void;
 };
 
 const gameStateDefault = {
   info: false,
   historyMode: false,
-  inputError: undefined,
+  inputError: null,
   toggleState: () => {},
+  reset: () => {},
 } satisfies GameState;
 
 export const gameState = new Proxy<GameState>(gameStateDefault, {
@@ -19,6 +21,14 @@ export const gameState = new Proxy<GameState>(gameStateDefault, {
     if (prop === "toggleState") {
       return (key: ToggleableKeys) => {
         target[key] = !target[key];
+      };
+    }
+
+    if (prop === "reset") {
+      return () => {
+        target.historyMode = false;
+        target.info = false;
+        target.inputError = null;
       };
     }
     return target[prop];

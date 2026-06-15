@@ -1,5 +1,10 @@
 import type { NavKey } from "@/global/navigationKeys";
-import type { KeyHandlerProps } from "@/services/keyHandlerService";
+import type { AppRoute } from "@/navigation/routes";
+import type {
+  KeyHandler,
+  KeyHandlerProps,
+  ReadlineKey,
+} from "@/services/keyHandlerService";
 
 import { NAV_KEYS } from "@/global/navigationKeys";
 import { ROUTES } from "@/navigation/routes";
@@ -49,6 +54,32 @@ const nextPosition = (current: CursorPosition, direction: NavKey) => {
   return getIndexFromCursor({ row: newRow, col: newCol });
 };
 
+const specialKeysHandler = (
+  key: ReadlineKey,
+  handler: KeyHandler,
+): null | AppRoute => {
+  const game = getGame();
+
+  if (QuitKeys.some((k) => k === key.name)) {
+    handler.stop();
+    game.reset();
+    gameState.reset();
+    return ROUTES.MENU;
+  }
+
+  // TODO: implement in the future
+  // if (key.name === NAV_KEYS.H && game.movesCount > 0) {
+  //   gameState.toggleState("historyMode");
+  //   return null;
+  // }
+
+  if (key.name === NAV_KEYS.I) {
+    gameState.toggleState("info");
+  }
+
+  return null;
+};
+
 const ReturnKeys = [NAV_KEYS.RETURN, NAV_KEYS.SPACE] as const;
 const QuitKeys = [NAV_KEYS.Q, NAV_KEYS.ESCAPE, NAV_KEYS.BACKSPACE] as const;
 
@@ -73,21 +104,8 @@ export const arrowKeyHandler = (props: KeyHandlerProps) => {
     return nextPos;
   }
 
-  if (QuitKeys.some((k) => k === key.name)) {
-    handler.stop();
-    game.reset();
-    return ROUTES.MENU;
-  }
-
-  if (key.name === NAV_KEYS.H && game.movesCount > 0) {
-    gameState.toggleState("historyMode");
-    return null;
-  }
-
-  if (key.name === NAV_KEYS.I) {
-    gameState.toggleState("info");
-    return null;
-  }
+  const specialKeyPressed = specialKeysHandler(key, handler);
+  if (specialKeyPressed) return specialKeyPressed;
 
   return nextPos;
 };
