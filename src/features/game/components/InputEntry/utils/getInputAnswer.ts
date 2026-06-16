@@ -28,5 +28,5 @@ export const getInputAnswer = async (): Promise<number | NavKey | null> => {
     return null;
   }
 
-  return validateInputEntry(Number(answer));
+  return validateInputEntry(Number(answer), false);
 };

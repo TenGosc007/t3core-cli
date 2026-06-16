@@ -94,7 +94,7 @@ const enterKeyHandler = (
     }
 
     gameState.inputError = null;
-    validateInputEntry(nextPos);
+    validateInputEntry(nextPos, handler.running);
     game.savePlayerMove(nextPos);
     return nextPos;
   }
