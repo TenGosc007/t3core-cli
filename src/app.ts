@@ -1,7 +1,7 @@
 import { Header } from "./components/Header";
-import { closeInput } from "./components/UserInput";
-import { renderRoute } from "./navigation";
+import { renderRoute } from "./navigation/renderRoute";
 import { ROUTES, type AppRoute } from "./navigation/routes";
+import { closeInput } from "./services/inputService";
 import { beepAndDeepClear } from "./utils/beepAndClear";
 import { beepSound } from "./utils/beepSound";
 
@@ -17,4 +17,5 @@ export const app = async () => {
   closeInput();
   beepSound();
   console.log("Exiting the app");
+  process.exit(0);
 };

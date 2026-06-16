@@ -80,17 +80,12 @@ const specialKeysHandler = (
   return null;
 };
 
-const ReturnKeys = [NAV_KEYS.RETURN, NAV_KEYS.SPACE] as const;
-const QuitKeys = [NAV_KEYS.Q, NAV_KEYS.ESCAPE, NAV_KEYS.BACKSPACE] as const;
-
-export const arrowKeyHandler = (props: KeyHandlerProps) => {
-  const { key, position, handler } = props;
-  if (!key.name) return null;
-
+const enterKeyHandler = (
+  nextPos: number,
+  key: ReadlineKey,
+  handler: KeyHandler,
+) => {
   const game = getGame();
-
-  const currentPos = getCursorFromIndex(position) ?? defaultCursorPosition;
-  const nextPos = nextPosition(currentPos, key.name);
 
   if (ReturnKeys.some((k) => k === key.name)) {
     if (game.gameStatus.status !== "running") {
@@ -103,6 +98,20 @@ export const arrowKeyHandler = (props: KeyHandlerProps) => {
     game.savePlayerMove(nextPos);
     return nextPos;
   }
+};
+
+const ReturnKeys = [NAV_KEYS.RETURN, NAV_KEYS.SPACE] as const;
+const QuitKeys = [NAV_KEYS.Q, NAV_KEYS.ESCAPE, NAV_KEYS.BACKSPACE] as const;
+
+export const arrowKeyHandler = (props: KeyHandlerProps) => {
+  const { key, position, handler } = props;
+  if (!key.name) return null;
+
+  const currentPos = getCursorFromIndex(position) ?? defaultCursorPosition;
+  const nextPos = nextPosition(currentPos, key.name);
+
+  const enterPressed = enterKeyHandler(nextPos, key, handler);
+  if (enterPressed) return enterPressed;
 
   const specialKeyPressed = specialKeysHandler(key, handler);
   if (specialKeyPressed) return specialKeyPressed;
