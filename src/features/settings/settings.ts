@@ -1,4 +1,4 @@
-import { NAV_KEYS } from "@/global/navigationKeys";
+import { isExitKey } from "@/global/navigationKeys";
 import { ROUTES, type AppRoute } from "@/navigation/routes";
 import { restoreAndClearDown, saveCursor } from "@/utils/viewUtils";
 
@@ -23,7 +23,7 @@ export const SettingsView = async (): Promise<AppRoute> => {
       ? await keyHanlder.waitForKeyPress()
       : await SettingsEntry();
 
-    if (activeItem === NAV_KEYS.Q) break;
+    if (isExitKey(activeItem)) break;
   }
 
   settingsKeyHandlerService.stop();

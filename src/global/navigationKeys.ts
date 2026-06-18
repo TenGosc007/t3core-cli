@@ -25,7 +25,7 @@ export const NAV_KEYS = {
 
 export type NavKey = (typeof NAV_KEYS)[keyof typeof NAV_KEYS];
 
-export const isExitKey = (key: NavKey) => {
+export const isExitKey = (key: number | string | null) => {
   return (
     key === NAV_KEYS.Q || key === NAV_KEYS.ESCAPE || key === NAV_KEYS.BACKSPACE
   );
