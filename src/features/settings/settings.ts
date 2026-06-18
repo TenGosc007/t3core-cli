@@ -19,11 +19,11 @@ export const SettingsView = async (): Promise<AppRoute> => {
     SettingsOptions(keyHanlder.position);
     SettingsHintMessage();
 
-    const activeItem = keyHanlder.running
+    const key = keyHanlder.running
       ? await keyHanlder.waitForKeyPress()
       : await SettingsEntry();
 
-    if (isExitKey(activeItem)) break;
+    if (isExitKey(key)) break;
   }
 
   settingsKeyHandlerService.stop();
