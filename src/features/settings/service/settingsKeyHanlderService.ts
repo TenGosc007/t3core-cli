@@ -12,12 +12,9 @@ const handler = new KeyHandler({
 
 const getKeyHandler = () => {
   const settings = getSettings();
-  if (settings.arrowKeyNavigation) {
-    handler.start();
-    return handler;
-  }
+  if (settings.arrowKeyNavigation) handler.start();
+  else handler.stop();
 
-  handler.stop();
   return handler;
 };
 
