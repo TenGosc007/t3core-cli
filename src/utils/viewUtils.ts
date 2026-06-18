@@ -13,3 +13,16 @@ export const restoreCursor = () => {
 export const clearDown = () => {
   process.stdout.write("\x1b[J");
 };
+
+export const hideCursor = () => {
+  process.stdout.write("\x1b[?25l");
+};
+
+export const showCursor = () => {
+  process.stdout.write("\x1b[?25h");
+};
+
+export const restoreAndClearDown = () => {
+  restoreCursor();
+  clearDown();
+};

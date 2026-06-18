@@ -1,4 +1,6 @@
-import { ROUTES, type AppRoute } from "@/navigation/routes";
+import type { NavKey } from "@/global/navigationKeys";
+
+import { NAV_KEYS } from "@/global/navigationKeys";
 import { waitForInput } from "@/services/inputService";
 import {
   resetSettings,
@@ -6,13 +8,6 @@ import {
   toggleBeep,
   toggleStyle,
 } from "@/services/settings/settings";
-import { s } from "@/utils/styledLabel";
-
-const entryMessage = () => {
-  console.log(s.white("Select option from the list (1-3)"));
-  console.log(s.dim('Press "q" to back to the main menu'));
-  console.log("\t");
-};
 
 const ACTIONS: Record<string, () => void> = {
   "1": toggleBeep,
@@ -21,16 +16,10 @@ const ACTIONS: Record<string, () => void> = {
   "4": resetSettings,
 };
 
-export const SettingsEntry = async (): Promise<AppRoute> => {
-  entryMessage();
-
+export const SettingsEntry = async (): Promise<NavKey | null> => {
   const answer = await waitForInput("Enter your choice: ");
+  if (answer === "q") return NAV_KEYS.Q;
+  if (answer) ACTIONS[answer]?.();
 
-  if (answer === "q") return ROUTES.MENU;
-
-  if (answer) {
-    ACTIONS[answer]?.();
-  }
-
-  return ROUTES.SETTINGS;
+  return null;
 };

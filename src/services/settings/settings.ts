@@ -4,6 +4,7 @@ export type Settings = {
   beep: boolean;
   style: boolean;
   arrowKeyNavigation: boolean;
+  reset?: void;
 };
 
 export type SettingsKey = keyof Settings;

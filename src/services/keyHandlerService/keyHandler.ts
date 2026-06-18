@@ -3,8 +3,7 @@ import readline from "readline";
 import { NAV_KEYS, type NavKey } from "@/global/navigationKeys";
 import { isTTYAvailable } from "@/global/tty.global";
 import { enableRawMode, disableRawMode } from "@/utils/rawMode";
-
-import { refreshInput } from "../inputService";
+import { hideCursor, showCursor } from "@/utils/viewUtils";
 
 export type ReadlineKey = Omit<readline.Key, "name"> & { name: NavKey };
 export type KeyHandlerProps = {
@@ -23,6 +22,8 @@ export interface KeyHandlerOptions {
   handleCtrlC?: boolean;
   /** Custom action for Ctrl+C (default: process.exit(0)) */
   onCtrlC?: () => void;
+  /** Whether to hide the terminal cursor while the handler is running (default: true) */
+  hideCursor?: boolean;
   initialPosition?: number | string | null;
 }
 
@@ -46,6 +47,7 @@ export class KeyHandler {
   private onKeyPress: KeyHandlerCallback;
   private handleCtrlC: boolean;
   private onCtrlC: () => void;
+  private shouldHideCursor: boolean;
   private isRunning = false;
   private boundKeyListener: (_str: string, key: ReadlineKey) => void;
   private _position: number | string | null = null;
@@ -55,10 +57,11 @@ export class KeyHandler {
     | null = null;
 
   constructor(options: KeyHandlerOptions) {
-    this._position = this._initialPosition = options.initialPosition ?? null;
     this.onKeyPress = options.onKeyPress;
+    this._position = this._initialPosition = options.initialPosition ?? null;
     this.handleCtrlC = options.handleCtrlC ?? true;
     this.onCtrlC = options.onCtrlC ?? (() => process.exit(0));
+    this.shouldHideCursor = options.hideCursor ?? true;
     this.boundKeyListener = this.keyListener.bind(this);
   }
 
@@ -132,6 +135,7 @@ export class KeyHandler {
 
     process.stdin.on("keypress", this.boundKeyListener);
     this.isRunning = true;
+    if (this.shouldHideCursor) hideCursor();
 
     return true;
   }
@@ -145,8 +149,9 @@ export class KeyHandler {
 
     process.stdin.removeListener("keypress", this.boundKeyListener);
     disableRawMode();
+
     this.isRunning = false;
-    refreshInput();
+    if (this.shouldHideCursor) showCursor();
   }
 
   /**

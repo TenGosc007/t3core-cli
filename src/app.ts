@@ -6,7 +6,7 @@ import { beepAndDeepClear } from "./utils/beepAndClear";
 import { beepSound } from "./utils/beepSound";
 
 export const app = async () => {
-  let currentRoute: AppRoute = ROUTES.MENU;
+  let currentRoute: AppRoute = ROUTES.GAME;
 
   while (currentRoute !== "exit") {
     beepAndDeepClear();
