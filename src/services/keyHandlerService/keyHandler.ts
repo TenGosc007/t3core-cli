@@ -44,12 +44,12 @@ export interface KeyHandlerOptions {
  * ```
  */
 export class KeyHandler {
-  private onKeyPress: KeyHandlerCallback;
-  private handleCtrlC: boolean;
-  private onCtrlC: () => void;
-  private shouldHideCursor: boolean;
-  private isRunning = false;
-  private boundKeyListener: (_str: string, key: ReadlineKey) => void;
+  private _onKeyPress: KeyHandlerCallback;
+  private _handleCtrlC: boolean;
+  private _onCtrlC: () => void;
+  private _shouldHideCursor: boolean;
+  private _isRunning = false;
+  private _boundKeyListener: (_str: string, key: ReadlineKey) => void;
   private _position: number | string | null = null;
   private _initialPosition: number | string | null = null;
   private _resolveKeyPress:
@@ -57,19 +57,19 @@ export class KeyHandler {
     | null = null;
 
   constructor(options: KeyHandlerOptions) {
-    this.onKeyPress = options.onKeyPress;
+    this._onKeyPress = options.onKeyPress;
     this._position = this._initialPosition = options.initialPosition ?? null;
-    this.handleCtrlC = options.handleCtrlC ?? true;
-    this.onCtrlC = options.onCtrlC ?? (() => process.exit(0));
-    this.shouldHideCursor = options.hideCursor ?? true;
-    this.boundKeyListener = this.keyListener.bind(this);
+    this._handleCtrlC = options.handleCtrlC ?? true;
+    this._onCtrlC = options.onCtrlC ?? (() => process.exit(0));
+    this._shouldHideCursor = options.hideCursor ?? true;
+    this._boundKeyListener = this.keyListener.bind(this);
   }
 
   /**
    * Checks if the handler is active
    */
   get running(): boolean {
-    return this.isRunning;
+    return this._isRunning;
   }
 
   /**
@@ -90,13 +90,13 @@ export class KeyHandler {
    * Internal key event listener
    */
   private keyListener(_str: string, key: ReadlineKey): void {
-    if (this.handleCtrlC && key.ctrl && key.name === NAV_KEYS.C) {
+    if (this._handleCtrlC && key.ctrl && key.name === NAV_KEYS.C) {
       this.stop();
-      this.onCtrlC();
+      this._onCtrlC();
       return;
     }
 
-    this._position = this.onKeyPress({
+    this._position = this._onKeyPress({
       key,
       position: this._position,
       handler: this,
@@ -125,7 +125,7 @@ export class KeyHandler {
    * @returns true if started successfully, false if TTY unavailable
    */
   start(): boolean {
-    if (this.isRunning) return false;
+    if (this._isRunning) return false;
     if (!isTTYAvailable) return false;
 
     readline.emitKeypressEvents(process.stdin);
@@ -133,9 +133,10 @@ export class KeyHandler {
     const rawModeEnabled = enableRawMode();
     if (!rawModeEnabled) return false;
 
-    process.stdin.on("keypress", this.boundKeyListener);
-    this.isRunning = true;
-    if (this.shouldHideCursor) hideCursor();
+    process.stdin.on("keypress", this._boundKeyListener);
+    this._position = this._initialPosition;
+    this._isRunning = true;
+    if (this._shouldHideCursor) hideCursor();
 
     return true;
   }
@@ -145,13 +146,14 @@ export class KeyHandler {
    * Disables raw mode and removes the listener.
    */
   stop(): void {
-    if (!this.isRunning) return;
+    if (!this._isRunning) return;
 
-    process.stdin.removeListener("keypress", this.boundKeyListener);
+    process.stdin.removeListener("keypress", this._boundKeyListener);
     disableRawMode();
 
-    this.isRunning = false;
-    if (this.shouldHideCursor) showCursor();
+    this._position = null;
+    this._isRunning = false;
+    if (this._shouldHideCursor) showCursor();
   }
 
   /**
