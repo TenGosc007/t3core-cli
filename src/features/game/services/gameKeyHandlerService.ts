@@ -2,12 +2,12 @@ import { refreshInput } from "@/services/inputService";
 import { KeyHandler } from "@/services/keyHandlerService";
 import { getSettings } from "@/services/settings";
 
-import { INITIAL_SETTINGS_ID } from "../constants/settingsOptions";
-import { settingsKeyHandler } from "../utils/settingsKeyHandler";
+import { INITIAL_BOARD_POSITION } from "../constants/game.constants";
+import { gameKeyHandler } from "../util/gameKeyHandler";
 
 const handler = new KeyHandler({
-  onKeyPress: settingsKeyHandler,
-  initialPosition: INITIAL_SETTINGS_ID,
+  onKeyPress: gameKeyHandler,
+  initialPosition: INITIAL_BOARD_POSITION,
 });
 
 const getKeyHandler = () => {
@@ -23,7 +23,7 @@ const stopKeyHandler = () => {
   refreshInput();
 };
 
-export const settingsKeyHandlerService = {
+export const gameKeyHandlerService = {
   get: getKeyHandler,
   stop: stopKeyHandler,
 };

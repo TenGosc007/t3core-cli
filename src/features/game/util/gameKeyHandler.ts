@@ -1,5 +1,4 @@
 import type { NavKey } from "@/global/navigationKeys";
-import type { AppRoute } from "@/navigation/routes";
 import type {
   KeyHandler,
   KeyHandlerProps,
@@ -7,7 +6,6 @@ import type {
 } from "@/services/keyHandlerService";
 
 import { NAV_KEYS } from "@/global/navigationKeys";
-import { ROUTES } from "@/navigation/routes";
 
 import { getGame } from "../services/gameSession";
 import { gameState } from "../services/gameState";
@@ -15,6 +13,9 @@ import { validateInputEntry } from "../validation/validateInputEntry";
 
 type CursorPosition = { row: number; col: number };
 const defaultCursorPosition: CursorPosition = { row: 1, col: 1 };
+
+const ReturnKeys = [NAV_KEYS.RETURN, NAV_KEYS.SPACE] as const;
+const QuitKeys = [NAV_KEYS.Q, NAV_KEYS.ESCAPE, NAV_KEYS.BACKSPACE] as const;
 
 const BOARD_ROWS = 3;
 const BOARD_COLS = 3;
@@ -57,14 +58,14 @@ const nextPosition = (current: CursorPosition, direction: NavKey) => {
 const specialKeysHandler = (
   key: ReadlineKey,
   handler: KeyHandler,
-): null | AppRoute => {
+): null | NavKey => {
   const game = getGame();
 
   if (QuitKeys.some((k) => k === key.name)) {
     handler.stop();
     game.reset();
     gameState.reset();
-    return ROUTES.MENU;
+    return NAV_KEYS.Q;
   }
 
   // TODO: implement in the future
@@ -100,10 +101,7 @@ const enterKeyHandler = (
   }
 };
 
-const ReturnKeys = [NAV_KEYS.RETURN, NAV_KEYS.SPACE] as const;
-const QuitKeys = [NAV_KEYS.Q, NAV_KEYS.ESCAPE, NAV_KEYS.BACKSPACE] as const;
-
-export const arrowKeyHandler = (props: KeyHandlerProps) => {
+export const gameKeyHandler = (props: KeyHandlerProps) => {
   const { key, position, handler } = props;
   if (!key.name) return null;
 
