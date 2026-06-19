@@ -1,12 +1,12 @@
+import { gameKeyHandlerService } from "@/features/game/services/gameKeyHandlerService";
 import { getGame } from "@/features/game/services/gameSession";
 import { gameState } from "@/features/game/services/gameState";
-import { ArrowKeyInstance } from "@/services/keyHandlerService/navInstances/arrowKeyInstance";
 import { s } from "@/utils/styledLabel";
 
 const getHistoryInstruction = () => {
   const game = getGame();
-  const akInstance = ArrowKeyInstance.get();
-  const useArrowKeys = akInstance?.running;
+  const keyHandler = gameKeyHandlerService.get();
+  const useArrowKeys = keyHandler?.running;
 
   return useArrowKeys
     ? "SelectPrevious move"
@@ -16,8 +16,8 @@ const getHistoryInstruction = () => {
 
 const showInstructionMessage = () => {
   const isHistoryMode = gameState.historyMode;
-  const akInstance = ArrowKeyInstance.get();
-  const useArrowKeys = akInstance?.running && !isHistoryMode;
+  const keyHandler = gameKeyHandlerService.get();
+  const useArrowKeys = keyHandler?.running && !isHistoryMode;
 
   const instruction = isHistoryMode
     ? getHistoryInstruction()

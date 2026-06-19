@@ -7,15 +7,14 @@ import type {
 
 import { NAV_KEYS } from "@/global/navigationKeys";
 
+import { actionKeysHandler } from "../components/InputEntry/utils/actionKeysHandler";
 import { getGame } from "../services/gameSession";
-import { gameState } from "../services/gameState";
 import { validateInputEntry } from "../validation/validateInputEntry";
 
 type CursorPosition = { row: number; col: number };
 const defaultCursorPosition: CursorPosition = { row: 1, col: 1 };
 
 const ReturnKeys = [NAV_KEYS.RETURN, NAV_KEYS.SPACE] as const;
-const QuitKeys = [NAV_KEYS.Q, NAV_KEYS.ESCAPE, NAV_KEYS.BACKSPACE] as const;
 
 const BOARD_ROWS = 3;
 const BOARD_COLS = 3;
@@ -55,32 +54,6 @@ const nextPosition = (current: CursorPosition, direction: NavKey) => {
   return getIndexFromCursor({ row: newRow, col: newCol });
 };
 
-const specialKeysHandler = (
-  key: ReadlineKey,
-  handler: KeyHandler,
-): null | NavKey => {
-  const game = getGame();
-
-  if (QuitKeys.some((k) => k === key.name)) {
-    handler.stop();
-    game.reset();
-    gameState.reset();
-    return NAV_KEYS.Q;
-  }
-
-  // TODO: implement in the future
-  // if (key.name === NAV_KEYS.H && game.movesCount > 0) {
-  //   gameState.toggleState("historyMode");
-  //   return null;
-  // }
-
-  if (key.name === NAV_KEYS.I) {
-    gameState.toggleState("info");
-  }
-
-  return null;
-};
-
 const enterKeyHandler = (
   nextPos: number,
   key: ReadlineKey,
@@ -94,7 +67,6 @@ const enterKeyHandler = (
       return handler.initialPosition;
     }
 
-    gameState.inputError = null;
     validateInputEntry(nextPos, handler.running);
     game.savePlayerMove(nextPos);
     return nextPos;
@@ -111,8 +83,8 @@ export const gameKeyHandler = (props: KeyHandlerProps) => {
   const enterPressed = enterKeyHandler(nextPos, key, handler);
   if (enterPressed) return enterPressed;
 
-  const specialKeyPressed = specialKeysHandler(key, handler);
-  if (specialKeyPressed) return specialKeyPressed;
+  const actionKey = actionKeysHandler(key.name);
+  if (actionKey) return actionKey;
 
   return nextPos;
 };

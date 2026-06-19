@@ -1,12 +1,12 @@
 import type { NavKey } from "@/global/navigationKeys";
 
+import { gameKeyHandlerService } from "@/features/game/services/gameKeyHandlerService";
 import { getGame } from "@/features/game/services/gameSession";
 import { gameState } from "@/features/game/services/gameState";
-import { ArrowKeyInstance } from "@/services/keyHandlerService/navInstances/arrowKeyInstance";
 
 const saveAnswer = (answer: number) => {
-  const akInstance = ArrowKeyInstance.get();
-  if (akInstance?.running) return null;
+  const keyHandler = gameKeyHandlerService.get();
+  if (keyHandler?.running) return null;
 
   const game = getGame();
   game.savePlayerMove(answer - 1);

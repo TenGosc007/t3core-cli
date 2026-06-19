@@ -2,7 +2,6 @@ import type { KeyHandler } from "@/services/keyHandlerService";
 
 import { isExitKey } from "@/global/navigationKeys";
 import { ROUTES, type AppRoute } from "@/navigation/routes";
-import { refreshInput } from "@/services/inputService";
 import { restoreAndClearDown, saveCursor } from "@/utils/viewUtils";
 
 import { Board } from "./components/Board";
@@ -34,13 +33,12 @@ export const GameView = async (): Promise<AppRoute> => {
   }
 
   gameKeyHandlerService.stop();
-  refreshInput();
   return ROUTES.MENU;
 };
 
-async function entryHandler(akInstance?: KeyHandler | null) {
-  if (akInstance?.running) {
-    return await akInstance?.waitForKeyPress();
+async function entryHandler(keyHandler?: KeyHandler | null) {
+  if (keyHandler?.running) {
+    return await keyHandler?.waitForKeyPress();
   }
   return await InputEntry();
 }

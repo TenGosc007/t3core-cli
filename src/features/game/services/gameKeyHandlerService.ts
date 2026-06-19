@@ -4,6 +4,7 @@ import { getSettings } from "@/services/settings";
 
 import { INITIAL_BOARD_POSITION } from "../constants/game.constants";
 import { gameKeyHandler } from "../util/gameKeyHandler";
+import { gameState } from "./gameState";
 
 const handler = new KeyHandler({
   onKeyPress: gameKeyHandler,
@@ -12,8 +13,10 @@ const handler = new KeyHandler({
 
 const getKeyHandler = () => {
   const settings = getSettings();
-  if (settings.arrowKeyNavigation) handler.start();
-  else handler.stop();
+  const isHistoryModeOn = gameState.historyMode;
+
+  if (settings.arrowKeyNavigation && !isHistoryModeOn) handler.start();
+  else stopKeyHandler();
 
   return handler;
 };

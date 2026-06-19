@@ -29,6 +29,8 @@ export const validateInputEntry = (
   const { range, start } = getStartAndRange();
   const { index, entry } = entryHelper(entryProp, isArrowKeyOn);
 
+  gameState.inputError = null;
+
   const validField =
     validateFieldRange(entry, range, start) &&
     validateSelectedField(entry, index);
