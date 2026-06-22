@@ -1,6 +1,7 @@
 import type { ReadlineKey } from "@/services/keyHandlerService";
 
 import { isExitKey, NAV_KEYS } from "@/global/navigationKeys";
+import { ListNavigationStrategy } from "@/services/navigationService/strategies/listNavigationStrategy";
 import {
   resetSettings,
   toggleArrowKeyNavigation,
@@ -13,19 +14,7 @@ import { SETTINGS_OPTIONS } from "../constants/settingsOptions";
 const settingsLenght = SETTINGS_OPTIONS.length;
 
 const positionHelper = (position: number | null) => position ?? 1;
-
-const onPositionChange = (key: ReadlineKey, position: number | null) => {
-  let newPosition = positionHelper(position);
-
-  if (key.name === NAV_KEYS.UP && newPosition > 1) {
-    newPosition -= 1;
-  }
-  if (key.name === NAV_KEYS.DOWN && newPosition < settingsLenght) {
-    newPosition += 1;
-  }
-
-  return newPosition;
-};
+const listNavigationStrategy = new ListNavigationStrategy(1, settingsLenght);
 
 const onEnterPress = (position: number | null) => {
   if (position === 1) {
@@ -52,7 +41,8 @@ export const settingsKeyHandler = ({
   if (isExitKey(key.name)) return NAV_KEYS.Q;
   if (typeof position === "string") return position;
 
-  const newPosition = onPositionChange(key, position);
+  const currentPosition = positionHelper(position);
+  const newPosition = listNavigationStrategy.move(currentPosition, key.name);
 
   if (key.name === NAV_KEYS.ENTER) {
     onEnterPress(position);
