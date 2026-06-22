@@ -1,11 +1,12 @@
+import type { ReadlineKey } from "./keyNormalizer";
+
 import readline from "readline";
 
-import { NAV_KEYS, type NavKey } from "@/global/navigationKeys";
+import { NAV_KEYS } from "@/global/navigationKeys";
 import { isTTYAvailable } from "@/global/tty.global";
 import { enableRawMode, disableRawMode } from "@/utils/rawMode";
 import { hideCursor, showCursor } from "@/utils/viewUtils";
 
-export type ReadlineKey = Omit<readline.Key, "name"> & { name: NavKey };
 export type KeyHandlerProps = {
   key: ReadlineKey;
   position: number | string | null;

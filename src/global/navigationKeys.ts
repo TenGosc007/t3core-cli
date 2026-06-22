@@ -23,6 +23,23 @@ export const NAV_KEYS = {
   C: "c",
 } as const;
 
+export const KNOWN_NAV_KEYS_SET: ReadonlySet<string> = new Set([
+  NAV_KEYS.UP,
+  NAV_KEYS.DOWN,
+  NAV_KEYS.LEFT,
+  NAV_KEYS.RIGHT,
+  NAV_KEYS.RETURN,
+  NAV_KEYS.SPACE,
+  NAV_KEYS.ESCAPE,
+  NAV_KEYS.BACKSPACE,
+  NAV_KEYS.DELETE,
+  NAV_KEYS.TAB,
+  NAV_KEYS.Q,
+  NAV_KEYS.H,
+  NAV_KEYS.I,
+  NAV_KEYS.C,
+]);
+
 export type NavKey = (typeof NAV_KEYS)[keyof typeof NAV_KEYS];
 
 export const isExitKey = (key: number | string | null) => {
