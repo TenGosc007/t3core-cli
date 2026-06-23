@@ -18,17 +18,17 @@ export const GameView = async (): Promise<AppRoute> => {
   saveCursor();
 
   while (true) {
-    const keyHanlder = gameKeyHandlerService.get();
+    const keyHandler = gameKeyHandlerService.get();
     restoreAndClearDown();
 
     GameEntryMessage();
-    Board(keyHanlder.position);
+    Board(keyHandler.position);
     GameStatusMessage();
     GameInformations();
 
     if (await playAgain()) continue;
 
-    const entry = await entryHandler(keyHanlder);
+    const entry = await entryHandler(keyHandler);
     if (isExitKey(entry)) break;
   }
 
