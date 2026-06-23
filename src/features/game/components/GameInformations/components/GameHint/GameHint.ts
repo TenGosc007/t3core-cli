@@ -9,7 +9,7 @@ const getHistoryInstruction = () => {
   const useArrowKeys = keyHandler?.running;
 
   return useArrowKeys
-    ? "SelectPrevious move"
+    ? "Select previous move"
     : `Back to previous move from 0 to ${game.movesCount}.
 (0 is start from the beginning)`;
 };
