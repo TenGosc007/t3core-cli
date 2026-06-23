@@ -22,11 +22,6 @@ const gridNavigationStrategy = new GridNavigationStrategy(
   BOARD_COLS,
 );
 
-const getCurrentPosition = (position: number | string | null) => {
-  if (typeof position === "number") return position;
-  return INITIAL_BOARD_POSITION;
-};
-
 const onQuit = () => {
   resetGame();
   gameState.reset();
@@ -40,9 +35,7 @@ const navigationController = new NavigationController(gridNavigationStrategy, [
 ]);
 
 const handleKey = ({ key, position }: KeyHandlerProps) => {
-  if (!key.name) return null;
-
-  const currentPos = getCurrentPosition(position);
+  const currentPos = position ?? INITIAL_BOARD_POSITION;
   return navigationController.handleKey(currentPos, key.name);
 };
 

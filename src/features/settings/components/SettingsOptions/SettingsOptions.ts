@@ -6,7 +6,7 @@ import { s } from "@/utils/styledLabel";
 import { SETTINGS_OPTIONS } from "../../options";
 
 const getItemNumber = (
-  activeItem: number | string | null | undefined,
+  activeItem: number | null | undefined,
   item: SettingsOption,
 ) => {
   const id = item.id.toString();
@@ -22,7 +22,7 @@ const getItemValue = (setting: boolean) => {
   return setting ? ` - ${s.greenBright("ON")}` : ` - ${s.redBright("OFF")}`;
 };
 
-export const SettingsOptions = (activeItem?: number | string | null) => {
+export const SettingsOptions = (activeItem?: number | null) => {
   const settings = getSettings();
 
   SETTINGS_OPTIONS.forEach((item) => {

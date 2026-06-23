@@ -12,14 +12,14 @@ const col = s.grey.bold("│");
 const formatCell = (
   value: BoardField,
   index: number,
-  selectedIndex?: number | string | null,
+  selectedIndex?: number | null,
 ): string => {
   const isSelected = selectedIndex === index;
   if (isSelected) return s.inverse(value);
   return colorLabelSymbol(value);
 };
 
-export const Board = (selectedIndex?: number | string | null) => {
+export const Board = (selectedIndex?: number | null) => {
   const game = getGame();
   const fields = game.board;
 

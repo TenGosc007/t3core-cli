@@ -1,21 +1,24 @@
 import type { ReadlineKey } from "./keyNormalizer";
 import type readline from "readline";
 
-import { NAV_KEYS } from "@/global/navigationKeys";
+import { NAV_KEYS, type NavKey } from "@/global/navigationKeys";
 import { isTTYAvailable } from "@/global/tty.global";
 import { startKeyInput, stopKeyInput } from "@/services/inputService";
 import { hideCursor, showCursor } from "@/utils/viewUtils";
 
 import { normalizeReadlineKey } from "./keyNormalizer";
 
+export type KeyHandlerResult = number | NavKey | null;
+
 export type KeyHandlerProps = {
   key: ReadlineKey;
-  position: number | string | null;
-  handler: KeyHandler;
+  position: number | null;
 };
-export type KeyHandlerCallback = (
-  props: KeyHandlerProps,
-) => number | string | null;
+export type KeyHandlerCallback = (props: KeyHandlerProps) => KeyHandlerResult;
+
+const isNavigationPosition = (
+  result: KeyHandlerResult,
+): result is number | null => typeof result !== "string";
 
 export interface KeyHandlerOptions {
   /** Callback invoked for each key press */
@@ -26,7 +29,7 @@ export interface KeyHandlerOptions {
   onCtrlC?: () => void;
   /** Whether to hide the terminal cursor while the handler is running (default: true) */
   hideCursor?: boolean;
-  initialPosition?: number | string | null;
+  initialPosition?: number | null;
 }
 
 /**
@@ -52,11 +55,9 @@ export class KeyHandler {
   private _shouldHideCursor: boolean;
   private _isRunning = false;
   private _boundKeyListener: (_str: string, key: readline.Key) => void;
-  private _position: number | string | null = null;
-  private _initialPosition: number | string | null = null;
-  private _resolveKeyPress:
-    | ((position: number | string | null) => void)
-    | null = null;
+  private _position: number | null = null;
+  private _initialPosition: number | null = null;
+  private _resolveKeyPress: ((result: KeyHandlerResult) => void) | null = null;
 
   constructor(options: KeyHandlerOptions) {
     this._onKeyPress = options.onKeyPress;
@@ -95,25 +96,40 @@ export class KeyHandler {
     const key = normalizeReadlineKey(rawKey);
     if (!key) return;
 
-    if (this._handleCtrlC && key.ctrl && key.name === NAV_KEYS.C) {
-      this.stop();
-      this._onCtrlC();
-      return;
-    }
+    if (this.handleCtrlC(key)) return;
 
-    this._position = this._onKeyPress({
+    const result = this._onKeyPress({
       key,
       position: this._position,
-      handler: this,
     });
 
-    this.resolvePendingKeyPress(this._position);
+    this.updatePosition(result);
+    this.resolvePendingKeyPress(result);
+  }
+
+  /**
+   * Handles Ctrl+C key press
+   */
+  private handleCtrlC(key: ReadlineKey): boolean {
+    if (!this._handleCtrlC || !key.ctrl || key.name !== NAV_KEYS.C)
+      return false;
+
+    this.stop();
+    this._onCtrlC();
+    return true;
+  }
+
+  /**
+   * Updates the current position based on the result
+   */
+  private updatePosition(result: KeyHandlerResult): void {
+    if (isNavigationPosition(result)) this._position = result;
   }
 
   /**
    * Returns a Promise that resolves with the new position after the next key press.
    */
-  waitForKeyPress(): Promise<number | string | null> {
+  waitForKeyPress(): Promise<KeyHandlerResult> {
     if (!this._isRunning) return Promise.resolve(null);
 
     return new Promise((resolve) => {
@@ -127,7 +143,7 @@ export class KeyHandler {
    * If no promise is pending, does nothing.
    * @param position The position to resolve with, or null if no position is available.
    */
-  private resolvePendingKeyPress(position: number | string | null): void {
+  private resolvePendingKeyPress(position: KeyHandlerResult): void {
     if (!this._resolveKeyPress) return;
 
     const resolve = this._resolveKeyPress;
@@ -170,12 +186,5 @@ export class KeyHandler {
     this.resolvePendingKeyPress(null);
     this._isRunning = false;
     if (this._shouldHideCursor) showCursor();
-  }
-
-  /**
-   * Resets the position to the initial position
-   */
-  resetPosition(): void {
-    this._position = this._initialPosition;
   }
 }

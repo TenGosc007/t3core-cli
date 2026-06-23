@@ -1,4 +1,4 @@
-import type { ReadlineKey } from "@/services/keyHandlerService";
+import type { KeyHandlerProps } from "@/services/keyHandlerService";
 
 import {
   ListNavigationStrategy,
@@ -11,11 +11,6 @@ import {
   SETTINGS_OPTIONS,
 } from "../options";
 import { ToggleSelectedSettingCommand } from "./commands/toggleSelectedSettingCommand";
-
-type SettingsNavigationProps = {
-  key: ReadlineKey;
-  position: number | string | null;
-};
 
 const settingsLength = SETTINGS_OPTIONS.length;
 const listNavigationStrategy = new ListNavigationStrategy(
@@ -31,9 +26,7 @@ const positionHelper = (position: number | null) => {
   return position ?? INITIAL_SETTINGS_ID;
 };
 
-const handleKey = ({ key, position }: SettingsNavigationProps) => {
-  if (typeof position === "string") return position;
-
+const handleKey = ({ key, position }: KeyHandlerProps) => {
   const currentPosition = positionHelper(position);
   return navigationController.handleKey(currentPosition, key.name);
 };
