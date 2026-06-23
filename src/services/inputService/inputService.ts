@@ -34,14 +34,14 @@ const refreshInput = () => {
 };
 
 export const startKeyInput = () => {
-  closeInterface();
+  const input = ensureInterface();
+  readline.emitKeypressEvents(process.stdin, input);
 
   const rawModeEnabled = enableRawMode();
-  if (!rawModeEnabled) {
-    rl = createInterface();
-  }
+  if (!rawModeEnabled) return false;
 
-  return rawModeEnabled;
+  process.stdin.resume();
+  return true;
 };
 
 export const stopKeyInput = () => {

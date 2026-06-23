@@ -1,6 +1,5 @@
 import type { ReadlineKey } from "./keyNormalizer";
-
-import readline from "readline";
+import type readline from "readline";
 
 import { NAV_KEYS } from "@/global/navigationKeys";
 import { isTTYAvailable } from "@/global/tty.global";
@@ -148,8 +147,6 @@ export class KeyHandler {
 
     const keyInputStarted = startKeyInput();
     if (!keyInputStarted) return false;
-
-    readline.emitKeypressEvents(process.stdin);
 
     process.stdin.on("keypress", this._boundKeyListener);
     this._position = this._initialPosition;
