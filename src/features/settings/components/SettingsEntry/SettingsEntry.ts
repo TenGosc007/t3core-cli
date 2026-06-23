@@ -6,7 +6,9 @@ import { waitForInput } from "@/services/inputService";
 import { executeSettingsOption } from "../../options";
 
 export const SettingsEntry = async (): Promise<NavKey | null> => {
-  const answer = await waitForInput("Enter your choice: ");
+  const input = await waitForInput("Enter your choice: ");
+  const answer = input?.trim().toLowerCase();
+
   if (answer === "q") return NAV_KEYS.Q;
   if (answer) executeSettingsOption(answer);
 
