@@ -16,13 +16,10 @@ const initialSettings: Settings = {
 
 let settings = { ...initialSettings };
 
-export const getSettings = () => {
-  if (!settings.style) {
-    return { ...settings, arrowKeyNavigation: false };
-  }
-
-  return settings;
-};
+export const getSettings = (): Readonly<Settings> => ({
+  ...settings,
+  arrowKeyNavigation: settings.style ? settings.arrowKeyNavigation : false,
+});
 
 export const resetSettings = () => {
   settings = { ...initialSettings };
