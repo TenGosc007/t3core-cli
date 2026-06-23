@@ -1,7 +1,9 @@
 import readline from "readline";
 
+import { enableRawMode, disableRawMode } from "@/utils/rawMode";
+
 // terminal communication interface
-let rl = createInterface();
+let rl: readline.Interface | null = createInterface();
 
 function createInterface() {
   return readline.createInterface({
@@ -10,15 +12,43 @@ function createInterface() {
   });
 }
 
+function ensureInterface() {
+  rl ??= createInterface();
+  return rl;
+}
+
+function closeInterface() {
+  if (!rl) return;
+
+  rl.close();
+  rl = null;
+}
+
 export const waitForInput = (query?: string): Promise<string> | null => {
-  return new Promise((resolve) => rl.question(query ?? "", resolve));
+  return new Promise((resolve) => ensureInterface().question(query ?? "", resolve));
 };
 
-export const refreshInput = () => {
-  rl.close();
+const refreshInput = () => {
+  closeInterface();
   rl = createInterface();
 };
 
+export const startKeyInput = () => {
+  closeInterface();
+
+  const rawModeEnabled = enableRawMode();
+  if (!rawModeEnabled) {
+    rl = createInterface();
+  }
+
+  return rawModeEnabled;
+};
+
+export const stopKeyInput = () => {
+  disableRawMode();
+  refreshInput();
+};
+
 export const closeInput = () => {
-  rl.close();
+  closeInterface();
 };

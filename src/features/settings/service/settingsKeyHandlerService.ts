@@ -1,4 +1,3 @@
-import { refreshInput } from "@/services/inputService";
 import { KeyHandler } from "@/services/keyHandlerService";
 import { getSettings } from "@/services/settings";
 
@@ -20,7 +19,6 @@ const getKeyHandler = () => {
 
 const stopKeyHandler = () => {
   handler.stop();
-  refreshInput();
 };
 
 export const settingsKeyHandlerService = {

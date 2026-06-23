@@ -4,8 +4,10 @@ import readline from "readline";
 
 import { NAV_KEYS } from "@/global/navigationKeys";
 import { isTTYAvailable } from "@/global/tty.global";
-import { enableRawMode, disableRawMode } from "@/utils/rawMode";
+import { startKeyInput, stopKeyInput } from "@/services/inputService";
 import { hideCursor, showCursor } from "@/utils/viewUtils";
+
+import { normalizeReadlineKey } from "./keyNormalizer";
 
 export type KeyHandlerProps = {
   key: ReadlineKey;
@@ -50,7 +52,7 @@ export class KeyHandler {
   private _onCtrlC: () => void;
   private _shouldHideCursor: boolean;
   private _isRunning = false;
-  private _boundKeyListener: (_str: string, key: ReadlineKey) => void;
+  private _boundKeyListener: (_str: string, key: readline.Key) => void;
   private _position: number | string | null = null;
   private _initialPosition: number | string | null = null;
   private _resolveKeyPress:
@@ -90,7 +92,10 @@ export class KeyHandler {
   /**
    * Internal key event listener
    */
-  private keyListener(_str: string, key: ReadlineKey): void {
+  private keyListener(_str: string, rawKey: readline.Key): void {
+    const key = normalizeReadlineKey(rawKey);
+    if (!key) return;
+
     if (this._handleCtrlC && key.ctrl && key.name === NAV_KEYS.C) {
       this.stop();
       this._onCtrlC();
@@ -129,10 +134,10 @@ export class KeyHandler {
     if (this._isRunning) return false;
     if (!isTTYAvailable) return false;
 
-    readline.emitKeypressEvents(process.stdin);
+    const keyInputStarted = startKeyInput();
+    if (!keyInputStarted) return false;
 
-    const rawModeEnabled = enableRawMode();
-    if (!rawModeEnabled) return false;
+    readline.emitKeypressEvents(process.stdin);
 
     process.stdin.on("keypress", this._boundKeyListener);
     this._position = this._initialPosition;
@@ -150,7 +155,7 @@ export class KeyHandler {
     if (!this._isRunning) return;
 
     process.stdin.removeListener("keypress", this._boundKeyListener);
-    disableRawMode();
+    stopKeyInput();
 
     this._position = null;
     this._isRunning = false;
