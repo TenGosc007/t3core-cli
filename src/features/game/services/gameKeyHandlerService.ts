@@ -1,5 +1,5 @@
 import { KeyHandler } from "@/services/keyHandlerService";
-import { getSettings } from "@/services/settings";
+import { selectEffectiveSettings } from "@/services/settings";
 
 import { INITIAL_BOARD_POSITION } from "../constants/game.constants";
 import { gameNavigation } from "../navigation/gameNavigation";
@@ -11,7 +11,7 @@ const handler = new KeyHandler({
 });
 
 const getKeyHandler = () => {
-  const settings = getSettings();
+  const settings = selectEffectiveSettings();
   const isHistoryModeOn = gameState.historyMode;
 
   if (settings.arrowKeyNavigation && !isHistoryModeOn) handler.start();

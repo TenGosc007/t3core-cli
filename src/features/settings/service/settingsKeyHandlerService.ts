@@ -1,5 +1,5 @@
 import { KeyHandler } from "@/services/keyHandlerService";
-import { getSettings } from "@/services/settings";
+import { selectEffectiveSettings } from "@/services/settings";
 
 import { settingsNavigation } from "../navigation/settingsNavigation";
 import { INITIAL_SETTINGS_ID } from "../options";
@@ -10,7 +10,7 @@ const handler = new KeyHandler({
 });
 
 const getKeyHandler = () => {
-  const settings = getSettings();
+  const settings = selectEffectiveSettings();
   if (settings.arrowKeyNavigation) handler.start();
   else handler.stop();
 

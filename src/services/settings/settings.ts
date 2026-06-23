@@ -16,9 +16,12 @@ const initialSettings: Settings = {
 
 let settings = { ...initialSettings };
 
-export const getSettings = (): Readonly<Settings> => ({
+export const selectRawSettings = (): Readonly<Settings> => ({ ...settings });
+
+export const selectEffectiveSettings = (): Readonly<Settings> => ({
   ...settings,
-  arrowKeyNavigation: settings.style ? settings.arrowKeyNavigation : false,
+  arrowKeyNavigation:
+    isTTYAvailable && settings.style && settings.arrowKeyNavigation,
 });
 
 export const resetSettings = () => {
