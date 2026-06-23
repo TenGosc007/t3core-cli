@@ -9,8 +9,8 @@ import { SettingsOptions } from "./components/SettingsOptions";
 import { settingsKeyHandlerService } from "./service/settingsKeyHandlerService";
 
 export const SettingsView = async (): Promise<AppRoute> => {
-  saveCursor();
   SettingsHeader();
+  saveCursor();
 
   while (true) {
     const keyHanlder = settingsKeyHandlerService.get();

@@ -12,5 +12,5 @@ export const getInputAnswer = async (): Promise<number | NavKey | null> => {
   const actionKey = actionKeysHandler(answer);
   if (actionKey) return actionKey;
 
-  return validateInputEntry(Number(answer), false);
+  return validateInputEntry(parseInt(answer ?? ""), false);
 };

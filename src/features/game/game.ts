@@ -14,8 +14,8 @@ import { gameKeyHandlerService } from "./services/gameKeyHandlerService";
 import { playAgain } from "./util/playAgain";
 
 export const GameView = async (): Promise<AppRoute> => {
-  saveCursor();
   GameHeader();
+  saveCursor();
 
   while (true) {
     const keyHanlder = gameKeyHandlerService.get();
