@@ -108,20 +108,32 @@ export class KeyHandler {
       handler: this,
     });
 
-    if (this._resolveKeyPress) {
-      const resolve = this._resolveKeyPress;
-      this._resolveKeyPress = null;
-      resolve(this._position);
-    }
+    this.resolvePendingKeyPress(this._position);
   }
 
   /**
    * Returns a Promise that resolves with the new position after the next key press.
    */
   waitForKeyPress(): Promise<number | string | null> {
+    if (!this._isRunning) return Promise.resolve(null);
+
     return new Promise((resolve) => {
+      this.resolvePendingKeyPress(this._position);
       this._resolveKeyPress = resolve;
     });
+  }
+
+  /**
+   * Resolves the pending key press promise with the given position.
+   * If no promise is pending, does nothing.
+   * @param position The position to resolve with, or null if no position is available.
+   */
+  private resolvePendingKeyPress(position: number | string | null): void {
+    if (!this._resolveKeyPress) return;
+
+    const resolve = this._resolveKeyPress;
+    this._resolveKeyPress = null;
+    resolve(position);
   }
 
   /**
@@ -158,6 +170,7 @@ export class KeyHandler {
     stopKeyInput();
 
     this._position = null;
+    this.resolvePendingKeyPress(null);
     this._isRunning = false;
     if (this._shouldHideCursor) showCursor();
   }

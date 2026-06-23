@@ -1,4 +1,4 @@
-import type { KeyHandler, KeyHandlerProps } from "@/services/keyHandlerService";
+import type { KeyHandlerProps } from "@/services/keyHandlerService";
 
 import {
   GridNavigationStrategy,
@@ -32,29 +32,21 @@ const onQuit = () => {
   gameState.reset();
 };
 
-let activeHandler: KeyHandler | null = null;
-
 const navigationController = new NavigationController(gridNavigationStrategy, [
   new QuitCommand(onQuit),
-  new SelectFieldCommand(() => activeHandler),
+  new SelectFieldCommand(),
   new ToggleHistoryCommand(),
   new ToggleInfoCommand(),
 ]);
 
-const handleKey = ({ key, position, handler }: KeyHandlerProps) => {
+const handleKey = ({ key, position }: KeyHandlerProps) => {
   if (!key.name) return null;
 
   const currentPos = getCurrentPosition(position);
-  activeHandler = handler;
+  const nextPosition = navigationController.handleKey(currentPos, key.name);
 
-  try {
-    const nextPosition = navigationController.handleKey(currentPos, key.name);
-
-    if (typeof nextPosition === "number") return nextPosition;
-    return nextPosition;
-  } finally {
-    activeHandler = null;
-  }
+  if (typeof nextPosition === "number") return nextPosition;
+  return nextPosition;
 };
 
 export const gameNavigation = {

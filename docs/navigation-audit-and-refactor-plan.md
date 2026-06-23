@@ -10,6 +10,19 @@ Dokument opisuje audyt obecnej logiki wejścia i nawigacji w:
 
 Celem jest uporządkowanie odpowiedzialności, opisanie wzorca **Strategy + Command** oraz przygotowanie bezpiecznego planu wdrożenia bez dużego rewrite'u.
 
+## Status Wdrożenia
+
+Plan został wdrożony. Aktualna architektura używa:
+
+- `keyNormalizer` do normalizacji surowych klawiszy z `readline`,
+- `NavigationStrategy` dla ruchu po planszy i liście,
+- `KeyCommand` dla akcji klawiszy,
+- bezstanowego `NavigationController`,
+- `gameNavigation` i `settingsNavigation` jako feature-level punktów składania nawigacji,
+- `inputService` jako centralnego miejsca zarządzania `readline` i raw mode.
+
+Pozycja nawigacji jest obecnie zawsze liczbą. Adaptery `gameKeyHandler.ts` i `settingsKeyHandler.ts` zostały usunięte, a feature-serwisy podpinają `gameNavigation.handleKey` i `settingsNavigation.handleKey` bezpośrednio do `KeyHandler`.
+
 ## Obecny Stan
 
 Aktualna obsługa wejścia jest podzielona na dwa główne mechanizmy:
@@ -21,7 +34,7 @@ Feature'y korzystają z tego tak:
 
 - `gameKeyHandlerService` tworzy singleton `KeyHandler` dla planszy gry.
 - `settingsKeyHandlerService` tworzy singleton `KeyHandler` dla ekranu ustawień.
-- `gameKeyHandler` i `settingsKeyHandler` zawierają właściwą logikę nawigacji oraz akcji.
+- `gameNavigation` i `settingsNavigation` zawierają właściwą konfigurację strategii oraz komend.
 
 Obecny układ działa, ale odpowiedzialności są miejscami wymieszane.
 
@@ -31,14 +44,14 @@ Obecny układ działa, ale odpowiedzialności są miejscami wymieszane.
 
 `KeyHandler` powinien być adapterem terminala: start, stop, raw mode, listener klawiatury, cleanup.
 
-Obecnie dodatkowo:
+Pierwotnie dodatkowo:
 
 - przechowuje `position`,
 - resetuje pozycję,
 - przekazuje samego siebie do callbacka,
 - oczekuje, że callback zwróci nową pozycję albo komendę tekstową.
 
-To powoduje, że logika domenowa gry zna szczegóły infrastruktury wejścia, np. może wołać `handler.resetPosition()` albo sprawdzać `handler.running`.
+To powodowało, że logika domenowa gry znała szczegóły infrastruktury wejścia, np. mogła wołać `handler.resetPosition()` albo sprawdzać `handler.running`.
 
 Docelowo `KeyHandler` powinien wiedzieć tylko tyle:
 
@@ -48,23 +61,27 @@ key pressed -> normalized key -> callback
 
 Nie powinien wiedzieć, czy pozycja oznacza pole planszy, pozycję w settingsach, wyjście z widoku, historię ruchów albo akcję gry.
 
+Status: częściowo uproszczone. `KeyHandler` nadal przechowuje pozycję, bo jest ona częścią obecnego flow widoków, ale nie zna strategii ani komend domenowych. Surowy klawisz jest normalizowany przed przekazaniem do callbacka.
+
 ### 2. `inputService` I `KeyHandler` Konkurują O `stdin`
 
 `inputService` tworzy globalny `readline.Interface`, a `KeyHandler` przełącza `process.stdin` w raw mode.
 
-Po zatrzymaniu `KeyHandler` feature-serwisy wołają `refreshInput()`, żeby odtworzyć `readline.Interface`.
+Pierwotnie po zatrzymaniu `KeyHandler` feature-serwisy wołały `refreshInput()`, żeby odtworzyć `readline.Interface`.
 
-To działa, ale jest kruche, bo zarządzanie trybem terminala jest rozproszone:
+Takie rozwiązanie działało, ale było kruche, bo zarządzanie trybem terminala było rozproszone:
 
 - `inputService` zarządza `readline`,
 - `KeyHandler` zarządza raw mode,
-- feature-serwisy wiedzą, że po `stop()` trzeba zrobić `refreshInput()`.
+- feature-serwisy wiedziały, że po `stop()` trzeba zrobić `refreshInput()`.
 
 Lepszym kierunkiem jest centralny serwis wejścia terminalowego, który kontroluje oba tryby.
 
+Status: wdrożone. `inputService` udostępnia `startKeyInput()` i `stopKeyInput()`, a feature-serwisy nie wołają już ręcznie `refreshInput()`.
+
 ### 3. Typ `ReadlineKey` Jest Zbyt Optymistyczny
 
-Obecny typ zakłada, że `key.name` zawsze jest jedną z wartości `NavKey`.
+Pierwotny typ zakładał, że `key.name` zawsze jest jedną z wartości `NavKey`.
 
 W runtime `readline.Key.name` może być:
 
@@ -86,13 +103,15 @@ const normalizeKey = (key: RawReadlineKey): NavKey | null => {
 };
 ```
 
+Status: wdrożone. `normalizeReadlineKey()` odrzuca nieznane klawisze i zwraca `ReadlineKey | null`.
+
 ### 4. `waitForKeyPress()` Może Zostawić Nierozwiązany Promise
 
-`waitForKeyPress()` przechowuje jeden resolver. Jeśli metoda zostanie wywołana drugi raz przed następnym klawiszem, poprzedni Promise może zostać zgubiony.
+Pierwotnie `waitForKeyPress()` przechowywało jeden resolver. Jeśli metoda została wywołana drugi raz przed następnym klawiszem, poprzedni Promise mógł zostać zgubiony.
 
-Jeśli `stop()` nastąpi podczas oczekiwania na klawisz, Promise również może pozostać nierozwiązany.
+Jeśli `stop()` nastąpił podczas oczekiwania na klawisz, Promise również mógł pozostać nierozwiązany.
 
-Obecny flow prawdopodobnie nie wywołuje tego błędu, ale API serwisu jest podatne na niepoprawne użycie.
+Obecny kod rozwiązuje aktywne oczekiwanie jawnie, więc API nie zostawia oczekujących Promise'ów w tych scenariuszach.
 
 Docelowo warto:
 
@@ -100,9 +119,11 @@ Docelowo warto:
 - albo rozwiązywać poprzednie oczekiwanie przy `stop()`,
 - albo uprościć API i zamiast `waitForKeyPress()` emitować wynik przez kontroler nawigacji.
 
+Status: wdrożone. Drugie oczekiwanie rozwiązuje poprzedni Promise, `stop()` rozwiązuje aktywne oczekiwanie wartością `null`, a wywołanie `waitForKeyPress()` przy zatrzymanym handlerze również zwraca rozwiązany Promise.
+
 ### 5. Logika Ruchu I Akcji Jest Wymieszana
 
-W `gameKeyHandler` w jednym miejscu dzieją się różne rzeczy:
+Pierwotnie w `gameKeyHandler` w jednym miejscu działy się różne rzeczy:
 
 - obliczanie pozycji na planszy 3x3,
 - obsługa Enter/Space,
@@ -110,7 +131,7 @@ W `gameKeyHandler` w jednym miejscu dzieją się różne rzeczy:
 - reset pozycji po zakończeniu gry,
 - obsługa akcji `q`, `escape`, `backspace`, `h`, `i`.
 
-W `settingsKeyHandler` podobnie:
+Pierwotnie w `settingsKeyHandler` podobnie:
 
 - ruch po liście,
 - wyjście,
@@ -120,6 +141,8 @@ To są różne odpowiedzialności:
 
 - ruch kursora to strategia nawigacji,
 - akcja po klawiszu to komenda.
+
+Status: wdrożone. Ruch jest w strategiach, akcje są w komendach, a adaptery `gameKeyHandler.ts` i `settingsKeyHandler.ts` zostały usunięte.
 
 ## Rekomendowany Wzorzec: Strategy + Command
 
@@ -139,15 +162,17 @@ Przykłady strategii:
 Wspólny kontrakt:
 
 ```ts
-export interface NavigationStrategy<TPosition> {
-  move(position: TPosition, key: NavKey): TPosition;
-}
+export type NavigationPosition = number;
+
+export type NavigationStrategy = {
+  move(position: NavigationPosition, key: NavKey): NavigationPosition;
+};
 ```
 
 Przykład strategii dla planszy:
 
 ```ts
-export class GridNavigationStrategy implements NavigationStrategy<number> {
+export class GridNavigationStrategy implements NavigationStrategy {
   constructor(
     private readonly rows: number,
     private readonly cols: number,
@@ -173,7 +198,7 @@ export class GridNavigationStrategy implements NavigationStrategy<number> {
 Przykład strategii dla listy:
 
 ```ts
-export class ListNavigationStrategy implements NavigationStrategy<number> {
+export class ListNavigationStrategy implements NavigationStrategy {
   constructor(
     private readonly min: number,
     private readonly max: number,
@@ -207,16 +232,18 @@ Przykłady komend:
 Wspólny kontrakt:
 
 ```ts
-export interface KeyCommand<TPosition> {
+export type NavigationResult = NavigationPosition | NavKey | null;
+
+export interface KeyCommand {
   canHandle(key: NavKey): boolean;
-  execute(position: TPosition): TPosition | NavKey | null;
+  execute(position: NavigationPosition): NavigationResult;
 }
 ```
 
 Przykład komendy wyjścia:
 
 ```ts
-export class QuitCommand implements KeyCommand<number> {
+export class QuitCommand implements KeyCommand {
   canHandle(key: NavKey): boolean {
     return isExitKey(key);
   }
@@ -230,7 +257,7 @@ export class QuitCommand implements KeyCommand<number> {
 Przykład komendy wyboru pola:
 
 ```ts
-export class SelectFieldCommand implements KeyCommand<number> {
+export class SelectFieldCommand implements KeyCommand {
   canHandle(key: NavKey): boolean {
     return key === NAV_KEYS.ENTER || key === NAV_KEYS.SPACE;
   }
@@ -239,7 +266,7 @@ export class SelectFieldCommand implements KeyCommand<number> {
     const game = getGame();
 
     if (game.gameStatus.status !== "running") {
-      return null;
+      return INITIAL_BOARD_POSITION;
     }
 
     validateInputEntry(position, true);
@@ -256,7 +283,7 @@ Strategie i komendy najlepiej spiąć przez mały kontroler.
 
 Kontroler:
 
-- trzyma aktualną pozycję,
+- przyjmuje aktualną pozycję jako argument,
 - sprawdza, czy klawisz obsługuje jakaś komenda,
 - jeśli nie, deleguje ruch do strategii,
 - zwraca wynik dla widoku.
@@ -264,36 +291,20 @@ Kontroler:
 Przykład:
 
 ```ts
-export class NavigationController<TPosition> {
+export class NavigationController {
   constructor(
-    private position: TPosition,
-    private readonly strategy: NavigationStrategy<TPosition>,
-    private readonly commands: KeyCommand<TPosition>[],
+    private readonly strategy: NavigationStrategy,
+    private readonly commands: KeyCommand[] = [],
   ) {}
 
-  handleKey(key: NavKey): TPosition | NavKey | null {
+  handleKey(position: number, key: NavKey): NavigationResult {
     const command = this.commands.find((command) => command.canHandle(key));
 
     if (command) {
-      const result = command.execute(this.position);
-
-      if (result !== null && typeof result !== "string") {
-        this.position = result;
-      }
-
-      return result;
+      return command.execute(position);
     }
 
-    this.position = this.strategy.move(this.position, key);
-    return this.position;
-  }
-
-  getPosition(): TPosition {
-    return this.position;
-  }
-
-  reset(position: TPosition): void {
-    this.position = position;
+    return this.strategy.move(position, key);
   }
 }
 ```
@@ -408,13 +419,17 @@ src/services/navigationService/types.ts
 Minimalne typy:
 
 ```ts
-export interface NavigationStrategy<TPosition> {
-  move(position: TPosition, key: NavKey): TPosition;
-}
+export type NavigationPosition = number;
 
-export interface KeyCommand<TPosition> {
+export type NavigationResult = NavigationPosition | NavKey | null;
+
+export type NavigationStrategy = {
+  move(position: NavigationPosition, key: NavKey): NavigationPosition;
+};
+
+export interface KeyCommand {
   canHandle(key: NavKey): boolean;
-  execute(position: TPosition): TPosition | NavKey | null;
+  execute(position: NavigationPosition): NavigationResult;
 }
 ```
 
@@ -431,8 +446,8 @@ src/services/navigationService/strategies/listNavigationStrategy.ts
 
 Przenieść:
 
-- logikę ruchu po planszy z `gameKeyHandler`,
-- logikę ruchu po liście z `settingsKeyHandler`.
+- logikę ruchu po planszy do `GridNavigationStrategy`,
+- logikę ruchu po liście do `ListNavigationStrategy`.
 
 To jest najbezpieczniejszy etap, bo dotyczy głównie czystej logiki bez efektów ubocznych.
 
@@ -446,9 +461,9 @@ src/services/navigationService/navigationController.ts
 
 Kontroler powinien:
 
-- przechowywać pozycję,
+- przyjmować aktualną pozycję jako argument `handleKey(position, key)`,
 - używać strategii do ruchu,
-- później obsługiwać komendy.
+- obsługiwać komendy przed strategią.
 
 Na tym etapie można jeszcze utrzymać akcje w istniejących handlerach, żeby nie robić zbyt dużej zmiany naraz.
 
@@ -473,15 +488,7 @@ src/features/settings/navigation/settingsNavigation.ts
 - `ListNavigationStrategy`,
 - akcje specyficzne dla settingsów.
 
-Po tym kroku `gameKeyHandler` i `settingsKeyHandler` powinny stać się cienkimi adapterami.
-
-Przykładowo:
-
-```ts
-export const gameKeyHandler = ({ key }: KeyHandlerProps) => {
-  return gameNavigation.handleKey(key.name);
-};
-```
+Po tym kroku `gameNavigation.handleKey` i `settingsNavigation.handleKey` mogą być podpięte bezpośrednio jako `onKeyPress` w `KeyHandler`.
 
 ### Etap 6: Wydzielenie Komend
 
@@ -504,7 +511,7 @@ Ten etap warto zrobić dopiero wtedy, gdy faktycznie poprawi czytelność. Nie m
 
 ### Etap 7: Uporządkowanie `inputService` I Raw Mode
 
-To jest osobny, późniejszy etap.
+Etap został wdrożony po uporządkowaniu Strategy + Command.
 
 Cel:
 
@@ -517,7 +524,7 @@ Możliwe kierunki:
 - zostawić `inputService`, ale dodać metody trybu klawiatury,
 - albo stworzyć nowy `terminalInputService`, który obsłuży i `question()`, i `keypress`.
 
-Nie rekomenduje się robić tego równolegle z wdrożeniem Strategy + Command. Lepiej najpierw uporządkować logikę nawigacji.
+Wybrany kierunek: `inputService` pozostał istniejącym serwisem, ale dostał metody `startKeyInput()` i `stopKeyInput()`. Dzięki temu `KeyHandler` nie zarządza bezpośrednio raw mode, a feature-serwisy nie odświeżają ręcznie `readline`.
 
 ## Kolejność Priorytetów
 
@@ -563,14 +570,16 @@ Refaktoryzację można uznać za udaną, gdy:
 - `KeyHandler` nie zna domeny gry ani settingsów,
 - logika ruchu po planszy i liście jest w strategiach,
 - akcje po klawiszach są oddzielone od ruchu kursora,
-- `gameKeyHandler` i `settingsKeyHandler` są cienkimi adapterami,
+- `gameKeyHandler` i `settingsKeyHandler` nie są potrzebne albo są tylko świadomym adapterem,
+- `inputService` centralizuje przełączanie `readline` i raw mode,
+- `waitForKeyPress()` nie zostawia nierozwiązanych Promise'ów przy `stop()` ani przy ponownym oczekiwaniu,
 - `npm run ts:check` przechodzi,
 - istnieją testy dla strategii albo przynajmniej czysta logika możliwa do łatwego testowania.
 
 ## Rekomendacja Końcowa
 
-Nie warto robić dużego rewrite'u całego wejścia od razu.
+Refaktoryzacja została wdrożona bez dużego rewrite'u całego wejścia.
 
-Najpierw należy wydzielić czystą logikę nawigacji przez **Strategy**, potem spiąć ją przez prosty `NavigationController`, a dopiero później przenieść akcje do **Command**.
+Aktualny układ rozdziela czystą logikę ruchu przez **Strategy**, akcje użytkownika przez **Command**, a `NavigationController` pełni rolę bezstanowego koordynatora.
 
-Taki kierunek daje lepszą strukturę bez utraty obecnego, działającego flow aplikacji.
+Kolejny sensowny krok to dodanie testów dla strategii, kontrolera i komend, żeby utrwalić zachowanie po refaktoryzacji.
