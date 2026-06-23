@@ -9,7 +9,7 @@ const handler = new KeyHandler({
   initialPosition: INITIAL_SETTINGS_POSITION,
 });
 
-const getKeyHandler = () => {
+const getSyncedKeyHandler = () => {
   const settings = getRuntimeSettings();
   if (settings.arrowKeyNavigation) handler.start();
   else handler.stop();
@@ -22,6 +22,6 @@ const stopKeyHandler = () => {
 };
 
 export const settingsKeyHandlerService = {
-  get: getKeyHandler,
+  getSyncedHandler: getSyncedKeyHandler,
   stop: stopKeyHandler,
 };

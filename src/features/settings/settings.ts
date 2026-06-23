@@ -13,14 +13,14 @@ export const SettingsView = async (): Promise<AppRoute> => {
   saveCursor();
 
   while (true) {
-    const keyHanlder = settingsKeyHandlerService.get();
+    const keyHandler = settingsKeyHandlerService.getSyncedHandler();
     restoreAndClearDown();
 
-    SettingsOptions(keyHanlder.position);
+    SettingsOptions(keyHandler.position);
     SettingsHintMessage();
 
-    const key = keyHanlder.running
-      ? await keyHanlder.waitForKeyPress()
+    const key = keyHandler.running
+      ? await keyHandler.waitForKeyPress()
       : await SettingsEntry();
 
     if (isExitKey(key)) break;
