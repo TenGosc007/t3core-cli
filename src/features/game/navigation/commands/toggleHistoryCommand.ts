@@ -5,7 +5,7 @@ import { NAV_KEYS, type NavKey } from "@/global/navigationKeys";
 import { getGame } from "../../services/gameSession";
 import { gameState } from "../../services/gameState";
 
-export class ToggleHistoryCommand implements KeyCommand<number> {
+export class ToggleHistoryCommand implements KeyCommand {
   canHandle(key: NavKey): boolean {
     return key === NAV_KEYS.H;
   }

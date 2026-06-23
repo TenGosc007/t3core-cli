@@ -2,7 +2,7 @@ import type { KeyCommand } from "../types";
 
 import { isExitKey, NAV_KEYS, type NavKey } from "@/global/navigationKeys";
 
-export class QuitCommand<TPosition> implements KeyCommand<TPosition> {
+export class QuitCommand implements KeyCommand {
   constructor(private readonly onQuit?: () => void) {}
 
   canHandle(key: NavKey): boolean {

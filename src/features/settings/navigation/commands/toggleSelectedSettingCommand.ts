@@ -15,7 +15,7 @@ const SettingsActions: Record<number, () => void> = {
   4: resetSettings,
 };
 
-export class ToggleSelectedSettingCommand implements KeyCommand<number> {
+export class ToggleSelectedSettingCommand implements KeyCommand {
   canHandle(key: NavKey): boolean {
     return key === NAV_KEYS.ENTER;
   }

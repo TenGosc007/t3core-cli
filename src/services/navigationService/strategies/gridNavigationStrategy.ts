@@ -4,7 +4,7 @@ import { NAV_KEYS, type NavKey } from "@/global/navigationKeys";
 
 type GridPosition = { col: number; row: number };
 
-export class GridNavigationStrategy implements NavigationStrategy<number> {
+export class GridNavigationStrategy implements NavigationStrategy {
   constructor(
     private readonly rows: number,
     private readonly cols: number,

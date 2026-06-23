@@ -8,7 +8,7 @@ import { validateInputEntry } from "../../validation/validateInputEntry";
 
 const ReturnKeys = [NAV_KEYS.RETURN, NAV_KEYS.SPACE] as const;
 
-export class SelectFieldCommand implements KeyCommand<number> {
+export class SelectFieldCommand implements KeyCommand {
   constructor(private readonly handler: KeyHandler) {}
 
   canHandle(key: NavKey): boolean {

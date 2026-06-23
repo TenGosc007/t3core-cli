@@ -1,18 +1,18 @@
-import type { KeyCommand, NavigationStrategy } from "./types";
+import type { KeyCommand, NavigationResult, NavigationStrategy } from "./types";
 import type { NavKey } from "@/global/navigationKeys";
 
-export class NavigationController<TPosition> {
+export class NavigationController {
   constructor(
-    private _position: TPosition,
-    private readonly _strategy: NavigationStrategy<TPosition>,
-    private readonly _commands: KeyCommand<TPosition>[] = [],
+    private _position: number,
+    private readonly _strategy: NavigationStrategy,
+    private readonly _commands: KeyCommand[] = [],
   ) {}
 
-  get position(): TPosition {
+  get position(): number {
     return this._position;
   }
 
-  handleKey(key: NavKey): TPosition | NavKey | null {
+  handleKey(key: NavKey): NavigationResult {
     const command = this._commands.find((command) => command.canHandle(key));
 
     if (command) {
@@ -29,7 +29,7 @@ export class NavigationController<TPosition> {
     return this._position;
   }
 
-  reset(position: TPosition): void {
+  reset(position: number): void {
     this._position = position;
   }
 }

@@ -2,7 +2,7 @@ import type { NavigationStrategy } from "../types";
 
 import { NAV_KEYS, type NavKey } from "@/global/navigationKeys";
 
-export class ListNavigationStrategy implements NavigationStrategy<number> {
+export class ListNavigationStrategy implements NavigationStrategy {
   constructor(
     private readonly min: number,
     private readonly max: number,

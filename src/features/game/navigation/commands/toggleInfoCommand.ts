@@ -4,7 +4,7 @@ import { NAV_KEYS, type NavKey } from "@/global/navigationKeys";
 
 import { gameState } from "../../services/gameState";
 
-export class ToggleInfoCommand implements KeyCommand<number> {
+export class ToggleInfoCommand implements KeyCommand {
   canHandle(key: NavKey): boolean {
     return key === NAV_KEYS.I;
   }
