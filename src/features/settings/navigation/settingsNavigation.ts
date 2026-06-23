@@ -6,10 +6,7 @@ import {
   QuitCommand,
 } from "@/services/navigationService";
 
-import {
-  INITIAL_SETTINGS_ID,
-  SETTINGS_OPTIONS,
-} from "../options";
+import { INITIAL_SETTINGS_ID, SETTINGS_OPTIONS } from "../options";
 import { ToggleSelectedSettingCommand } from "./commands/toggleSelectedSettingCommand";
 
 const settingsLength = SETTINGS_OPTIONS.length;
@@ -22,12 +19,8 @@ const navigationController = new NavigationController(listNavigationStrategy, [
   new ToggleSelectedSettingCommand(),
 ]);
 
-const positionHelper = (position: number | null) => {
-  return position ?? INITIAL_SETTINGS_ID;
-};
-
 const handleKey = ({ key, position }: KeyHandlerProps) => {
-  const currentPosition = positionHelper(position);
+  const currentPosition = position ?? INITIAL_SETTINGS_ID;
   return navigationController.handleKey(currentPosition, key.name);
 };
 
