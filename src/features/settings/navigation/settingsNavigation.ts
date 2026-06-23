@@ -9,7 +9,7 @@ import {
 import {
   INITIAL_SETTINGS_ID,
   SETTINGS_OPTIONS,
-} from "../constants/settingsOptions";
+} from "../options";
 import { ToggleSelectedSettingCommand } from "./commands/toggleSelectedSettingCommand";
 
 type SettingsNavigationProps = {

@@ -1,9 +1,9 @@
-import type { SettingsOption } from "../../constants/settingsOptions";
+import type { SettingsOption } from "../../options";
 
 import { getSettings } from "@/services/settings/settings";
 import { s } from "@/utils/styledLabel";
 
-import { SETTINGS_OPTIONS } from "../../constants/settingsOptions";
+import { SETTINGS_OPTIONS } from "../../options";
 
 const getItemNumber = (
   activeItem: number | string | null | undefined,
@@ -15,9 +15,7 @@ const getItemNumber = (
 };
 
 const getItemLabel = (item: SettingsOption) => {
-  return item.emphasis
-    ? s.redBright(item.label)
-    : s.magentaBright(item.label);
+  return item.emphasis ? s.redBright(item.label) : s.magentaBright(item.label);
 };
 
 const getItemValue = (setting: boolean) => {

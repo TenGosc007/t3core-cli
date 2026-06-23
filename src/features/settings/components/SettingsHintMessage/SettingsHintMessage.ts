@@ -1,6 +1,6 @@
 import { s } from "@/utils/styledLabel";
 
-import { SETTINGS_OPTIONS } from "../../constants/settingsOptions";
+import { SETTINGS_OPTIONS } from "../../options";
 
 export const SettingsHintMessage = () => {
   console.log(

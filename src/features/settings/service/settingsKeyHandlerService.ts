@@ -1,8 +1,8 @@
 import { KeyHandler } from "@/services/keyHandlerService";
 import { getSettings } from "@/services/settings";
 
-import { INITIAL_SETTINGS_ID } from "../constants/settingsOptions";
 import { settingsNavigation } from "../navigation/settingsNavigation";
+import { INITIAL_SETTINGS_ID } from "../options";
 
 const handler = new KeyHandler({
   onKeyPress: settingsNavigation.handleKey,
