@@ -1,4 +1,4 @@
-import { selectEffectiveSettings } from "@/services/settings/settings";
+import { getRuntimeSettings } from "@/services/settings/settings";
 
 const fgCodes = {
   black: 30,
@@ -107,7 +107,7 @@ function buildStyler(codes: number[]): Styler {
   const apply = (...args: (string | number)[]): string => {
     const text = args.join(" ");
 
-    if (!selectEffectiveSettings().style) return text;
+    if (!getRuntimeSettings().style) return text;
     if (codes.length === 0) return text;
 
     return `\x1b[${codes.join(";")}m${text}\x1b[0m`;

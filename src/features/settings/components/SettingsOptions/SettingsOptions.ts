@@ -1,6 +1,6 @@
 import type { SettingsOption } from "../../options";
 
-import { selectEffectiveSettings } from "@/services/settings/settings";
+import { getRuntimeSettings } from "@/services/settings/settings";
 import { s } from "@/utils/styledLabel";
 
 import { SETTINGS_OPTIONS } from "../../options";
@@ -23,7 +23,7 @@ const getItemValue = (setting: boolean) => {
 };
 
 export const SettingsOptions = (activeItem?: number | null) => {
-  const settings = selectEffectiveSettings();
+  const settings = getRuntimeSettings();
 
   SETTINGS_OPTIONS.forEach((item) => {
     const itemNumber = getItemNumber(activeItem, item);

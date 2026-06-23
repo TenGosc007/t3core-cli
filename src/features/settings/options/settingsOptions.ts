@@ -1,7 +1,7 @@
 import { isTTYAvailable } from "@/global/tty.global";
 import {
   resetSettings,
-  selectEffectiveSettings,
+  getRuntimeSettings,
   toggleArrowKeyNavigation,
   toggleBeep,
   toggleStyle,
@@ -57,7 +57,7 @@ export const executeSettingsOption = (
   id: number | string | null | undefined,
 ) => {
   const option = getSettingsOptionById(id);
-  const settings = selectEffectiveSettings();
+  const settings = getRuntimeSettings();
 
   if (!option || option.disabled?.(settings)) return;
 

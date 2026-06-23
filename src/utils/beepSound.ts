@@ -1,7 +1,7 @@
-import { selectEffectiveSettings } from "../services/settings/settings";
+import { getRuntimeSettings } from "../services/settings/settings";
 
 export const beepSound = () => {
-  if (selectEffectiveSettings().beep) {
+  if (getRuntimeSettings().beep) {
     process.stdout.write("\x07");
   }
 };
