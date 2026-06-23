@@ -48,18 +48,35 @@ export const SETTINGS_OPTIONS: readonly SettingsOption[] = [
   },
 ] as const;
 
-export const INITIAL_SETTINGS_ID = SETTINGS_OPTIONS[0].id;
+export const INITIAL_SETTINGS_POSITION = 0;
+export const LAST_SETTINGS_POSITION = SETTINGS_OPTIONS.length - 1;
+export const SETTINGS_OPTION_IDS_LABEL = SETTINGS_OPTIONS.map(({ id }) =>
+  id.toString(),
+).join(", ");
 
-export const getSettingsOptionById = (id: number | string | null | undefined) =>
-  SETTINGS_OPTIONS.find((option) => option.id.toString() === id?.toString());
+export const getSettingsOptionById = (id: number | string | null) =>
+  SETTINGS_OPTIONS.find((option) => option.id.toString() === id?.toString()) ??
+  null;
 
-export const executeSettingsOption = (
-  id: number | string | null | undefined,
-) => {
-  const option = getSettingsOptionById(id);
+export const getSettingsOptionByPosition = (position: number | null) => {
+  if (position == null) return null;
+  if (!Number.isInteger(position)) return null;
+
+  return SETTINGS_OPTIONS[position];
+};
+
+const executeOption = (option: SettingsOption | null) => {
   const settings = getRuntimeSettings();
 
   if (!option || option.disabled?.(settings)) return;
 
   option.action();
+};
+
+export const executeSettingsOption = (id: number | string | null) => {
+  executeOption(getSettingsOptionById(id));
+};
+
+export const executeSettingsOptionByPosition = (position: number | null) => {
+  executeOption(getSettingsOptionByPosition(position));
 };

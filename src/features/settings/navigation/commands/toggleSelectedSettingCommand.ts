@@ -2,7 +2,7 @@ import type { KeyCommand } from "@/services/navigationService";
 
 import { NAV_KEYS, type NavKey } from "@/global/navigationKeys";
 
-import { executeSettingsOption } from "../../options";
+import { executeSettingsOptionByPosition } from "../../options";
 
 export class ToggleSelectedSettingCommand implements KeyCommand {
   canHandle(key: NavKey): boolean {
@@ -10,7 +10,7 @@ export class ToggleSelectedSettingCommand implements KeyCommand {
   }
 
   execute(position: number): number {
-    executeSettingsOption(position);
+    executeSettingsOptionByPosition(position);
     return position;
   }
 }

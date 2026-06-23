@@ -2,11 +2,11 @@ import { KeyHandler } from "@/services/keyHandlerService";
 import { getRuntimeSettings } from "@/services/settings";
 
 import { settingsNavigation } from "../navigation/settingsNavigation";
-import { INITIAL_SETTINGS_ID } from "../options";
+import { INITIAL_SETTINGS_POSITION } from "../options";
 
 const handler = new KeyHandler({
   onKeyPress: settingsNavigation.handleKey,
-  initialPosition: INITIAL_SETTINGS_ID,
+  initialPosition: INITIAL_SETTINGS_POSITION,
 });
 
 const getKeyHandler = () => {

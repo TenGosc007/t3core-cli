@@ -6,12 +6,13 @@ import { s } from "@/utils/styledLabel";
 import { SETTINGS_OPTIONS } from "../../options";
 
 const getItemNumber = (
-  activeItem: number | null | undefined,
+  activePosition: number | null | undefined,
+  itemPosition: number,
   item: SettingsOption,
 ) => {
   const id = item.id.toString();
   const num = s.yellowBright.bold(id);
-  return activeItem?.toString() === id ? s.inverse(num) : num;
+  return activePosition === itemPosition ? s.inverse(num) : num;
 };
 
 const getItemLabel = (item: SettingsOption) => {
@@ -22,11 +23,11 @@ const getItemValue = (setting: boolean) => {
   return setting ? ` - ${s.greenBright("ON")}` : ` - ${s.redBright("OFF")}`;
 };
 
-export const SettingsOptions = (activeItem?: number | null) => {
+export const SettingsOptions = (activePosition?: number | null) => {
   const settings = getRuntimeSettings();
 
-  SETTINGS_OPTIONS.forEach((item) => {
-    const itemNumber = getItemNumber(activeItem, item);
+  SETTINGS_OPTIONS.forEach((item, itemPosition) => {
+    const itemNumber = getItemNumber(activePosition, itemPosition, item);
     const itemLabel = getItemLabel(item);
     const itemValue =
       item.type === "toggle" ? getItemValue(settings[item.key]) : "";
