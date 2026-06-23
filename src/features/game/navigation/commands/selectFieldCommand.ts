@@ -9,25 +9,28 @@ import { validateInputEntry } from "../../validation/validateInputEntry";
 const ReturnKeys = [NAV_KEYS.RETURN, NAV_KEYS.SPACE] as const;
 
 export class SelectFieldCommand implements KeyCommand {
-  constructor(private readonly handler: KeyHandler) {}
+  constructor(private readonly getHandler: () => KeyHandler | null) {}
 
   canHandle(key: NavKey): boolean {
     return ReturnKeys.some((returnKey) => returnKey === key);
   }
 
   execute(position: number): number {
+    const handler = this.getHandler();
+    if (!handler) return position;
+
     const game = getGame();
 
     if (game.gameStatus.status !== "running") {
-      this.handler.resetPosition();
-      if (typeof this.handler.initialPosition === "number") {
-        return this.handler.initialPosition;
+      handler.resetPosition();
+      if (typeof handler.initialPosition === "number") {
+        return handler.initialPosition;
       }
 
       return position;
     }
 
-    validateInputEntry(position, this.handler.running);
+    validateInputEntry(position, handler.running);
     game.savePlayerMove(position);
     return position;
   }

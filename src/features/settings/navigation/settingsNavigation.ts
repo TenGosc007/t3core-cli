@@ -18,12 +18,14 @@ type SettingsNavigationProps = {
 };
 
 const settingsLength = SETTINGS_OPTIONS.length;
-
-const navigationController = new NavigationController(
+const listNavigationStrategy = new ListNavigationStrategy(
   INITIAL_SETTINGS_ID,
-  new ListNavigationStrategy(INITIAL_SETTINGS_ID, settingsLength),
-  [new QuitCommand(), new ToggleSelectedSettingCommand()],
+  settingsLength,
 );
+const navigationController = new NavigationController(listNavigationStrategy, [
+  new QuitCommand(),
+  new ToggleSelectedSettingCommand(),
+]);
 
 const positionHelper = (position: number | null) => {
   return position ?? INITIAL_SETTINGS_ID;
@@ -33,8 +35,7 @@ const handleKey = ({ key, position }: SettingsNavigationProps) => {
   if (typeof position === "string") return position;
 
   const currentPosition = positionHelper(position);
-  navigationController.reset(currentPosition);
-  const nextPosition = navigationController.handleKey(key.name);
+  const nextPosition = navigationController.handleKey(currentPosition, key.name);
 
   if (typeof nextPosition === "number") return nextPosition;
   return nextPosition;
@@ -42,5 +43,4 @@ const handleKey = ({ key, position }: SettingsNavigationProps) => {
 
 export const settingsNavigation = {
   handleKey,
-  reset: () => navigationController.reset(INITIAL_SETTINGS_ID),
 };
