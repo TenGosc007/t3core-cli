@@ -35,10 +35,7 @@ const handleKey = ({ key, position }: SettingsNavigationProps) => {
   if (typeof position === "string") return position;
 
   const currentPosition = positionHelper(position);
-  const nextPosition = navigationController.handleKey(currentPosition, key.name);
-
-  if (typeof nextPosition === "number") return nextPosition;
-  return nextPosition;
+  return navigationController.handleKey(currentPosition, key.name);
 };
 
 export const settingsNavigation = {

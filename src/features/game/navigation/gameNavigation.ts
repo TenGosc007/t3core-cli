@@ -43,10 +43,7 @@ const handleKey = ({ key, position }: KeyHandlerProps) => {
   if (!key.name) return null;
 
   const currentPos = getCurrentPosition(position);
-  const nextPosition = navigationController.handleKey(currentPos, key.name);
-
-  if (typeof nextPosition === "number") return nextPosition;
-  return nextPosition;
+  return navigationController.handleKey(currentPos, key.name);
 };
 
 export const gameNavigation = {
