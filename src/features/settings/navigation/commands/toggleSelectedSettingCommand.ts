@@ -1,19 +1,7 @@
 import type { KeyCommand } from "@/services/navigationService";
 
 import { NAV_KEYS, type NavKey } from "@/global/navigationKeys";
-import {
-  resetSettings,
-  toggleArrowKeyNavigation,
-  toggleBeep,
-  toggleStyle,
-} from "@/services/settings";
-
-const SettingsActions: Record<number, () => void> = {
-  1: toggleBeep,
-  2: toggleStyle,
-  3: toggleArrowKeyNavigation,
-  4: resetSettings,
-};
+import { executeSettingsOption } from "../../constants/settingsOptions";
 
 export class ToggleSelectedSettingCommand implements KeyCommand {
   canHandle(key: NavKey): boolean {
@@ -21,7 +9,7 @@ export class ToggleSelectedSettingCommand implements KeyCommand {
   }
 
   execute(position: number): number {
-    SettingsActions[position]?.();
+    executeSettingsOption(position);
     return position;
   }
 }

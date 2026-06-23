@@ -4,7 +4,6 @@ export type Settings = {
   beep: boolean;
   style: boolean;
   arrowKeyNavigation: boolean;
-  reset?: void;
 };
 
 export type SettingsKey = keyof Settings;
@@ -38,6 +37,6 @@ export const toggleStyle = () => {
 };
 
 export const toggleArrowKeyNavigation = () => {
-  if (!isTTYAvailable && settings.style) return;
+  if (!isTTYAvailable || !settings.style) return;
   settings.arrowKeyNavigation = !settings.arrowKeyNavigation;
 };
