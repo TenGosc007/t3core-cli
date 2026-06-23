@@ -3,11 +3,11 @@ import { KeyHandler } from "@/services/keyHandlerService";
 import { getSettings } from "@/services/settings";
 
 import { INITIAL_BOARD_POSITION } from "../constants/game.constants";
-import { gameKeyHandler } from "../util/gameKeyHandler";
+import { gameNavigation } from "../navigation/gameNavigation";
 import { gameState } from "./gameState";
 
 const handler = new KeyHandler({
-  onKeyPress: gameKeyHandler,
+  onKeyPress: gameNavigation.handleKey,
   initialPosition: INITIAL_BOARD_POSITION,
 });
 

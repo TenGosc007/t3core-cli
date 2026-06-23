@@ -3,10 +3,10 @@ import { KeyHandler } from "@/services/keyHandlerService";
 import { getSettings } from "@/services/settings";
 
 import { INITIAL_SETTINGS_ID } from "../constants/settingsOptions";
-import { settingsKeyHandler } from "../utils/settingsKeyHandler";
+import { settingsNavigation } from "../navigation/settingsNavigation";
 
 const handler = new KeyHandler({
-  onKeyPress: settingsKeyHandler,
+  onKeyPress: settingsNavigation.handleKey,
   initialPosition: INITIAL_SETTINGS_ID,
 });
 
