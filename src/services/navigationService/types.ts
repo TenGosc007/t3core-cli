@@ -1,10 +1,10 @@
 import type { NavKey } from "@/global/navigationKeys";
 
-export type NavigationStrategy<T> = {
-  move(position: T, key: NavKey): T;
+export type NavigationStrategy<TPosition> = {
+  move(position: TPosition, key: NavKey): TPosition;
 };
 
-export type KeyCommand<T> = {
+export type KeyCommand<TPosition> = {
   canHandle(key: NavKey): boolean;
-  execute(position: T): T | NavKey | null;
+  execute(position: TPosition): TPosition | NavKey | null;
 };
