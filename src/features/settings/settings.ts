@@ -1,21 +1,31 @@
-import type { AppRoute } from "@/navigation/routes";
-
-import { Header } from "@/components/Header";
-import { ROUTES } from "@/navigation/routes";
-import { beepAndClear } from "@/utils/beepAndClear";
+import { isExitKey } from "@/global/navigationKeys";
+import { ROUTES, type AppRoute } from "@/navigation/routes";
+import { restoreAndClearDown, saveCursor } from "@/utils/viewUtils";
 
 import { SettingsEntry } from "./components/SettingsEntry";
 import { SettingsHeader } from "./components/SettingsHeader";
+import { SettingsHintMessage } from "./components/SettingsHintMessage";
 import { SettingsOptions } from "./components/SettingsOptions";
+import { settingsKeyHandlerService } from "./service/settingsKeyHandlerService";
 
 export const SettingsView = async (): Promise<AppRoute> => {
-  while (true) {
-    beepAndClear();
-    Header();
-    SettingsHeader();
-    SettingsOptions();
+  SettingsHeader();
+  saveCursor();
 
-    const result = await SettingsEntry();
-    if (result === "quit") return ROUTES.MENU;
+  while (true) {
+    const keyHandler = settingsKeyHandlerService.getSyncedHandler();
+    restoreAndClearDown();
+
+    SettingsOptions(keyHandler.position);
+    SettingsHintMessage();
+
+    const key = keyHandler.running
+      ? await keyHandler.waitForKeyPress()
+      : await SettingsEntry();
+
+    if (isExitKey(key)) break;
   }
+
+  settingsKeyHandlerService.stop();
+  return ROUTES.MENU;
 };

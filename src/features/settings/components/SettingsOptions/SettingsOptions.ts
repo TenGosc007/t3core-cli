@@ -1,27 +1,45 @@
-import { getSettings } from "@/global/settings.global";
+import type { SettingsOption } from "../../options";
+
+import { getRuntimeSettings } from "@/services/settings/settings";
 import { s } from "@/utils/styledLabel";
 
-import { SETTINGS_OPTIONS } from "../../constants/settingsOptions";
+import { SETTINGS_OPTIONS } from "../../options";
 
-export const SettingsOptions = () => {
-  const settings = getSettings();
+const getItemNumber = (
+  activePosition: number | null | undefined,
+  itemPosition: number,
+  item: SettingsOption,
+) => {
+  const id = item.id.toString();
+  const num = s.yellowBright.bold(id);
+  return activePosition === itemPosition ? s.inverse(num) : num;
+};
 
-  SETTINGS_OPTIONS.forEach((item) => {
-    const itemNumber = s.yellowBright.bold(item.id);
-    const itemLabel = s.magentaBright(item.label);
+const getItemLabel = (item: SettingsOption) => {
+  return item.emphasis ? s.redBright(item.label) : s.magentaBright(item.label);
+};
 
-    const setting = settings[item.key];
+const getItemValue = (setting: boolean) => {
+  return setting ? ` - ${s.greenBright("ON")}` : ` - ${s.redBright("OFF")}`;
+};
 
-    const value = setting ? s.greenBright("ON") : s.redBright("OFF");
+export const SettingsOptions = (activePosition?: number | null) => {
+  const settings = getRuntimeSettings();
 
-    const itemValue = value ? ` - ${value}` : "";
+  SETTINGS_OPTIONS.forEach((item, itemPosition) => {
+    const itemNumber = getItemNumber(activePosition, itemPosition, item);
+    const itemLabel = getItemLabel(item);
+    const itemValue =
+      item.type === "toggle" ? getItemValue(settings[item.key]) : "";
 
-    console.log(`[${itemNumber}] ${itemLabel}${itemValue}`);
+    let label = `${itemLabel}${itemValue}`;
+    if (item.disabled?.(settings)) {
+      label = s.dim(label);
+    }
+
+    if (item.type === "command") console.log("\t");
+    console.log(`[${itemNumber}] ${label}`);
   });
 
-  const resetToDefault = `[${s.yellowBright.bold((SETTINGS_OPTIONS.length + 1).toString())}] ${s.grey("Reset to default")}`;
-
-  console.log("\t");
-  console.log(resetToDefault);
   console.log("\t");
 };

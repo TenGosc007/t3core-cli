@@ -1,35 +1,16 @@
-import { UserInput } from "@/components/UserInput";
-import {
-  resetSettings,
-  toggleBeep,
-  toggleStyle,
-} from "@/global/settings.global";
-import { s } from "@/utils/styledLabel";
+import type { NavKey } from "@/global/navigationKeys";
 
-const entryMessage = () => {
-  console.log(s.white("Select option from the list (1-3)"));
-  console.log(s.dim('Press "q" to back to the main menu'));
-  console.log("\t");
-};
+import { NAV_KEYS } from "@/global/navigationKeys";
+import { waitForInput } from "@/services/inputService";
 
-export const SettingsEntry = async (): Promise<"quit" | "continue"> => {
-  entryMessage();
+import { executeSettingsOption } from "../../options";
 
-  const answer = await UserInput("Enter your choice: ");
+export const SettingsEntry = async (): Promise<NavKey | null> => {
+  const input = await waitForInput("Enter your choice: ");
+  const answer = input?.trim().toLowerCase();
 
-  switch (answer) {
-    case "1":
-      toggleBeep();
-      break;
-    case "2":
-      toggleStyle();
-      break;
-    case "3":
-      resetSettings();
-      break;
-    case "q":
-      return "quit";
-  }
+  if (answer === "q") return NAV_KEYS.Q;
+  if (answer) executeSettingsOption(answer);
 
-  return "continue";
+  return null;
 };

@@ -1,44 +1,44 @@
-import type { AppRoute } from "@/navigation/routes";
+import type { KeyHandler } from "@/services/keyHandlerService";
 
-import { Header } from "@/components/Header";
-import { ROUTES } from "@/navigation/routes";
-import { beepAndClear } from "@/utils/beepAndClear";
+import { isExitKey } from "@/global/navigationKeys";
+import { ROUTES, type AppRoute } from "@/navigation/routes";
+import { restoreAndClearDown, saveCursor } from "@/utils/viewUtils";
 
 import { Board } from "./components/Board";
 import { GameEntryMessage } from "./components/GameEntryMessage";
 import { GameHeader } from "./components/GameHeader";
+import { GameInformations } from "./components/GameInformations";
 import { GameStatusMessage } from "./components/GameStatusMessage";
-import { getPlayerAnswer } from "./components/PlayerEntry/utils/getPlayerAnswer";
-import { playAgain } from "./components/PlayerEntry/utils/playAgain";
-import { PlayerPrompt } from "./components/PlayerPrompt";
-import { getGame } from "./services/gameSession";
-
-const renderBoard = () => {
-  beepAndClear();
-  Header();
-  GameHeader();
-  GameEntryMessage();
-  Board();
-  GameStatusMessage();
-};
+import { InputEntry } from "./components/InputEntry";
+import { gameKeyHandlerService } from "./services/gameKeyHandlerService";
+import { playAgain } from "./util/playAgain";
 
 export const GameView = async (): Promise<AppRoute> => {
-  const game = getGame();
+  GameHeader();
+  saveCursor();
 
   while (true) {
-    renderBoard();
+    const keyHandler = gameKeyHandlerService.get();
+    restoreAndClearDown();
 
-    if (game.gameStatus.status !== "running") {
-      await playAgain();
-      return ROUTES.GAME;
-    }
+    GameEntryMessage();
+    Board(keyHandler.position);
+    GameStatusMessage();
+    GameInformations();
 
-    PlayerPrompt(game);
+    if (await playAgain()) continue;
 
-    const answer = await getPlayerAnswer();
-    if (answer === "quit") return ROUTES.MENU;
-    if (answer === null) continue;
-
-    game.savePlayerMove(answer);
+    const entry = await entryHandler(keyHandler);
+    if (isExitKey(entry)) break;
   }
+
+  gameKeyHandlerService.stop();
+  return ROUTES.MENU;
 };
+
+async function entryHandler(keyHandler?: KeyHandler | null) {
+  if (keyHandler?.running) {
+    return await keyHandler?.waitForKeyPress();
+  }
+  return await InputEntry();
+}

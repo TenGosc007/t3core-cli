@@ -1,7 +1,7 @@
-import { getSettings } from "../global/settings.global";
+import { getRuntimeSettings } from "../services/settings/settings";
 
 export const beepSound = () => {
-  if (getSettings().beep) {
+  if (getRuntimeSettings().beep) {
     process.stdout.write("\x07");
   }
 };
