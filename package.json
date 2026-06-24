@@ -1,6 +1,6 @@
 {
   "name": "t3core-cli",
-  "version": "1.2.0",
+  "version": "1.5.0",
   "description": "Interactive Tic Tac Toe CLI — play in your terminal via npx t3core-cli",
   "main": "dist/index.js",
   "preferGlobal": true,
