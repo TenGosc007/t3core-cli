@@ -23,7 +23,7 @@ export const GameView = async (): Promise<AppRoute> => {
     GameEntryMessage();
     Board(keyHandler.position);
     GameStatusMessage();
-    GameInformations();
+    GameInformations({ isKeyHandlerRunning: keyHandler.running });
 
     if (await playAgain()) continue;
 
