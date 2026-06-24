@@ -3,7 +3,7 @@ import { ToggleHistoryCommand } from "@/features/game/navigation/commands/toggle
 import { ToggleInfoCommand } from "@/features/game/navigation/commands/toggleInfoCommand";
 import { gameState } from "@/features/game/services/gameState";
 import { type NavKey } from "@/global/navigationKeys";
-import { QuitCommand } from "@/services/navigationService/commands/quitCommand";
+import { QuitCommand } from "@/services/navigationService";
 
 const quitCommand = new QuitCommand(() => {
   gameManager.reset();
