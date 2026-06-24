@@ -1,9 +1,21 @@
+type GameState = {
+  info: boolean;
+  historyMode: boolean;
+  inputError: string | null;
+};
+
+const createInitialGameState = (): GameState => ({
+  info: false,
+  historyMode: false,
+  inputError: null,
+});
+
 export class GameStateManager {
-  private _state = {
-    info: false,
-    historyMode: false,
-    inputError: null as string | null,
-  };
+  private _state: GameState;
+
+  constructor(initialState?: Partial<GameState>) {
+    this._state = { ...createInitialGameState(), ...initialState };
+  }
 
   // Getters for read-only access
   get info() {

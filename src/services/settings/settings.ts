@@ -15,7 +15,11 @@ const createInitialSettings = (): Settings => ({
 });
 
 export class SettingsManager {
-  private _settings = createInitialSettings();
+  private _settings: Settings;
+
+  constructor(initialSettings?: Partial<Settings>) {
+    this._settings = { ...createInitialSettings(), ...initialSettings };
+  }
 
   getRuntimeSettings = (): Readonly<Settings> => {
     return {
