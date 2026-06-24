@@ -1,6 +1,6 @@
 import type { ToggleCommand } from "@/services/navigationService";
 
-import { gameState } from "@/features/game/services/gameState";
+import { gameStateManager } from "@/features/game/services/gameState";
 import { NAV_KEYS, type NavKey } from "@/global/navigationKeys";
 
 export class ToggleInfoCommand implements ToggleCommand {
@@ -9,7 +9,7 @@ export class ToggleInfoCommand implements ToggleCommand {
   }
 
   execute(): NavKey {
-    gameState.toggleInfo();
+    gameStateManager.toggleInfo();
     return NAV_KEYS.I;
   }
 }

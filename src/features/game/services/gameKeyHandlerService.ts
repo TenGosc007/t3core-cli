@@ -3,7 +3,7 @@ import { gameNavigation } from "@/features/game/navigation/gameNavigation";
 import { KeyHandler } from "@/services/keyHandlerService";
 import { settingsManager } from "@/services/settings";
 
-import { gameState } from "./gameState";
+import { gameStateManager } from "./gameState";
 
 const handler = new KeyHandler({
   onKeyPress: gameNavigation.handleKey,
@@ -12,7 +12,7 @@ const handler = new KeyHandler({
 
 const getKeyHandler = () => {
   const settings = settingsManager.getRuntimeSettings();
-  const isHistoryModeOn = gameState.historyMode;
+  const isHistoryModeOn = gameStateManager.historyMode;
 
   if (settings.arrowKeyNavigation && !isHistoryModeOn) handler.start();
   else stopKeyHandler();

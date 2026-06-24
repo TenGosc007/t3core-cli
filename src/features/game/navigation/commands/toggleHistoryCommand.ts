@@ -1,7 +1,7 @@
 import type { ToggleCommand } from "@/services/navigationService";
 
 import { gameManager } from "@/features/game/engine";
-import { gameState } from "@/features/game/services/gameState";
+import { gameStateManager } from "@/features/game/services/gameState";
 import { NAV_KEYS, type NavKey } from "@/global/navigationKeys";
 
 export class ToggleHistoryCommand implements ToggleCommand {
@@ -13,7 +13,7 @@ export class ToggleHistoryCommand implements ToggleCommand {
     const game = gameManager.getGame();
 
     if (game.getMovesCount() > 0) {
-      gameState.toggleHistoryMode();
+      gameStateManager.toggleHistoryMode();
     }
 
     return NAV_KEYS.H;

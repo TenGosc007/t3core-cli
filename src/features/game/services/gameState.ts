@@ -51,4 +51,4 @@ export class GameStateManager {
 }
 
 // Singleton instance
-export const gameState = new GameStateManager();
+export const gameStateManager = new GameStateManager();

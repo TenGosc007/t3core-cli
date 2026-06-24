@@ -1,13 +1,13 @@
 import { gameManager } from "@/features/game/engine";
 import { ToggleHistoryCommand } from "@/features/game/navigation/commands/toggleHistoryCommand";
 import { ToggleInfoCommand } from "@/features/game/navigation/commands/toggleInfoCommand";
-import { gameState } from "@/features/game/services/gameState";
+import { gameStateManager } from "@/features/game/services/gameState";
 import { type NavKey } from "@/global/navigationKeys";
 import { QuitCommand } from "@/services/navigationService";
 
 const quitCommand = new QuitCommand(() => {
   gameManager.reset();
-  gameState.reset();
+  gameStateManager.reset();
 });
 const toggleHistoryCommand = new ToggleHistoryCommand();
 const toggleInfoCommand = new ToggleInfoCommand();

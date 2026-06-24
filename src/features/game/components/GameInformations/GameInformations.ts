@@ -3,7 +3,7 @@ import type { GameEngine } from "@/features/game/engine";
 import { GameHintUI } from "@/features/game/components/ui/GameHintUI";
 import { InputErrorMessageUI } from "@/features/game/components/ui/InputErrorMessageUI";
 import { PlayerPromptUI } from "@/features/game/components/ui/PlayerPromptUI";
-import { gameState } from "@/features/game/services/gameState";
+import { gameStateManager } from "@/features/game/services/gameState";
 
 type GameInformationsProps = {
   game: GameEngine;
@@ -16,8 +16,8 @@ export const GameInformations = ({
 }: GameInformationsProps) => {
   if (game.getStatus().status !== "running") return;
 
-  const error = gameState.inputError;
-  const isHistoryMode = gameState.historyMode;
+  const error = gameStateManager.inputError;
+  const isHistoryMode = gameStateManager.historyMode;
   const currentPlayer = game.getCurrentPlayer();
   const movesCount = game.getMovesCount();
 

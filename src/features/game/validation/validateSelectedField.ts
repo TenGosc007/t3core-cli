@@ -1,6 +1,6 @@
 import type { GameEngine } from "@/features/game/engine";
 
-import { gameState } from "@/features/game/services/gameState";
+import { gameStateManager } from "@/features/game/services/gameState";
 
 type ValidateSelectedFieldProps = {
   entry: number;
@@ -13,8 +13,8 @@ export const validateSelectedField = ({
   game,
   index = entry,
 }: ValidateSelectedFieldProps) => {
-  if (!gameState.historyMode && game.isFieldOccupied(index)) {
-    gameState.setInputError(`Field ${entry} already selected`);
+  if (!gameStateManager.historyMode && game.isFieldOccupied(index)) {
+    gameStateManager.setInputError(`Field ${entry} already selected`);
     return false;
   }
   return true;

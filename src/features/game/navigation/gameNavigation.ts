@@ -9,7 +9,7 @@ import { gameManager } from "@/features/game/engine";
 import { SelectFieldCommand } from "@/features/game/navigation/commands/selectFieldCommand";
 import { ToggleHistoryCommand } from "@/features/game/navigation/commands/toggleHistoryCommand";
 import { ToggleInfoCommand } from "@/features/game/navigation/commands/toggleInfoCommand";
-import { gameState } from "@/features/game/services/gameState";
+import { gameStateManager } from "@/features/game/services/gameState";
 import {
   GridNavigationStrategy,
   NavigationController,
@@ -23,7 +23,7 @@ const gridNavigationStrategy = new GridNavigationStrategy(
 
 const onQuit = () => {
   gameManager.reset();
-  gameState.reset();
+  gameStateManager.reset();
 };
 
 const navigationController = new NavigationController(gridNavigationStrategy, [
