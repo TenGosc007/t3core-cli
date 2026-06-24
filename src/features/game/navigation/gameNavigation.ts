@@ -23,30 +23,36 @@ const gridNavigationStrategy = new GridNavigationStrategy(
   BOARD_COLS,
 );
 
-type OnQuitProps = {
-  game?: GameManager;
+type GameNavigationProps = {
+  manager?: GameManager;
   gameState?: GameStateManager;
 };
 
-const onQuit = ({ game, gameState }: OnQuitProps) => {
-  const resolvedGame = game ?? gameManager;
-  const resolvedState = gameState ?? gameStateManager;
-  resolvedGame.reset();
-  resolvedState.reset();
-};
+export const gameNavigation = ({
+  manager = gameManager,
+  gameState = gameStateManager,
+}: GameNavigationProps = {}) => {
+  const game = manager.getGame();
 
-const navigationController = new NavigationController(gridNavigationStrategy, [
-  new QuitCommand(() => onQuit({})),
-  new SelectFieldCommand(),
-  new ToggleHistoryCommand(),
-  new ToggleInfoCommand(),
-]);
+  const onQuit = () => {
+    manager.reset();
+    gameState.reset();
+  };
 
-const handleKey = ({ key, position }: KeyHandlerProps) => {
-  const currentPos = position ?? INITIAL_BOARD_POSITION;
-  return navigationController.handleKey(currentPos, key.name);
-};
+  const navigationController = new NavigationController(
+    gridNavigationStrategy,
+    [
+      new QuitCommand(onQuit),
+      new SelectFieldCommand(game, gameState),
+      new ToggleHistoryCommand(game, gameState),
+      new ToggleInfoCommand(gameState),
+    ],
+  );
 
-export const gameNavigation = {
-  handleKey,
+  const handleKey = ({ key, position }: KeyHandlerProps) => {
+    const currentPos = position ?? INITIAL_BOARD_POSITION;
+    return navigationController.handleKey(currentPos, key.name);
+  };
+
+  return { handleKey };
 };

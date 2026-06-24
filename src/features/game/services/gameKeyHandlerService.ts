@@ -6,7 +6,7 @@ import { settingsManager } from "@/services/settings";
 import { gameStateManager } from "./gameState";
 
 const handler = new KeyHandler({
-  onKeyPress: gameNavigation.handleKey,
+  onKeyPress: gameNavigation().handleKey,
   initialPosition: INITIAL_BOARD_POSITION,
 });
 
