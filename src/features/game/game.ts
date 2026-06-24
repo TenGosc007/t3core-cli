@@ -1,4 +1,5 @@
 import type { GameEngine } from "@/features/game/engine";
+import type { GameStateManager } from "@/features/game/services/gameState";
 import type { KeyHandler } from "@/services/keyHandlerService";
 
 import { GameInformations } from "@/features/game/components/GameInformations";
@@ -16,9 +17,9 @@ import { BoardUI } from "./components/ui/BoardUI";
 import { GameEntryMessageUI } from "./components/ui/GameEntryMessageUI";
 import { GameStatusMessageUI } from "./components/ui/GameStatusMessageUI";
 
-export const GameView = async (): Promise<AppRoute> => {
-  const gameState = gameStateManager;
-
+export const GameView = async (
+  gameState: GameStateManager = gameStateManager,
+): Promise<AppRoute> => {
   GameHeaderUI();
   saveCursor();
 
@@ -38,7 +39,7 @@ export const GameView = async (): Promise<AppRoute> => {
 
     if (await playAgain({ game })) continue;
 
-    const entry = await entryHandler({ game, keyHandler });
+    const entry = await entryHandler({ game, keyHandler, gameState });
     if (isExitKey(entry)) break;
   }
 
@@ -49,11 +50,16 @@ export const GameView = async (): Promise<AppRoute> => {
 type EntryHandlerProps = {
   game: GameEngine;
   keyHandler?: KeyHandler | null;
+  gameState: GameStateManager;
 };
 
-async function entryHandler({ game, keyHandler }: EntryHandlerProps) {
+async function entryHandler({
+  game,
+  keyHandler,
+  gameState,
+}: EntryHandlerProps) {
   if (keyHandler?.running) {
     return await keyHandler?.waitForKeyPress();
   }
-  return await InputEntry({ game });
+  return await InputEntry({ game, gameState });
 }
