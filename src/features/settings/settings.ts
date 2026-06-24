@@ -15,7 +15,7 @@ export const SettingsView = async (): Promise<AppRoute> => {
     const keyHandler = settingsKeyHandlerService.getSyncedHandler();
     restoreAndClearDown();
 
-    SettingsOptions(keyHandler.position);
+    SettingsOptions({ activePosition: keyHandler.position });
     SettingsHintMessage();
 
     const key = keyHandler.running

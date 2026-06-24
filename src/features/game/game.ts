@@ -21,7 +21,7 @@ export const GameView = async (): Promise<AppRoute> => {
     restoreAndClearDown();
 
     GameEntryMessage();
-    Board(keyHandler.position);
+    Board({ selectedIndex: keyHandler.position });
     GameStatusMessage();
     GameInformations({ isKeyHandlerRunning: keyHandler.running });
 

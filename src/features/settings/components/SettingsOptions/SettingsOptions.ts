@@ -22,7 +22,11 @@ const getItemValue = (setting: boolean) => {
   return setting ? ` - ${s.greenBright("ON")}` : ` - ${s.redBright("OFF")}`;
 };
 
-export const SettingsOptions = (activePosition?: number | null) => {
+type SettingsOptionsProps = {
+  activePosition?: number | null;
+};
+
+export const SettingsOptions = ({ activePosition }: SettingsOptionsProps) => {
   const settings = getRuntimeSettings();
 
   SETTINGS_OPTIONS.forEach((item, itemPosition) => {
