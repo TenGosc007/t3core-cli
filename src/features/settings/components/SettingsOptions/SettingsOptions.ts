@@ -1,7 +1,7 @@
 import type { SettingsOption } from "@/features/settings/options";
 
 import { SETTINGS_OPTIONS } from "@/features/settings/options";
-import { getRuntimeSettings } from "@/services/settings/settings";
+import { getRuntimeSettings } from "@/services/settings";
 import { s } from "@/utils/styledLabel";
 
 const getItemNumber = (

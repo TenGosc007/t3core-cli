@@ -1,4 +1,4 @@
-import { getRuntimeSettings } from "@/services/settings/settings";
+import { getRuntimeSettings } from "@/services/settings";
 
 export const beepSound = () => {
   if (getRuntimeSettings().beep) {

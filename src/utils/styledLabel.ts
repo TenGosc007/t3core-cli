@@ -1,4 +1,4 @@
-import { getRuntimeSettings } from "@/services/settings/settings";
+import { getRuntimeSettings } from "@/services/settings";
 
 const fgCodes = {
   black: 30,

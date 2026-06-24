@@ -7,7 +7,7 @@ import {
   toggleStyle,
   type Settings,
   type SettingsKey,
-} from "@/services/settings/settings";
+} from "@/services/settings";
 
 type BaseSettingsOption = {
   id: number;
