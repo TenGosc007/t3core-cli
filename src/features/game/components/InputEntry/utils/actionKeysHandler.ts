@@ -1,26 +1,30 @@
 import { gameManager } from "@/features/game/engine";
+import { ToggleHistoryCommand } from "@/features/game/navigation/commands/toggleHistoryCommand";
+import { ToggleInfoCommand } from "@/features/game/navigation/commands/toggleInfoCommand";
 import { gameState } from "@/features/game/services/gameState";
-import { NAV_KEYS } from "@/global/navigationKeys";
+import { type NavKey } from "@/global/navigationKeys";
+import { QuitCommand } from "@/services/navigationService/commands/quitCommand";
 
-const QuitKeys = [NAV_KEYS.Q, NAV_KEYS.ESCAPE, NAV_KEYS.BACKSPACE] as const;
+const quitCommand = new QuitCommand(() => {
+  gameManager.reset();
+  gameState.reset();
+});
+const toggleHistoryCommand = new ToggleHistoryCommand();
+const toggleInfoCommand = new ToggleInfoCommand();
 
-export const actionKeysHandler = (key: string | null) => {
-  const game = gameManager.getGame();
+export const actionKeysHandler = (key: string | null): NavKey | null => {
+  if (key == null) return null;
 
-  if (QuitKeys.some((k) => k === key)) {
-    game.reset();
-    gameState.reset();
-    return NAV_KEYS.Q;
+  if (quitCommand.canHandle(key as NavKey)) {
+    return quitCommand.execute();
   }
 
-  if (key === NAV_KEYS.H && game.getMovesCount() > 0) {
-    gameState.toggleHistoryMode();
-    return NAV_KEYS.H;
+  if (toggleHistoryCommand.canHandle(key as NavKey)) {
+    return toggleHistoryCommand.execute();
   }
 
-  if (key === NAV_KEYS.I) {
-    gameState.toggleInfo();
-    return NAV_KEYS.I;
+  if (toggleInfoCommand.canHandle(key as NavKey)) {
+    return toggleInfoCommand.execute();
   }
 
   return null;
