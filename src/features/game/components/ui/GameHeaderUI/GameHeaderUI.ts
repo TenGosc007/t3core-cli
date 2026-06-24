@@ -1,6 +1,6 @@
 import { s } from "@/utils/styledLabel";
 
-export const GameHeader = () => {
+export const GameHeaderUI = () => {
   console.log("\t");
   const mainMenuLabel = s.red.bold("GAME");
   const border = s.green.dim("===================");

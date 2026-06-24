@@ -6,15 +6,15 @@ import { restoreAndClearDown, saveCursor } from "@/utils/viewUtils";
 
 import { Board } from "./components/Board";
 import { GameEntryMessage } from "./components/GameEntryMessage";
-import { GameHeader } from "./components/GameHeader";
 import { GameInformations } from "./components/GameInformations";
 import { GameStatusMessage } from "./components/GameStatusMessage";
 import { InputEntry } from "./components/InputEntry";
+import { GameHeaderUI } from "./components/ui/GameHeaderUI";
 import { gameKeyHandlerService } from "./services/gameKeyHandlerService";
 import { playAgain } from "./util/playAgain";
 
 export const GameView = async (): Promise<AppRoute> => {
-  GameHeader();
+  GameHeaderUI();
   saveCursor();
 
   while (true) {
