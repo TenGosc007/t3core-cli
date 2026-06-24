@@ -29,7 +29,7 @@ export const validateInputEntry = (
   const { range, start } = getStartAndRange();
   const { index, entry } = entryHelper(entryProp, isArrowKeyOn);
 
-  gameState.inputError = null;
+  gameState.setInputError(null);
 
   const validField =
     validateFieldRange(entry, range, start) &&

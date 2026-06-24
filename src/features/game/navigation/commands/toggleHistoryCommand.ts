@@ -14,7 +14,7 @@ export class ToggleHistoryCommand implements KeyCommand {
     const game = gameManager.getGame();
 
     if (game.getMovesCount() > 0) {
-      gameState.toggleState("historyMode");
+      gameState.toggleHistoryMode();
     }
 
     return position;

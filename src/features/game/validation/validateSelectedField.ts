@@ -6,7 +6,7 @@ export const validateSelectedField = (entry: number, index: number = entry) => {
   const game = gameManager.getGame();
 
   if (!gameState.historyMode && game.isFieldOccupied(index)) {
-    gameState.inputError = `Field ${entry} already selected`;
+    gameState.setInputError(`Field ${entry} already selected`);
     return false;
   }
   return true;

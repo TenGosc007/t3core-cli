@@ -3,22 +3,22 @@ import type { IGameManager } from "./gameEngine.types";
 import { T3CoreAdapter } from "./t3coreAdapter";
 
 export class GameManager implements IGameManager {
-  private engine: T3CoreAdapter;
+  private _game: T3CoreAdapter;
 
   constructor() {
-    this.engine = new T3CoreAdapter();
+    this._game = new T3CoreAdapter();
   }
 
   getGame(): T3CoreAdapter {
-    return this.engine;
+    return this._game;
   }
 
   reset(): void {
-    this.engine.reset();
+    this._game.reset();
   }
 
   createNew(): void {
-    this.engine = new T3CoreAdapter();
+    this._game = new T3CoreAdapter();
   }
 }
 

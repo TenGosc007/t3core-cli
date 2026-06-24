@@ -18,7 +18,7 @@ export const handleInputAnswer = (answer: number | NavKey | null) => {
   if (gameState.historyMode) {
     const game = gameManager.getGame();
     game.backToMove(answer);
-    gameState.toggleState("historyMode");
+    gameState.toggleHistoryMode();
     return null;
   }
 

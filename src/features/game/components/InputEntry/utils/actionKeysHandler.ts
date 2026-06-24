@@ -14,12 +14,12 @@ export const actionKeysHandler = (key: string | null) => {
   }
 
   if (key === NAV_KEYS.H && game.getMovesCount() > 0) {
-    gameState.toggleState("historyMode");
+    gameState.toggleHistoryMode();
     return NAV_KEYS.H;
   }
 
   if (key === NAV_KEYS.I) {
-    gameState.toggleState("info");
+    gameState.toggleInfo();
     return NAV_KEYS.I;
   }
 

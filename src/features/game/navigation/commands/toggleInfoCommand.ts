@@ -10,7 +10,7 @@ export class ToggleInfoCommand implements KeyCommand {
   }
 
   execute(position: number): number {
-    gameState.toggleState("info");
+    gameState.toggleInfo();
     return position;
   }
 }

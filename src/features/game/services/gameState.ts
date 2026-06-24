@@ -1,43 +1,40 @@
-type ToggleableKeys = "info" | "historyMode";
+export class GameStateManager {
+  private _state = {
+    info: false,
+    historyMode: false,
+    inputError: null as string | null,
+  };
 
-type GameState = {
-  info: boolean;
-  historyMode: boolean;
-  inputError?: string | null;
-  toggleState: (key: ToggleableKeys) => void;
-  reset: () => void;
-};
+  // Getters for read-only access
+  get info() {
+    return this._state.info;
+  }
+  get historyMode() {
+    return this._state.historyMode;
+  }
+  get inputError() {
+    return this._state.inputError;
+  }
 
-const gameStateDefault = {
-  info: false,
-  historyMode: false,
-  inputError: null,
-  toggleState: () => {},
-  reset: () => {},
-} satisfies GameState;
+  // State modifiers
+  toggleInfo(): void {
+    this._state.info = !this._state.info;
+  }
 
-export const gameState = new Proxy<GameState>(gameStateDefault, {
-  get(target, prop: keyof GameState) {
-    if (prop === "toggleState") {
-      return (key: ToggleableKeys) => {
-        target[key] = !target[key];
-      };
-    }
+  toggleHistoryMode(): void {
+    this._state.historyMode = !this._state.historyMode;
+  }
 
-    if (prop === "reset") {
-      return () => {
-        target.historyMode = false;
-        target.info = false;
-        target.inputError = null;
-      };
-    }
-    return target[prop];
-  },
-  set(target, prop: keyof GameState, value: string | undefined) {
-    if (prop === "inputError") {
-      target.inputError = value;
-      return true;
-    }
-    return false;
-  },
-});
+  setInputError(error: string | null): void {
+    this._state.inputError = error;
+  }
+
+  reset(): void {
+    this._state.info = false;
+    this._state.historyMode = false;
+    this._state.inputError = null;
+  }
+}
+
+// Singleton instance
+export const gameState = new GameStateManager();
