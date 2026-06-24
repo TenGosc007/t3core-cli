@@ -1,8 +1,9 @@
 import type { BoardField } from "t3core";
 
-import { getGame } from "@/features/game/services/gameSession";
 import { colorLabelSymbol } from "@/features/game/util/colorLabelSymbol";
 import { s } from "@/utils/styledLabel";
+
+import { gameManager } from "../../engine";
 
 const top = s.grey.bold("┌───┬───┬───┐");
 const mid = s.grey.bold("├───┼───┼───┤");
@@ -20,8 +21,8 @@ const formatCell = (
 };
 
 export const Board = (selectedIndex?: number | null) => {
-  const game = getGame();
-  const fields = game.board;
+  const game = gameManager.getGame();
+  const fields = game.getBoard();
 
   console.log(top);
   fields.forEach((_, idx: number) => {

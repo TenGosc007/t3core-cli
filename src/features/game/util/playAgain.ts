@@ -1,14 +1,15 @@
-import { getGame, resetGame } from "@/features/game/services/gameSession";
 import { waitForInput } from "@/services/inputService";
 
+import { gameManager } from "../engine";
+
 export const playAgain = async () => {
-  const game = getGame();
-  const isGameRunning = game.gameStatus.status === "running";
+  const game = gameManager.getGame();
+  const isGameRunning = game.getStatus().status === "running";
 
   if (!isGameRunning) {
     console.log(`\t`);
     await waitForInput("Press enter to play again ");
-    resetGame();
+    gameManager.reset();
   }
 
   return !isGameRunning;

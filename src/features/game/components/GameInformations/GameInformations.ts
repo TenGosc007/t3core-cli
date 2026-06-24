@@ -1,12 +1,12 @@
-import { getGame } from "../../services/gameSession";
+import { gameManager } from "../../engine";
 import { GameHint } from "./components/GameHint";
 import { InputErrorMessage } from "./components/InputErrorMessage";
 import { PlayerPrompt } from "./components/PlayerPrompt";
 
 export const GameInformations = () => {
-  const game = getGame();
+  const game = gameManager.getGame();
 
-  if (game.gameStatus.status === "running") {
+  if (game.getStatus().status === "running") {
     PlayerPrompt();
     GameHint();
     InputErrorMessage();

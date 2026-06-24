@@ -1,16 +1,16 @@
+import { gameManager } from "@/features/game/engine";
 import { gameKeyHandlerService } from "@/features/game/services/gameKeyHandlerService";
-import { getGame } from "@/features/game/services/gameSession";
 import { gameState } from "@/features/game/services/gameState";
 import { s } from "@/utils/styledLabel";
 
 const getHistoryInstruction = () => {
-  const game = getGame();
+  const game = gameManager.getGame();
   const keyHandler = gameKeyHandlerService.get();
   const useArrowKeys = keyHandler?.running;
 
   return useArrowKeys
     ? "Select previous move"
-    : `Back to previous move from 0 to ${game.movesCount}.
+    : `Back to previous move from 0 to ${game.getMovesCount()}.
 (0 is start from the beginning)`;
 };
 
@@ -29,10 +29,10 @@ const showInstructionMessage = () => {
 };
 
 const showHistoryHint = () => {
-  const game = getGame();
+  const game = gameManager.getGame();
   const isHistoryMode = gameState.historyMode;
 
-  if (game.movesCount > 0)
+  if (game.getMovesCount() > 0)
     console.log(
       s.dim(`Press "h" to ${isHistoryMode ? "hide" : "show"} game history`),
     );

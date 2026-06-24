@@ -2,7 +2,7 @@ import type { KeyCommand } from "@/services/navigationService";
 
 import { NAV_KEYS, type NavKey } from "@/global/navigationKeys";
 
-import { getGame } from "../../services/gameSession";
+import { gameManager } from "../../engine";
 import { gameState } from "../../services/gameState";
 
 export class ToggleHistoryCommand implements KeyCommand {
@@ -11,9 +11,9 @@ export class ToggleHistoryCommand implements KeyCommand {
   }
 
   execute(position: number): number {
-    const game = getGame();
+    const game = gameManager.getGame();
 
-    if (game.movesCount > 0) {
+    if (game.getMovesCount() > 0) {
       gameState.toggleState("historyMode");
     }
 

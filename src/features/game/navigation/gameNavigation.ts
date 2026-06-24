@@ -11,7 +11,7 @@ import {
   BOARD_ROWS,
   INITIAL_BOARD_POSITION,
 } from "../constants/game.constants";
-import { resetGame } from "../services/gameSession";
+import { gameManager } from "../engine";
 import { gameState } from "../services/gameState";
 import { SelectFieldCommand } from "./commands/selectFieldCommand";
 import { ToggleHistoryCommand } from "./commands/toggleHistoryCommand";
@@ -23,7 +23,7 @@ const gridNavigationStrategy = new GridNavigationStrategy(
 );
 
 const onQuit = () => {
-  resetGame();
+  gameManager.reset();
   gameState.reset();
 };
 
