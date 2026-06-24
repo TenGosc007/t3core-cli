@@ -6,7 +6,7 @@ import { SettingsEntry } from "./components/SettingsEntry";
 import { SettingsHeader } from "./components/SettingsHeader";
 import { SettingsHintMessage } from "./components/SettingsHintMessage";
 import { SettingsOptions } from "./components/SettingsOptions";
-import { settingsKeyHandlerService } from "./service/settingsKeyHandlerService";
+import { settingsKeyHandlerService } from "./services/settingsKeyHandlerService";
 
 export const SettingsView = async (): Promise<AppRoute> => {
   SettingsHeader();
