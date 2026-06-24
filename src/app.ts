@@ -1,9 +1,9 @@
-import { Header } from "./components/Header";
-import { renderRoute } from "./navigation/renderRoute";
-import { ROUTES, type AppRoute } from "./navigation/routes";
-import { closeInput } from "./services/inputService";
-import { beepAndDeepClear } from "./utils/beepAndClear";
-import { beepSound } from "./utils/beepSound";
+import { Header } from "@/components/Header";
+import { renderRoute } from "@/navigation/renderRoute";
+import { ROUTES, type AppRoute } from "@/navigation/routes";
+import { closeInput } from "@/services/inputService";
+import { beepAndDeepClear } from "@/utils/beepAndClear";
+import { beepSound } from "@/utils/beepSound";
 
 export const app = async () => {
   let currentRoute: AppRoute = ROUTES.MENU;

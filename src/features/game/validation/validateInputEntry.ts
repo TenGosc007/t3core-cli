@@ -1,7 +1,7 @@
 import { BOARD_SIZE } from "@/features/game/constants/game.constants";
+import { gameManager } from "@/features/game/engine";
 import { gameState } from "@/features/game/services/gameState";
 
-import { gameManager } from "../engine";
 import { validateFieldRange } from "./validateFieldRange";
 import { validateSelectedField } from "./validateSelectedField";
 

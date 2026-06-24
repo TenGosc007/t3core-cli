@@ -1,6 +1,5 @@
+import { gameManager } from "@/features/game/engine";
 import { gameState } from "@/features/game/services/gameState";
-
-import { gameManager } from "../engine";
 
 export const validateSelectedField = (entry: number, index: number = entry) => {
   const game = gameManager.getGame();

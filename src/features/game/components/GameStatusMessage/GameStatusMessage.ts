@@ -1,5 +1,5 @@
-import { gameManager } from "../../engine";
-import { GameStatusMessageUI } from "../ui/GameStatusMessageUI";
+import { GameStatusMessageUI } from "@/features/game/components/ui/GameStatusMessageUI";
+import { gameManager } from "@/features/game/engine";
 
 export const GameStatusMessage = () => {
   const game = gameManager.getGame();

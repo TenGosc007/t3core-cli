@@ -1,8 +1,8 @@
+import { INITIAL_BOARD_POSITION } from "@/features/game/constants/game.constants";
+import { gameNavigation } from "@/features/game/navigation/gameNavigation";
 import { KeyHandler } from "@/services/keyHandlerService";
 import { getRuntimeSettings } from "@/services/settings";
 
-import { INITIAL_BOARD_POSITION } from "../constants/game.constants";
-import { gameNavigation } from "../navigation/gameNavigation";
 import { gameState } from "./gameState";
 
 const handler = new KeyHandler({

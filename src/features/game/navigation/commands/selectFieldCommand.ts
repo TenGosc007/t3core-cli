@@ -1,10 +1,9 @@
 import type { KeyCommand } from "@/services/navigationService";
 
+import { INITIAL_BOARD_POSITION } from "@/features/game/constants/game.constants";
+import { gameManager } from "@/features/game/engine";
+import { validateInputEntry } from "@/features/game/validation/validateInputEntry";
 import { NAV_KEYS, type NavKey } from "@/global/navigationKeys";
-
-import { INITIAL_BOARD_POSITION } from "../../constants/game.constants";
-import { gameManager } from "../../engine";
-import { validateInputEntry } from "../../validation/validateInputEntry";
 
 const ReturnKeys = [NAV_KEYS.RETURN, NAV_KEYS.SPACE] as const;
 

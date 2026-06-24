@@ -1,6 +1,5 @@
+import { MENU_ITEMS } from "@/features/menu/constants/menuItems";
 import { s } from "@/utils/styledLabel";
-
-import { MENU_ITEMS } from "../../constants/menuItems";
 
 export const MenuOptions = () => {
   MENU_ITEMS.forEach((item) => {

@@ -1,12 +1,11 @@
+import { SettingsEntry } from "@/features/settings/components/SettingsEntry";
+import { SettingsHeader } from "@/features/settings/components/SettingsHeader";
+import { SettingsHintMessage } from "@/features/settings/components/SettingsHintMessage";
+import { SettingsOptions } from "@/features/settings/components/SettingsOptions";
+import { settingsKeyHandlerService } from "@/features/settings/services/settingsKeyHandlerService";
 import { isExitKey } from "@/global/navigationKeys";
 import { ROUTES, type AppRoute } from "@/navigation/routes";
 import { restoreAndClearDown, saveCursor } from "@/utils/viewUtils";
-
-import { SettingsEntry } from "./components/SettingsEntry";
-import { SettingsHeader } from "./components/SettingsHeader";
-import { SettingsHintMessage } from "./components/SettingsHintMessage";
-import { SettingsOptions } from "./components/SettingsOptions";
-import { settingsKeyHandlerService } from "./services/settingsKeyHandlerService";
 
 export const SettingsView = async (): Promise<AppRoute> => {
   SettingsHeader();

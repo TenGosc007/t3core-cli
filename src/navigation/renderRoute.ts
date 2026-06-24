@@ -1,6 +1,7 @@
-import { GameView } from "../features/game";
-import { MenuView } from "../features/menu";
-import { SettingsView } from "../features/settings";
+import { GameView } from "@/features/game";
+import { MenuView } from "@/features/menu";
+import { SettingsView } from "@/features/settings";
+
 import { ROUTES, type AppRoute, type Routes } from "./routes";
 
 export const renderRoute = async (route: Routes): Promise<AppRoute> => {

@@ -1,9 +1,8 @@
-import type { SettingsOption } from "../../options";
+import type { SettingsOption } from "@/features/settings/options";
 
+import { SETTINGS_OPTIONS } from "@/features/settings/options";
 import { getRuntimeSettings } from "@/services/settings/settings";
 import { s } from "@/utils/styledLabel";
-
-import { SETTINGS_OPTIONS } from "../../options";
 
 const getItemNumber = (
   activePosition: number | null | undefined,

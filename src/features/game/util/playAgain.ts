@@ -1,6 +1,5 @@
+import { gameManager } from "@/features/game/engine";
 import { waitForInput } from "@/services/inputService";
-
-import { gameManager } from "../engine";
 
 export const playAgain = async () => {
   const game = gameManager.getGame();

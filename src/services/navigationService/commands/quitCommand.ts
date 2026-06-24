@@ -1,4 +1,4 @@
-import type { KeyCommand } from "../types";
+import type { KeyCommand } from "@/services/navigationService/types";
 
 import { isExitKey, NAV_KEYS, type NavKey } from "@/global/navigationKeys";
 

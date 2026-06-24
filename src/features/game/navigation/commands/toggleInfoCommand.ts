@@ -1,8 +1,7 @@
 import type { ToggleCommand } from "@/services/navigationService";
 
+import { gameState } from "@/features/game/services/gameState";
 import { NAV_KEYS, type NavKey } from "@/global/navigationKeys";
-
-import { gameState } from "../../services/gameState";
 
 export class ToggleInfoCommand implements ToggleCommand {
   canHandle(key: NavKey): boolean {

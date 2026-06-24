@@ -1,9 +1,8 @@
 import type { NavKey } from "@/global/navigationKeys";
 
+import { executeSettingsOption } from "@/features/settings/options";
 import { NAV_KEYS } from "@/global/navigationKeys";
 import { waitForInput } from "@/services/inputService";
-
-import { executeSettingsOption } from "../../options";
 
 export const SettingsEntry = async (): Promise<NavKey | null> => {
   const input = await waitForInput("Enter your choice: ");

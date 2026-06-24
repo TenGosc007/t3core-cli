@@ -1,9 +1,8 @@
 import type { NavKey } from "@/global/navigationKeys";
 
+import { getInputAnswer } from "@/features/game/components/InputEntry/utils/getInputAnswer";
+import { handleInputAnswer } from "@/features/game/components/InputEntry/utils/handleInputAnswer";
 import { NAV_KEYS } from "@/global/navigationKeys";
-
-import { getInputAnswer } from "./utils/getInputAnswer";
-import { handleInputAnswer } from "./utils/handleInputAnswer";
 
 export const InputEntry = async (): Promise<NavKey | null | number> => {
   const answer = await getInputAnswer();

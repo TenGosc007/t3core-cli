@@ -1,13 +1,15 @@
 import type { KeyHandlerProps } from "@/services/keyHandlerService";
 
+import { ToggleSelectedSettingCommand } from "@/features/settings/navigation/commands/toggleSelectedSettingCommand";
+import {
+  INITIAL_SETTINGS_POSITION,
+  LAST_SETTINGS_POSITION,
+} from "@/features/settings/options";
 import {
   ListNavigationStrategy,
   NavigationController,
   QuitCommand,
 } from "@/services/navigationService";
-
-import { INITIAL_SETTINGS_POSITION, LAST_SETTINGS_POSITION } from "../options";
-import { ToggleSelectedSettingCommand } from "./commands/toggleSelectedSettingCommand";
 
 const listNavigationStrategy = new ListNavigationStrategy(
   INITIAL_SETTINGS_POSITION,
