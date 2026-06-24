@@ -18,10 +18,12 @@ export class GameStateManager {
 
   // State modifiers
   toggleInfo(): void {
+    this._state.inputError = null;
     this._state.info = !this._state.info;
   }
 
   toggleHistoryMode(): void {
+    this._state.inputError = null;
     this._state.historyMode = !this._state.historyMode;
   }
 
