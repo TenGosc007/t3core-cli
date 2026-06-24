@@ -1,4 +1,4 @@
-import type { GameEngine } from "@/features/game/engine";
+import type { GameEngine, GameManager } from "@/features/game/engine";
 import type { GameStateManager } from "@/features/game/services/gameState";
 import type { KeyHandler } from "@/services/keyHandlerService";
 
@@ -19,12 +19,13 @@ import { GameStatusMessageUI } from "./components/ui/GameStatusMessageUI";
 
 export const GameView = async (
   gameState: GameStateManager = gameStateManager,
+  manager: GameManager = gameManager,
 ): Promise<AppRoute> => {
   GameHeaderUI();
   saveCursor();
 
   while (true) {
-    const game = gameManager.getGame();
+    const game = manager.getGame();
     const keyHandler = gameKeyHandlerService.get();
     restoreAndClearDown();
 
@@ -39,7 +40,7 @@ export const GameView = async (
 
     if (await playAgain({ game })) continue;
 
-    const entry = await entryHandler({ game, keyHandler, gameState });
+    const entry = await entryHandler({ game, keyHandler, gameState, manager });
     if (isExitKey(entry)) break;
   }
 
@@ -51,15 +52,17 @@ type EntryHandlerProps = {
   game: GameEngine;
   keyHandler?: KeyHandler | null;
   gameState: GameStateManager;
+  manager?: GameManager;
 };
 
 async function entryHandler({
   game,
   keyHandler,
   gameState,
+  manager,
 }: EntryHandlerProps) {
   if (keyHandler?.running) {
     return await keyHandler?.waitForKeyPress();
   }
-  return await InputEntry({ game, gameState });
+  return await InputEntry({ game, gameState, manager });
 }
