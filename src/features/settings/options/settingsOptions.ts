@@ -68,15 +68,16 @@ export const getSettingsOptionByPosition = (position: number | null) => {
 const executeOption = (option: SettingsOption | null) => {
   const settings = getRuntimeSettings();
 
-  if (!option || option.disabled?.(settings)) return;
+  if (!option || option.disabled?.(settings)) return false;
 
   option.action();
+  return true;
 };
 
 export const executeSettingsOption = (id: number | string | null) => {
-  executeOption(getSettingsOptionById(id));
+  return executeOption(getSettingsOptionById(id));
 };
 
 export const executeSettingsOptionByPosition = (position: number | null) => {
-  executeOption(getSettingsOptionByPosition(position));
+  return executeOption(getSettingsOptionByPosition(position));
 };
