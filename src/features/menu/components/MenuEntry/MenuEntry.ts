@@ -4,7 +4,7 @@ import { MENU_ITEMS } from "@/features/menu/constants/menuItems";
 import { waitForInput } from "@/services/inputService";
 import { s } from "@/utils/styledLabel";
 
-const MENU_ITEM_IDS_LABEL = `${MENU_ITEMS[0].id} - ${MENU_ITEMS[MENU_ITEMS.length - 1].id}`;
+const MENU_ITEM_IDS_LABEL = `${MENU_ITEMS[0].id}-${MENU_ITEMS[MENU_ITEMS.length - 1].id}`;
 
 const getMenuItemById = (id: string | null) => {
   return MENU_ITEMS.find((item) => item.id === id?.trim()) ?? null;

@@ -1,7 +1,7 @@
 import type { SettingsOption } from "@/features/settings/options";
 
 import { SETTINGS_OPTIONS } from "@/features/settings/options";
-import { getRuntimeSettings } from "@/services/settings";
+import { settingsManager } from "@/services/settings";
 import { s } from "@/utils/styledLabel";
 
 const getItemNumber = (
@@ -27,7 +27,7 @@ type SettingsOptionsProps = {
 };
 
 export const SettingsOptions = ({ activePosition }: SettingsOptionsProps) => {
-  const settings = getRuntimeSettings();
+  const settings = settingsManager.getRuntimeSettings();
 
   SETTINGS_OPTIONS.forEach((item, itemPosition) => {
     const itemNumber = getItemNumber(activePosition, itemPosition, item);

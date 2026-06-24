@@ -1,10 +1,6 @@
 import { isTTYAvailable } from "@/global/tty.global";
 import {
-  resetSettings,
-  getRuntimeSettings,
-  toggleArrowKeyNavigation,
-  toggleBeep,
-  toggleStyle,
+  settingsManager,
   type Settings,
   type SettingsKey,
 } from "@/services/settings";
@@ -29,28 +25,40 @@ type CommandSettingsOption = BaseSettingsOption & {
 export type SettingsOption = ToggleSettingsOption | CommandSettingsOption;
 
 export const SETTINGS_OPTIONS: readonly SettingsOption[] = [
-  { id: 1, label: "Sound", type: "toggle", key: "beep", action: toggleBeep },
-  { id: 2, label: "Style", type: "toggle", key: "style", action: toggleStyle },
+  {
+    id: 1,
+    label: "Sound",
+    type: "toggle",
+    key: "beep",
+    action: settingsManager.toggleBeep,
+  },
+  {
+    id: 2,
+    label: "Style",
+    type: "toggle",
+    key: "style",
+    action: settingsManager.toggleStyle,
+  },
   {
     id: 3,
     label: "Use Arrow Keys",
     type: "toggle",
     key: "arrowKeyNavigation",
-    action: toggleArrowKeyNavigation,
+    action: settingsManager.toggleArrowKeyNavigation,
     disabled: (settings) => !isTTYAvailable || !settings.style,
   },
   {
     id: 4,
     label: "Reset to default",
     type: "command",
-    action: resetSettings,
+    action: settingsManager.resetSettings,
     emphasis: true,
   },
 ] as const;
 
 export const INITIAL_SETTINGS_POSITION = 0;
 export const LAST_SETTINGS_POSITION = SETTINGS_OPTIONS.length - 1;
-export const SETTINGS_OPTION_IDS_LABEL = `${SETTINGS_OPTIONS[0].id} - ${SETTINGS_OPTIONS[SETTINGS_OPTIONS.length - 1].id}`;
+export const SETTINGS_OPTION_IDS_LABEL = `${SETTINGS_OPTIONS[0].id}-${SETTINGS_OPTIONS[SETTINGS_OPTIONS.length - 1].id}`;
 
 export const getSettingsOptionById = (id: number | string | null) =>
   SETTINGS_OPTIONS.find((option) => option.id.toString() === id?.toString()) ??
@@ -64,7 +72,7 @@ export const getSettingsOptionByPosition = (position: number | null) => {
 };
 
 const executeOption = (option: SettingsOption | null) => {
-  const settings = getRuntimeSettings();
+  const settings = settingsManager.getRuntimeSettings();
 
   if (!option || option.disabled?.(settings)) return false;
 
