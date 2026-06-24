@@ -1,4 +1,4 @@
-import type { NavigationStrategy } from "../types";
+import type { NavigationStrategy } from "@/services/navigationService/types";
 
 import { NAV_KEYS, type NavKey } from "@/global/navigationKeys";
 

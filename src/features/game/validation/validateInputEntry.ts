@@ -1,15 +1,21 @@
+import type { GameEngine } from "@/features/game/engine";
+
 import { BOARD_SIZE } from "@/features/game/constants/game.constants";
-import { getGame } from "@/features/game/services/gameSession";
-import { gameState } from "@/features/game/services/gameState";
+import { gameStateManager } from "@/features/game/services/gameState";
 
 import { validateFieldRange } from "./validateFieldRange";
 import { validateSelectedField } from "./validateSelectedField";
 
-const getStartAndRange = () => {
-  const game = getGame();
-  const isHistoryMode = gameState.historyMode;
+type ValidateInputEntryProps = {
+  entryProp: number;
+  game: GameEngine;
+  isArrowKeyOn: boolean;
+};
 
-  const range = isHistoryMode ? game.movesCount : BOARD_SIZE;
+const getStartAndRange = (movesCount: number) => {
+  const isHistoryMode = gameStateManager.historyMode;
+
+  const range = isHistoryMode ? movesCount : BOARD_SIZE;
   const start = isHistoryMode ? 0 : 1;
 
   return { range, start };
@@ -22,18 +28,19 @@ const entryHelper = (entryProp: number, isArrowKeyOn: boolean) => {
   return { index, entry };
 };
 
-export const validateInputEntry = (
-  entryProp: number,
-  isArrowKeyOn: boolean,
-) => {
-  const { range, start } = getStartAndRange();
+export const validateInputEntry = ({
+  entryProp,
+  game,
+  isArrowKeyOn,
+}: ValidateInputEntryProps) => {
+  const { range, start } = getStartAndRange(game.getMovesCount());
   const { index, entry } = entryHelper(entryProp, isArrowKeyOn);
 
-  gameState.inputError = null;
+  gameStateManager.setInputError(null);
 
   const validField =
     validateFieldRange(entry, range, start) &&
-    validateSelectedField(entry, index);
+    validateSelectedField({ entry, game, index });
 
   return validField ? entry : null;
 };

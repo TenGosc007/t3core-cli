@@ -1,21 +1,20 @@
 import type { KeyHandlerProps } from "@/services/keyHandlerService";
 
 import {
+  BOARD_COLS,
+  BOARD_ROWS,
+  INITIAL_BOARD_POSITION,
+} from "@/features/game/constants/game.constants";
+import { gameManager } from "@/features/game/engine";
+import { SelectFieldCommand } from "@/features/game/navigation/commands/selectFieldCommand";
+import { ToggleHistoryCommand } from "@/features/game/navigation/commands/toggleHistoryCommand";
+import { ToggleInfoCommand } from "@/features/game/navigation/commands/toggleInfoCommand";
+import { gameStateManager } from "@/features/game/services/gameState";
+import {
   GridNavigationStrategy,
   NavigationController,
   QuitCommand,
 } from "@/services/navigationService";
-
-import {
-  BOARD_COLS,
-  BOARD_ROWS,
-  INITIAL_BOARD_POSITION,
-} from "../constants/game.constants";
-import { resetGame } from "../services/gameSession";
-import { gameState } from "../services/gameState";
-import { SelectFieldCommand } from "./commands/selectFieldCommand";
-import { ToggleHistoryCommand } from "./commands/toggleHistoryCommand";
-import { ToggleInfoCommand } from "./commands/toggleInfoCommand";
 
 const gridNavigationStrategy = new GridNavigationStrategy(
   BOARD_ROWS,
@@ -23,8 +22,8 @@ const gridNavigationStrategy = new GridNavigationStrategy(
 );
 
 const onQuit = () => {
-  resetGame();
-  gameState.reset();
+  gameManager.reset();
+  gameStateManager.reset();
 };
 
 const navigationController = new NavigationController(gridNavigationStrategy, [

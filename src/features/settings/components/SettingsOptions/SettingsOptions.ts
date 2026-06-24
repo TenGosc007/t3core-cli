@@ -1,9 +1,7 @@
-import type { SettingsOption } from "../../options";
+import type { SettingsOption } from "@/features/settings/options";
+import type { Settings } from "@/services/settings";
 
-import { getRuntimeSettings } from "@/services/settings/settings";
 import { s } from "@/utils/styledLabel";
-
-import { SETTINGS_OPTIONS } from "../../options";
 
 const getItemNumber = (
   activePosition: number | null | undefined,
@@ -23,10 +21,20 @@ const getItemValue = (setting: boolean) => {
   return setting ? ` - ${s.greenBright("ON")}` : ` - ${s.redBright("OFF")}`;
 };
 
-export const SettingsOptions = (activePosition?: number | null) => {
-  const settings = getRuntimeSettings();
+type SettingsOptionsProps = {
+  options: readonly SettingsOption[];
+  settings: Settings;
+  activePosition?: number | null;
+};
 
-  SETTINGS_OPTIONS.forEach((item, itemPosition) => {
+export const SettingsOptions = ({
+  options,
+  settings,
+  activePosition,
+}: SettingsOptionsProps) => {
+  const lines: string[] = [];
+
+  options.forEach((item, itemPosition) => {
     const itemNumber = getItemNumber(activePosition, itemPosition, item);
     const itemLabel = getItemLabel(item);
     const itemValue =
@@ -37,9 +45,10 @@ export const SettingsOptions = (activePosition?: number | null) => {
       label = s.dim(label);
     }
 
-    if (item.type === "command") console.log("\t");
-    console.log(`[${itemNumber}] ${label}`);
+    if (item.type === "command") lines.push("\t");
+    lines.push(`[${itemNumber}] ${label}`);
   });
 
-  console.log("\t");
+  lines.push("\t");
+  lines.forEach((line) => console.log(line));
 };

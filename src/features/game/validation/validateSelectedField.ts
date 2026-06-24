@@ -1,11 +1,20 @@
-import { getGame } from "@/features/game/services/gameSession";
-import { gameState } from "@/features/game/services/gameState";
+import type { GameEngine } from "@/features/game/engine";
 
-export const validateSelectedField = (entry: number, index: number = entry) => {
-  const game = getGame();
+import { gameStateManager } from "@/features/game/services/gameState";
 
-  if (!gameState.historyMode && game.isFieldSelectedByIndex(index)) {
-    gameState.inputError = `Field ${entry} already selected`;
+type ValidateSelectedFieldProps = {
+  entry: number;
+  game: GameEngine;
+  index?: number;
+};
+
+export const validateSelectedField = ({
+  entry,
+  game,
+  index = entry,
+}: ValidateSelectedFieldProps) => {
+  if (!gameStateManager.historyMode && game.isFieldOccupied(index)) {
+    gameStateManager.setInputError(`Field ${entry} already selected`);
     return false;
   }
   return true;

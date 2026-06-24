@@ -1,16 +1,17 @@
-import { GameScreen } from "../screens/Game.screen";
-import { MenuScreen } from "../screens/Menu.screen";
-import { SettingsScreen } from "../screens/Settings.screen";
+import { GameView } from "@/features/game";
+import { MenuView } from "@/features/menu";
+import { SettingsView } from "@/features/settings";
+
 import { ROUTES, type AppRoute, type Routes } from "./routes";
 
 export const renderRoute = async (route: Routes): Promise<AppRoute> => {
   switch (route) {
     case ROUTES.MENU:
-      return MenuScreen();
+      return MenuView();
     case ROUTES.GAME:
-      return GameScreen();
+      return GameView();
     case ROUTES.SETTINGS:
-      return SettingsScreen();
+      return SettingsView();
 
     default:
       throw new Error(`Unknown route: ${route satisfies never}`);

@@ -1,14 +1,29 @@
-import { getGame } from "../../services/gameSession";
-import { GameHint } from "./components/GameHint";
-import { InputErrorMessage } from "./components/InputErrorMessage";
-import { PlayerPrompt } from "./components/PlayerPrompt";
+import type { GameEngine } from "@/features/game/engine";
+import type { GameStateManager } from "@/features/game/services/gameState";
 
-export const GameInformations = () => {
-  const game = getGame();
+import { GameHintUI } from "@/features/game/components/ui/GameHintUI";
+import { InputErrorMessageUI } from "@/features/game/components/ui/InputErrorMessageUI";
+import { PlayerPromptUI } from "@/features/game/components/ui/PlayerPromptUI";
 
-  if (game.gameStatus.status === "running") {
-    PlayerPrompt();
-    GameHint();
-    InputErrorMessage();
-  }
+type GameInformationsProps = {
+  game: GameEngine;
+  isKeyHandlerRunning: boolean;
+  gameState: GameStateManager;
+};
+
+export const GameInformations = ({
+  game,
+  isKeyHandlerRunning,
+  gameState,
+}: GameInformationsProps) => {
+  if (game.getStatus().status !== "running") return;
+
+  const error = gameState.inputError;
+  const isHistoryMode = gameState.historyMode;
+  const currentPlayer = game.getCurrentPlayer();
+  const movesCount = game.getMovesCount();
+
+  PlayerPromptUI({ currentPlayer });
+  GameHintUI({ movesCount, isKeyHandlerRunning, isHistoryMode });
+  InputErrorMessageUI({ error });
 };

@@ -1,4 +1,4 @@
-import { getRuntimeSettings } from "@/services/settings/settings";
+import { settingsManager } from "@/services/settings";
 
 const fgCodes = {
   black: 30,
@@ -105,9 +105,10 @@ function getStyleKey(prop: string, codes: number[]): Styler | undefined {
 
 function buildStyler(codes: number[]): Styler {
   const apply = (...args: (string | number)[]): string => {
+    const settings = settingsManager.getRuntimeSettings();
     const text = args.join(" ");
 
-    if (!getRuntimeSettings().style) return text;
+    if (!settings.style) return text;
     if (codes.length === 0) return text;
 
     return `\x1b[${codes.join(";")}m${text}\x1b[0m`;

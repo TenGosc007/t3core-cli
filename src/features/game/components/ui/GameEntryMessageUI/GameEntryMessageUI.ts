@@ -1,8 +1,10 @@
 import { s } from "@/utils/styledLabel";
 
-import { gameState } from "../../services/gameState";
+export type GameEntryMessageUIProps = {
+  showInfo: boolean;
+};
 
-export const GameEntryMessage = () => {
+export const GameEntryMessageUI = ({ showInfo }: GameEntryMessageUIProps) => {
   const border = s.yellow("--------------------------------------------");
 
   console.log(border);
@@ -19,7 +21,7 @@ squares are filled, resulting in a draw.
 Press "i" to hide game info`,
   );
 
-  if (gameState.info) console.log(gameEntryMessage);
+  if (showInfo) console.log(gameEntryMessage);
   else console.log(s.dim('Press "i" to show game info'));
 
   console.log(border);

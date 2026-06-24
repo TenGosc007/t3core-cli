@@ -1,12 +1,13 @@
+import { SettingsEntry } from "@/features/settings/components/SettingsEntry";
+import { SettingsHeader } from "@/features/settings/components/SettingsHeader";
+import { SettingsHintMessage } from "@/features/settings/components/SettingsHintMessage";
+import { SettingsOptions } from "@/features/settings/components/SettingsOptions";
+import { SETTINGS_OPTIONS } from "@/features/settings/options";
+import { settingsKeyHandlerService } from "@/features/settings/services/settingsKeyHandlerService";
 import { isExitKey } from "@/global/navigationKeys";
 import { ROUTES, type AppRoute } from "@/navigation/routes";
+import { settingsManager } from "@/services/settings";
 import { restoreAndClearDown, saveCursor } from "@/utils/viewUtils";
-
-import { SettingsEntry } from "./components/SettingsEntry";
-import { SettingsHeader } from "./components/SettingsHeader";
-import { SettingsHintMessage } from "./components/SettingsHintMessage";
-import { SettingsOptions } from "./components/SettingsOptions";
-import { settingsKeyHandlerService } from "./service/settingsKeyHandlerService";
 
 export const SettingsView = async (): Promise<AppRoute> => {
   SettingsHeader();
@@ -16,7 +17,11 @@ export const SettingsView = async (): Promise<AppRoute> => {
     const keyHandler = settingsKeyHandlerService.getSyncedHandler();
     restoreAndClearDown();
 
-    SettingsOptions(keyHandler.position);
+    SettingsOptions({
+      options: SETTINGS_OPTIONS,
+      settings: settingsManager.getRuntimeSettings(),
+      activePosition: keyHandler.position,
+    });
     SettingsHintMessage();
 
     const key = keyHandler.running

@@ -1,9 +1,9 @@
+import { INITIAL_BOARD_POSITION } from "@/features/game/constants/game.constants";
+import { gameNavigation } from "@/features/game/navigation/gameNavigation";
 import { KeyHandler } from "@/services/keyHandlerService";
-import { getRuntimeSettings } from "@/services/settings";
+import { settingsManager } from "@/services/settings";
 
-import { INITIAL_BOARD_POSITION } from "../constants/game.constants";
-import { gameNavigation } from "../navigation/gameNavigation";
-import { gameState } from "./gameState";
+import { gameStateManager } from "./gameState";
 
 const handler = new KeyHandler({
   onKeyPress: gameNavigation.handleKey,
@@ -11,8 +11,8 @@ const handler = new KeyHandler({
 });
 
 const getKeyHandler = () => {
-  const settings = getRuntimeSettings();
-  const isHistoryModeOn = gameState.historyMode;
+  const settings = settingsManager.getRuntimeSettings();
+  const isHistoryModeOn = gameStateManager.historyMode;
 
   if (settings.arrowKeyNavigation && !isHistoryModeOn) handler.start();
   else stopKeyHandler();

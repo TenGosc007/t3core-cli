@@ -1,15 +1,13 @@
-import type { BoardField, PlayerSymbol } from "t3core";
+import type { BoardField } from "t3core";
 
 import { DEFAULT_GAME_SYMBOLS } from "t3core";
 
-const colorCodes = new Map<PlayerSymbol, number>([
-  [DEFAULT_GAME_SYMBOLS[0], 32],
-  [DEFAULT_GAME_SYMBOLS[1], 31],
-]);
+import { s } from "@/utils/styledLabel";
 
 export const colorLabelSymbol = (label: BoardField) => {
-  if (typeof label === "number") return `\x1b[90m${label}\x1b[0m`;
+  if (typeof label === "number") return s.grey(label);
+  if (label === DEFAULT_GAME_SYMBOLS[0]) return s.green.bold(label);
+  if (label === DEFAULT_GAME_SYMBOLS[1]) return s.red.bold(label);
 
-  const colorCode = colorCodes.get(label);
-  return `\x1b[1;${colorCode}m${label}\x1b[0m`;
+  return s.bold(label);
 };

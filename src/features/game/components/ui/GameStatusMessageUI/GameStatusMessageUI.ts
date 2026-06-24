@@ -1,6 +1,5 @@
 import type { GameStatus } from "t3core";
 
-import { getGame } from "@/features/game/services/gameSession";
 import { colorLabelSymbol } from "@/features/game/util/colorLabelSymbol";
 import { s } from "@/utils/styledLabel";
 
@@ -18,8 +17,14 @@ function messageForGameStatus(gameStatus: GameStatus): string | undefined {
   }
 }
 
-export const GameStatusMessage = () => {
-  const line = messageForGameStatus(getGame().gameStatus);
+export type GameStatusMessageUIProps = {
+  gameStatus: GameStatus;
+};
+
+export const GameStatusMessageUI = ({
+  gameStatus,
+}: GameStatusMessageUIProps) => {
+  const line = messageForGameStatus(gameStatus);
 
   if (line === undefined) {
     return;

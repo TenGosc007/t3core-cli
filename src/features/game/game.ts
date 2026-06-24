@@ -1,34 +1,44 @@
+import type { GameEngine } from "@/features/game/engine";
 import type { KeyHandler } from "@/services/keyHandlerService";
 
+import { GameInformations } from "@/features/game/components/GameInformations";
+import { InputEntry } from "@/features/game/components/InputEntry";
+import { GameHeaderUI } from "@/features/game/components/ui/GameHeaderUI";
+import { gameManager } from "@/features/game/engine";
+import { gameKeyHandlerService } from "@/features/game/services/gameKeyHandlerService";
+import { gameStateManager } from "@/features/game/services/gameState";
+import { playAgain } from "@/features/game/util/playAgain";
 import { isExitKey } from "@/global/navigationKeys";
 import { ROUTES, type AppRoute } from "@/navigation/routes";
 import { restoreAndClearDown, saveCursor } from "@/utils/viewUtils";
 
-import { Board } from "./components/Board";
-import { GameEntryMessage } from "./components/GameEntryMessage";
-import { GameHeader } from "./components/GameHeader";
-import { GameInformations } from "./components/GameInformations";
-import { GameStatusMessage } from "./components/GameStatusMessage";
-import { InputEntry } from "./components/InputEntry";
-import { gameKeyHandlerService } from "./services/gameKeyHandlerService";
-import { playAgain } from "./util/playAgain";
+import { BoardUI } from "./components/ui/BoardUI";
+import { GameEntryMessageUI } from "./components/ui/GameEntryMessageUI";
+import { GameStatusMessageUI } from "./components/ui/GameStatusMessageUI";
 
 export const GameView = async (): Promise<AppRoute> => {
-  GameHeader();
+  const gameState = gameStateManager;
+
+  GameHeaderUI();
   saveCursor();
 
   while (true) {
+    const game = gameManager.getGame();
     const keyHandler = gameKeyHandlerService.get();
     restoreAndClearDown();
 
-    GameEntryMessage();
-    Board(keyHandler.position);
-    GameStatusMessage();
-    GameInformations();
+    GameEntryMessageUI({ showInfo: gameState.info });
+    BoardUI({ fields: game.getBoard(), selectedIndex: keyHandler.position });
+    GameStatusMessageUI({ gameStatus: game.getStatus() });
+    GameInformations({
+      game,
+      isKeyHandlerRunning: keyHandler.running,
+      gameState,
+    });
 
-    if (await playAgain()) continue;
+    if (await playAgain({ game })) continue;
 
-    const entry = await entryHandler(keyHandler);
+    const entry = await entryHandler({ game, keyHandler });
     if (isExitKey(entry)) break;
   }
 
@@ -36,9 +46,14 @@ export const GameView = async (): Promise<AppRoute> => {
   return ROUTES.MENU;
 };
 
-async function entryHandler(keyHandler?: KeyHandler | null) {
+type EntryHandlerProps = {
+  game: GameEngine;
+  keyHandler?: KeyHandler | null;
+};
+
+async function entryHandler({ game, keyHandler }: EntryHandlerProps) {
   if (keyHandler?.running) {
     return await keyHandler?.waitForKeyPress();
   }
-  return await InputEntry();
+  return await InputEntry({ game });
 }

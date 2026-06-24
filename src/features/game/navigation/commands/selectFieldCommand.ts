@@ -1,10 +1,9 @@
 import type { KeyCommand } from "@/services/navigationService";
 
+import { INITIAL_BOARD_POSITION } from "@/features/game/constants/game.constants";
+import { gameManager } from "@/features/game/engine";
+import { validateInputEntry } from "@/features/game/validation/validateInputEntry";
 import { NAV_KEYS, type NavKey } from "@/global/navigationKeys";
-
-import { INITIAL_BOARD_POSITION } from "../../constants/game.constants";
-import { getGame } from "../../services/gameSession";
-import { validateInputEntry } from "../../validation/validateInputEntry";
 
 const ReturnKeys = [NAV_KEYS.RETURN, NAV_KEYS.SPACE] as const;
 
@@ -14,14 +13,14 @@ export class SelectFieldCommand implements KeyCommand {
   }
 
   execute(position: number): number {
-    const game = getGame();
+    const game = gameManager.getGame();
 
-    if (game.gameStatus.status !== "running") {
+    if (game.getStatus().status !== "running") {
       return INITIAL_BOARD_POSITION;
     }
 
-    validateInputEntry(position, true);
-    game.savePlayerMove(position);
+    validateInputEntry({ entryProp: position, game, isArrowKeyOn: true });
+    game.makeMove(position);
     return position;
   }
 }

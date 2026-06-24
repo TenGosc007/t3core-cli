@@ -1,6 +1,5 @@
+import { SETTINGS_OPTION_IDS_LABEL } from "@/features/settings/options";
 import { s } from "@/utils/styledLabel";
-
-import { SETTINGS_OPTION_IDS_LABEL } from "../../options";
 
 export const SettingsHintMessage = () => {
   console.log(

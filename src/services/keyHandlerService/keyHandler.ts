@@ -20,7 +20,7 @@ const isNavigationPosition = (
   result: KeyHandlerResult,
 ): result is number | null => typeof result !== "string";
 
-export interface KeyHandlerOptions {
+export type KeyHandlerOptions = {
   /** Callback invoked for each key press */
   onKeyPress: KeyHandlerCallback;
   /** Whether to automatically handle Ctrl+C (default: true) */
@@ -30,7 +30,7 @@ export interface KeyHandlerOptions {
   /** Whether to hide the terminal cursor while the handler is running (default: true) */
   hideCursor?: boolean;
   initialPosition?: number | null;
-}
+};
 
 /**
  * Reusable keyboard handler for CLI.

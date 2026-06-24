@@ -1703,10 +1703,10 @@ supports-preserve-symlinks-flag@^1.0.0:
   resolved "https://registry.yarnpkg.com/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz#6eda4bd344a3c94aea376d4cc31bc77311039e09"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
 
-t3core@^1.4.4:
-  version "1.4.4"
-  resolved "https://registry.yarnpkg.com/t3core/-/t3core-1.4.4.tgz#96a9da33da805e4d45466dd9cdf27d94d4900a86"
-  integrity sha512-Ilik/uohb81n/+RvLAEGhvBPR/Z4ugZ/S43xdKQ81ynxrE8EHtWp4l2+wQWm3BIs9bQwebaXB+KmbE1qFECa9Q==
+t3core@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/t3core/-/t3core-1.5.0.tgz#ce8cc5f31f8673540ebd7d86571f383ca467b8d7"
+  integrity sha512-lyC8t6z4YRHFFfRlSxsJwBs168Nkd6XZ5dRSR49OGKJILTZvN5rbwj1oHTYRqsS7UHaSixKI7scq1wa86EIxQg==
   dependencies:
     eventemitter3 "^5.0.4"
 

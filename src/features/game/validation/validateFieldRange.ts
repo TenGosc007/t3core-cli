@@ -1,4 +1,4 @@
-import { gameState } from "@/features/game/services/gameState";
+import { gameStateManager } from "@/features/game/services/gameState";
 
 export const validateFieldRange = (
   index: number,
@@ -7,7 +7,9 @@ export const validateFieldRange = (
 ) => {
   const isFieldOutOfRange = index < start || index > range;
   if (isNaN(index) || isFieldOutOfRange) {
-    gameState.inputError = `Please enter a valid number (${start}-${range}) and press enter`;
+    gameStateManager.setInputError(
+      `Please enter a valid number (${start}-${range}) and press enter`,
+    );
     return false;
   }
   return true;

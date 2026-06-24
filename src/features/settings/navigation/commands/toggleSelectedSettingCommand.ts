@@ -1,8 +1,7 @@
 import type { KeyCommand } from "@/services/navigationService";
 
+import { executeSettingsOptionByPosition } from "@/features/settings/options";
 import { NAV_KEYS, type NavKey } from "@/global/navigationKeys";
-
-import { executeSettingsOptionByPosition } from "../../options";
 
 export class ToggleSelectedSettingCommand implements KeyCommand {
   canHandle(key: NavKey): boolean {

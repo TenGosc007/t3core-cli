@@ -12,3 +12,8 @@ export type KeyCommand = {
   canHandle(key: NavKey): boolean;
   execute(position: NavigationPosition): NavigationResult;
 };
+
+export type ToggleCommand = {
+  canHandle(key: NavKey): boolean;
+  execute(): NavKey;
+};
