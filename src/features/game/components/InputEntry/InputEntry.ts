@@ -18,5 +18,5 @@ export const InputEntry = async ({
   const answer = await getInputAnswer({ game, gameState });
   if (answer === NAV_KEYS.Q) return answer;
 
-  return handleInputAnswer({ answer, game });
+  return handleInputAnswer({ answer, game, gameState });
 };

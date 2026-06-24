@@ -18,7 +18,6 @@ export const getInputAnswer = async ({
   gameState,
 }: GetInputAnswerProps): Promise<number | NavKey | null> => {
   const answer = await waitForInput(s.yellow("Your choice: "));
-  gameState.setInputError(null);
 
   const actionKey = actionKeysHandler(answer);
   if (actionKey) return actionKey;
@@ -28,5 +27,6 @@ export const getInputAnswer = async ({
     game,
     isArrowKeyOn: false,
     isInHistoryMode: gameState.historyMode,
+    gameState,
   });
 };

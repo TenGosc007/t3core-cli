@@ -1,3 +1,5 @@
+import type { GameManager } from "@/features/game/engine";
+import type { GameStateManager } from "@/features/game/services/gameState";
 import type { KeyHandlerProps } from "@/services/keyHandlerService";
 
 import {
@@ -21,13 +23,20 @@ const gridNavigationStrategy = new GridNavigationStrategy(
   BOARD_COLS,
 );
 
-const onQuit = () => {
-  gameManager.reset();
-  gameStateManager.reset();
+type OnQuitProps = {
+  game?: GameManager;
+  gameState?: GameStateManager;
+};
+
+const onQuit = ({ game, gameState }: OnQuitProps) => {
+  const resolvedGame = game ?? gameManager;
+  const resolvedState = gameState ?? gameStateManager;
+  resolvedGame.reset();
+  resolvedState.reset();
 };
 
 const navigationController = new NavigationController(gridNavigationStrategy, [
-  new QuitCommand(onQuit),
+  new QuitCommand(() => onQuit({})),
   new SelectFieldCommand(),
   new ToggleHistoryCommand(),
   new ToggleInfoCommand(),
