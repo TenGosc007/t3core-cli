@@ -1,12 +1,18 @@
+import type { GameEngine } from "@/features/game/engine";
+
 import { BOARD_SIZE } from "@/features/game/constants/game.constants";
-import { gameManager } from "@/features/game/engine";
 import { gameState } from "@/features/game/services/gameState";
 
 import { validateFieldRange } from "./validateFieldRange";
 import { validateSelectedField } from "./validateSelectedField";
 
-const getStartAndRange = () => {
-  const game = gameManager.getGame();
+type ValidateInputEntryProps = {
+  entryProp: number;
+  game: GameEngine;
+  isArrowKeyOn: boolean;
+};
+
+const getStartAndRange = (game: GameEngine) => {
   const isHistoryMode = gameState.historyMode;
 
   const range = isHistoryMode ? game.getMovesCount() : BOARD_SIZE;
@@ -22,18 +28,19 @@ const entryHelper = (entryProp: number, isArrowKeyOn: boolean) => {
   return { index, entry };
 };
 
-export const validateInputEntry = (
-  entryProp: number,
-  isArrowKeyOn: boolean,
-) => {
-  const { range, start } = getStartAndRange();
+export const validateInputEntry = ({
+  entryProp,
+  game,
+  isArrowKeyOn,
+}: ValidateInputEntryProps) => {
+  const { range, start } = getStartAndRange(game);
   const { index, entry } = entryHelper(entryProp, isArrowKeyOn);
 
   gameState.setInputError(null);
 
   const validField =
     validateFieldRange(entry, range, start) &&
-    validateSelectedField(entry, index);
+    validateSelectedField({ entry, game, index });
 
   return validField ? entry : null;
 };

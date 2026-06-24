@@ -19,7 +19,7 @@ export class SelectFieldCommand implements KeyCommand {
       return INITIAL_BOARD_POSITION;
     }
 
-    validateInputEntry(position, true);
+    validateInputEntry({ entryProp: position, game, isArrowKeyOn: true });
     game.makeMove(position);
     return position;
   }

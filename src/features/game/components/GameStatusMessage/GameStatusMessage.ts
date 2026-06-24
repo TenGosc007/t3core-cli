@@ -1,8 +1,12 @@
-import { GameStatusMessageUI } from "@/features/game/components/ui/GameStatusMessageUI";
-import { gameManager } from "@/features/game/engine";
+import type { GameEngine } from "@/features/game/engine";
 
-export const GameStatusMessage = () => {
-  const game = gameManager.getGame();
+import { GameStatusMessageUI } from "@/features/game/components/ui/GameStatusMessageUI";
+
+type GameStatusMessageProps = {
+  game: GameEngine;
+};
+
+export const GameStatusMessage = ({ game }: GameStatusMessageProps) => {
   const gameStatus = game.getStatus();
 
   GameStatusMessageUI({ gameStatus });

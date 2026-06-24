@@ -1,28 +1,33 @@
+import type { GameEngine } from "@/features/game/engine";
 import type { NavKey } from "@/global/navigationKeys";
 
-import { gameManager } from "@/features/game/engine";
 import { gameKeyHandlerService } from "@/features/game/services/gameKeyHandlerService";
 import { gameState } from "@/features/game/services/gameState";
 
-const saveAnswer = (answer: number) => {
+type HandleInputAnswerProps = {
+  answer: number | NavKey | null;
+  game: GameEngine;
+};
+
+const saveAnswer = ({ answer, game }: HandleInputAnswerProps) => {
+  if (answer == null || typeof answer === "string") return null;
+
   const keyHandler = gameKeyHandlerService.get();
   if (keyHandler?.running) return null;
 
-  const game = gameManager.getGame();
   game.makeMove(answer - 1);
 };
 
-export const handleInputAnswer = (answer: number | NavKey | null) => {
+export const handleInputAnswer = ({ answer, game }: HandleInputAnswerProps) => {
   if (answer == null || typeof answer === "string") return null;
 
   if (gameState.historyMode) {
-    const game = gameManager.getGame();
     game.backToMove(answer);
     gameState.toggleHistoryMode();
     return null;
   }
 
-  saveAnswer(answer);
+  saveAnswer({ answer, game });
 
   return null;
 };

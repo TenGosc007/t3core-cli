@@ -1,3 +1,4 @@
+import type { GameEngine } from "@/features/game/engine";
 import type { KeyHandler } from "@/services/keyHandlerService";
 
 import { Board } from "@/features/game/components/Board";
@@ -6,6 +7,7 @@ import { GameInformations } from "@/features/game/components/GameInformations";
 import { GameStatusMessage } from "@/features/game/components/GameStatusMessage";
 import { InputEntry } from "@/features/game/components/InputEntry";
 import { GameHeaderUI } from "@/features/game/components/ui/GameHeaderUI";
+import { gameManager } from "@/features/game/engine";
 import { gameKeyHandlerService } from "@/features/game/services/gameKeyHandlerService";
 import { playAgain } from "@/features/game/util/playAgain";
 import { isExitKey } from "@/global/navigationKeys";
@@ -17,17 +19,18 @@ export const GameView = async (): Promise<AppRoute> => {
   saveCursor();
 
   while (true) {
+    const game = gameManager.getGame();
     const keyHandler = gameKeyHandlerService.get();
     restoreAndClearDown();
 
     GameEntryMessage();
-    Board({ selectedIndex: keyHandler.position });
-    GameStatusMessage();
-    GameInformations({ isKeyHandlerRunning: keyHandler.running });
+    Board({ game, selectedIndex: keyHandler.position });
+    GameStatusMessage({ game });
+    GameInformations({ game, isKeyHandlerRunning: keyHandler.running });
 
-    if (await playAgain()) continue;
+    if (await playAgain({ game })) continue;
 
-    const entry = await entryHandler(keyHandler);
+    const entry = await entryHandler({ game, keyHandler });
     if (isExitKey(entry)) break;
   }
 
@@ -35,9 +38,14 @@ export const GameView = async (): Promise<AppRoute> => {
   return ROUTES.MENU;
 };
 
-async function entryHandler(keyHandler?: KeyHandler | null) {
+type EntryHandlerProps = {
+  game: GameEngine;
+  keyHandler?: KeyHandler | null;
+};
+
+async function entryHandler({ game, keyHandler }: EntryHandlerProps) {
   if (keyHandler?.running) {
     return await keyHandler?.waitForKeyPress();
   }
-  return await InputEntry();
+  return await InputEntry({ game });
 }
