@@ -1,11 +1,21 @@
 import type { BoardField } from "t3core";
 
+import {
+  BOARD_COLS,
+  BOARD_ROWS,
+} from "@/features/game/constants/game.constants";
 import { colorLabelSymbol } from "@/features/game/util/colorLabelSymbol";
 import { s } from "@/utils/styledLabel";
 
-const top = s.grey.bold("┌───┬───┬───┐");
-const mid = s.grey.bold("├───┼───┼───┤");
-const bot = s.grey.bold("└───┴───┴───┘");
+const buildBorder = (left: string, middle: string, right: string) => {
+  return s.grey.bold(
+    `${left}${Array(BOARD_COLS).fill("───").join(middle)}${right}`,
+  );
+};
+
+const top = buildBorder("┌", "┬", "┐");
+const mid = buildBorder("├", "┼", "┤");
+const bot = buildBorder("└", "┴", "┘");
 const col = s.grey.bold("│");
 
 const formatCell = (
@@ -26,18 +36,14 @@ export type BoardUIProps = {
 export const BoardUI = ({ fields, selectedIndex }: BoardUIProps) => {
   console.log(top);
 
-  fields.forEach((_, idx: number) => {
-    if (idx % 3 === 0) {
-      const row = idx / 3;
+  for (let row = 0; row < BOARD_ROWS; row++) {
+    const rowStart = row * BOARD_COLS;
+    const cells = Array.from({ length: BOARD_COLS }, (_, colIndex) => {
+      const fieldIndex = rowStart + colIndex;
+      return formatCell(fields[fieldIndex], fieldIndex, selectedIndex);
+    });
 
-      const entireRow = `${col} ${formatCell(fields[idx], idx, selectedIndex)} ${col} ${formatCell(
-        fields[idx + 1],
-        idx + 1,
-        selectedIndex,
-      )} ${col} ${formatCell(fields[idx + 2], idx + 2, selectedIndex)} ${col}`;
-
-      console.log(entireRow);
-      console.log(row < 2 ? mid : bot);
-    }
-  });
+    console.log(`${col} ${cells.join(` ${col} `)} ${col}`);
+    console.log(row < BOARD_ROWS - 1 ? mid : bot);
+  }
 };
