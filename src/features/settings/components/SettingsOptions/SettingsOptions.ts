@@ -1,7 +1,6 @@
 import type { SettingsOption } from "@/features/settings/options";
-import type { SettingsManager } from "@/services/settings";
+import type { Settings } from "@/services/settings";
 
-import { SETTINGS_OPTIONS } from "@/features/settings/options";
 import { s } from "@/utils/styledLabel";
 
 const getItemNumber = (
@@ -23,17 +22,19 @@ const getItemValue = (setting: boolean) => {
 };
 
 type SettingsOptionsProps = {
-  settingsManager: SettingsManager;
+  options: readonly SettingsOption[];
+  settings: Settings;
   activePosition?: number | null;
 };
 
 export const SettingsOptions = ({
-  settingsManager,
+  options,
+  settings,
   activePosition,
 }: SettingsOptionsProps) => {
-  const settings = settingsManager.getRuntimeSettings();
+  const lines: string[] = [];
 
-  SETTINGS_OPTIONS.forEach((item, itemPosition) => {
+  options.forEach((item, itemPosition) => {
     const itemNumber = getItemNumber(activePosition, itemPosition, item);
     const itemLabel = getItemLabel(item);
     const itemValue =
@@ -44,9 +45,10 @@ export const SettingsOptions = ({
       label = s.dim(label);
     }
 
-    if (item.type === "command") console.log("\t");
-    console.log(`[${itemNumber}] ${label}`);
+    if (item.type === "command") lines.push("\t");
+    lines.push(`[${itemNumber}] ${label}`);
   });
 
-  console.log("\t");
+  lines.push("\t");
+  lines.forEach((line) => console.log(line));
 };

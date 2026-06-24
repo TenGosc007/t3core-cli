@@ -1,14 +1,9 @@
 import { isTTYAvailable } from "@/global/tty.global";
-import {
-  settingsManager,
-  type Settings,
-  type SettingsKey,
-} from "@/services/settings";
+import { type Settings, type SettingsKey } from "@/services/settings";
 
 type BaseSettingsOption = {
   id: number;
   label: string;
-  action: () => void;
   disabled?: (settings: Settings) => boolean;
   emphasis?: boolean;
 };
@@ -24,39 +19,33 @@ type CommandSettingsOption = BaseSettingsOption & {
 
 export type SettingsOption = ToggleSettingsOption | CommandSettingsOption;
 
-const settings = settingsManager;
-
 export const SETTINGS_OPTIONS: readonly SettingsOption[] = [
   {
     id: 1,
     label: "Sound",
     type: "toggle",
     key: "beep",
-    action: settings.toggleBeep,
   },
   {
     id: 2,
     label: "Style",
     type: "toggle",
     key: "style",
-    action: settings.toggleStyle,
   },
   {
     id: 3,
     label: "Use Arrow Keys",
     type: "toggle",
     key: "arrowKeyNavigation",
-    action: settings.toggleArrowKeyNavigation,
     disabled: (settings) => !isTTYAvailable || !settings.style,
   },
   {
     id: 4,
     label: "Reset to default",
     type: "command",
-    action: settings.resetSettings,
     emphasis: true,
   },
-] as const;
+];
 
 export const INITIAL_SETTINGS_POSITION = 0;
 export const LAST_SETTINGS_POSITION = SETTINGS_OPTIONS.length - 1;
@@ -71,21 +60,4 @@ export const getSettingsOptionByPosition = (position: number | null) => {
   if (!Number.isInteger(position)) return null;
 
   return SETTINGS_OPTIONS[position];
-};
-
-const executeOption = (option: SettingsOption | null) => {
-  const settings = settingsManager.getRuntimeSettings();
-
-  if (!option || option.disabled?.(settings)) return false;
-
-  option.action();
-  return true;
-};
-
-export const executeSettingsOption = (id: number | string | null) => {
-  return executeOption(getSettingsOptionById(id));
-};
-
-export const executeSettingsOptionByPosition = (position: number | null) => {
-  return executeOption(getSettingsOptionByPosition(position));
 };
