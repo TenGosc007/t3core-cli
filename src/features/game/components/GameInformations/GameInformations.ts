@@ -17,12 +17,11 @@ export const GameInformations = ({
   if (game.getStatus().status !== "running") return;
 
   const error = gameState.inputError;
+  const isHistoryMode = gameState.historyMode;
+  const currentPlayer = game.getCurrentPlayer();
+  const movesCount = game.getMovesCount();
 
-  PlayerPromptUI({ currentPlayer: game.getCurrentPlayer() });
-  GameHintUI({
-    movesCount: game.getMovesCount(),
-    isKeyHandlerRunning,
-    isHistoryMode: gameState.historyMode,
-  });
+  PlayerPromptUI({ currentPlayer });
+  GameHintUI({ movesCount, isKeyHandlerRunning, isHistoryMode });
   InputErrorMessageUI({ error });
 };

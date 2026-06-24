@@ -1,10 +1,8 @@
 import type { GameEngine } from "@/features/game/engine";
 import type { KeyHandler } from "@/services/keyHandlerService";
 
-import { Board } from "@/features/game/components/Board";
 import { GameEntryMessage } from "@/features/game/components/GameEntryMessage";
 import { GameInformations } from "@/features/game/components/GameInformations";
-import { GameStatusMessage } from "@/features/game/components/GameStatusMessage";
 import { InputEntry } from "@/features/game/components/InputEntry";
 import { GameHeaderUI } from "@/features/game/components/ui/GameHeaderUI";
 import { gameManager } from "@/features/game/engine";
@@ -13,6 +11,9 @@ import { playAgain } from "@/features/game/util/playAgain";
 import { isExitKey } from "@/global/navigationKeys";
 import { ROUTES, type AppRoute } from "@/navigation/routes";
 import { restoreAndClearDown, saveCursor } from "@/utils/viewUtils";
+
+import { BoardUI } from "./components/ui/BoardUI";
+import { GameStatusMessageUI } from "./components/ui/GameStatusMessageUI";
 
 export const GameView = async (): Promise<AppRoute> => {
   GameHeaderUI();
@@ -24,8 +25,8 @@ export const GameView = async (): Promise<AppRoute> => {
     restoreAndClearDown();
 
     GameEntryMessage();
-    Board({ game, selectedIndex: keyHandler.position });
-    GameStatusMessage({ game });
+    BoardUI({ fields: game.getBoard(), selectedIndex: keyHandler.position });
+    GameStatusMessageUI({ gameStatus: game.getStatus() });
     GameInformations({ game, isKeyHandlerRunning: keyHandler.running });
 
     if (await playAgain({ game })) continue;

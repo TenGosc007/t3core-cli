@@ -12,10 +12,10 @@ type ValidateInputEntryProps = {
   isArrowKeyOn: boolean;
 };
 
-const getStartAndRange = (game: GameEngine) => {
+const getStartAndRange = (movesCount: number) => {
   const isHistoryMode = gameState.historyMode;
 
-  const range = isHistoryMode ? game.getMovesCount() : BOARD_SIZE;
+  const range = isHistoryMode ? movesCount : BOARD_SIZE;
   const start = isHistoryMode ? 0 : 1;
 
   return { range, start };
@@ -33,7 +33,7 @@ export const validateInputEntry = ({
   game,
   isArrowKeyOn,
 }: ValidateInputEntryProps) => {
-  const { range, start } = getStartAndRange(game);
+  const { range, start } = getStartAndRange(game.getMovesCount());
   const { index, entry } = entryHelper(entryProp, isArrowKeyOn);
 
   gameState.setInputError(null);
