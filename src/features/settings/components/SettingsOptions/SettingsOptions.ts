@@ -1,7 +1,7 @@
 import type { SettingsOption } from "@/features/settings/options";
+import type { SettingsManager } from "@/services/settings";
 
 import { SETTINGS_OPTIONS } from "@/features/settings/options";
-import { settingsManager } from "@/services/settings";
 import { s } from "@/utils/styledLabel";
 
 const getItemNumber = (
@@ -23,10 +23,14 @@ const getItemValue = (setting: boolean) => {
 };
 
 type SettingsOptionsProps = {
+  settingsManager: SettingsManager;
   activePosition?: number | null;
 };
 
-export const SettingsOptions = ({ activePosition }: SettingsOptionsProps) => {
+export const SettingsOptions = ({
+  settingsManager,
+  activePosition,
+}: SettingsOptionsProps) => {
   const settings = settingsManager.getRuntimeSettings();
 
   SETTINGS_OPTIONS.forEach((item, itemPosition) => {

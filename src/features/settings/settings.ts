@@ -5,9 +5,12 @@ import { SettingsOptions } from "@/features/settings/components/SettingsOptions"
 import { settingsKeyHandlerService } from "@/features/settings/services/settingsKeyHandlerService";
 import { isExitKey } from "@/global/navigationKeys";
 import { ROUTES, type AppRoute } from "@/navigation/routes";
+import { settingsManager } from "@/services/settings";
 import { restoreAndClearDown, saveCursor } from "@/utils/viewUtils";
 
 export const SettingsView = async (): Promise<AppRoute> => {
+  const settings = settingsManager;
+
   SettingsHeader();
   saveCursor();
 
@@ -15,7 +18,10 @@ export const SettingsView = async (): Promise<AppRoute> => {
     const keyHandler = settingsKeyHandlerService.getSyncedHandler();
     restoreAndClearDown();
 
-    SettingsOptions({ activePosition: keyHandler.position });
+    SettingsOptions({
+      settingsManager: settings,
+      activePosition: keyHandler.position,
+    });
     SettingsHintMessage();
 
     const key = keyHandler.running

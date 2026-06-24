@@ -24,34 +24,36 @@ type CommandSettingsOption = BaseSettingsOption & {
 
 export type SettingsOption = ToggleSettingsOption | CommandSettingsOption;
 
+const settings = settingsManager;
+
 export const SETTINGS_OPTIONS: readonly SettingsOption[] = [
   {
     id: 1,
     label: "Sound",
     type: "toggle",
     key: "beep",
-    action: settingsManager.toggleBeep,
+    action: settings.toggleBeep,
   },
   {
     id: 2,
     label: "Style",
     type: "toggle",
     key: "style",
-    action: settingsManager.toggleStyle,
+    action: settings.toggleStyle,
   },
   {
     id: 3,
     label: "Use Arrow Keys",
     type: "toggle",
     key: "arrowKeyNavigation",
-    action: settingsManager.toggleArrowKeyNavigation,
+    action: settings.toggleArrowKeyNavigation,
     disabled: (settings) => !isTTYAvailable || !settings.style,
   },
   {
     id: 4,
     label: "Reset to default",
     type: "command",
-    action: settingsManager.resetSettings,
+    action: settings.resetSettings,
     emphasis: true,
   },
 ] as const;
