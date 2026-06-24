@@ -17,11 +17,13 @@ function messageForGameStatus(gameStatus: GameStatus): string | undefined {
   }
 }
 
-export interface GameStatusMessageUIProps {
+export type GameStatusMessageUIProps = {
   gameStatus: GameStatus;
-}
+};
 
-export const GameStatusMessageUI = ({ gameStatus }: GameStatusMessageUIProps) => {
+export const GameStatusMessageUI = ({
+  gameStatus,
+}: GameStatusMessageUIProps) => {
   const line = messageForGameStatus(gameStatus);
 
   if (line === undefined) {

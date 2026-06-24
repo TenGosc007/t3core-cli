@@ -18,14 +18,14 @@ const formatCell = (
   return colorLabelSymbol(value);
 };
 
-export interface BoardUIProps {
+export type BoardUIProps = {
   fields: BoardField[];
   selectedIndex?: number | null;
-}
+};
 
 export const BoardUI = ({ fields, selectedIndex }: BoardUIProps) => {
   console.log(top);
-  
+
   fields.forEach((_, idx: number) => {
     if (idx % 3 === 0) {
       const row = idx / 3;

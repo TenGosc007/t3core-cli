@@ -1,8 +1,8 @@
 import { s } from "@/utils/styledLabel";
 
-export interface GameEntryMessageUIProps {
+export type GameEntryMessageUIProps = {
   showInfo: boolean;
-}
+};
 
 export const GameEntryMessageUI = ({ showInfo }: GameEntryMessageUIProps) => {
   const border = s.yellow("--------------------------------------------");
