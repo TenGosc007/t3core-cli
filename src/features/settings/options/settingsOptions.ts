@@ -50,9 +50,7 @@ export const SETTINGS_OPTIONS: readonly SettingsOption[] = [
 
 export const INITIAL_SETTINGS_POSITION = 0;
 export const LAST_SETTINGS_POSITION = SETTINGS_OPTIONS.length - 1;
-export const SETTINGS_OPTION_IDS_LABEL = SETTINGS_OPTIONS.map(({ id }) =>
-  id.toString(),
-).join(", ");
+export const SETTINGS_OPTION_IDS_LABEL = `${SETTINGS_OPTIONS[0].id} - ${SETTINGS_OPTIONS[SETTINGS_OPTIONS.length - 1].id}`;
 
 export const getSettingsOptionById = (id: number | string | null) =>
   SETTINGS_OPTIONS.find((option) => option.id.toString() === id?.toString()) ??
