@@ -33,4 +33,10 @@ describe("renderRoute", () => {
 
     expect(result).toBe(ROUTES.MENU);
   });
+
+  it("throws for unknown route", async () => {
+    await expect(
+      renderRoute("unknown" as unknown as typeof ROUTES.MENU),
+    ).rejects.toThrow("Unknown route");
+  });
 });

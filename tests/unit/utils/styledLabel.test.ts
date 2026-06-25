@@ -27,6 +27,14 @@ describe("styledLabel", () => {
     expect(s.red("hello")).toContain("\x1b[31m");
   });
 
+  it("joins multiple args when called directly as a function", () => {
+    const result = (s as unknown as (...args: string[]) => string)(
+      "hello",
+      "world",
+    );
+    expect(result).toBe("hello world");
+  });
+
   it("supports chained modifiers", () => {
     settingsSpy = vi
       .spyOn(settingsManager, "getRuntimeSettings")

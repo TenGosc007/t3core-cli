@@ -51,6 +51,17 @@ describe("settingsNavigation", () => {
     expect(manager.toggleBeep).toHaveBeenCalled();
   });
 
+  it("uses initial position when position is undefined", () => {
+    const manager = createSettingsManager();
+    const navigation = settingsNavigation({ settingsManager: manager });
+
+    const result = navigation.handleKey({
+      key: { name: NAV_KEYS.UP },
+      position: null,
+    });
+    expect(typeof result === "number").toBe(true);
+  });
+
   it("quits on q", () => {
     const manager = createSettingsManager();
     const navigation = settingsNavigation({ settingsManager: manager });
