@@ -1,4 +1,5 @@
 import type { KeyHandlerProps } from "@/services/keyHandlerService";
+import type { SettingsManager } from "@/services/settings";
 
 import { ToggleSelectedSettingCommand } from "@/features/settings/navigation/commands/toggleSelectedSettingCommand";
 import {
@@ -10,21 +11,28 @@ import {
   NavigationController,
   QuitCommand,
 } from "@/services/navigationService";
+import { settingsManager } from "@/services/settings";
 
-const listNavigationStrategy = new ListNavigationStrategy(
-  INITIAL_SETTINGS_POSITION,
-  LAST_SETTINGS_POSITION,
-);
-const navigationController = new NavigationController(listNavigationStrategy, [
-  new QuitCommand(),
-  new ToggleSelectedSettingCommand(),
-]);
-
-const handleKey = ({ key, position }: KeyHandlerProps) => {
-  const currentPosition = position ?? INITIAL_SETTINGS_POSITION;
-  return navigationController.handleKey(currentPosition, key.name);
+type SettingsNavigationProps = {
+  settingsManager?: SettingsManager;
 };
 
-export const settingsNavigation = {
-  handleKey,
+export const settingsNavigation = ({
+  settingsManager: manager = settingsManager,
+}: SettingsNavigationProps = {}) => {
+  const listNavigationStrategy = new ListNavigationStrategy(
+    INITIAL_SETTINGS_POSITION,
+    LAST_SETTINGS_POSITION,
+  );
+  const navigationController = new NavigationController(
+    listNavigationStrategy,
+    [new QuitCommand(), new ToggleSelectedSettingCommand(manager)],
+  );
+
+  const handleKey = ({ key, position }: KeyHandlerProps) => {
+    const currentPosition = position ?? INITIAL_SETTINGS_POSITION;
+    return navigationController.handleKey(currentPosition, key.name);
+  };
+
+  return { handleKey };
 };
