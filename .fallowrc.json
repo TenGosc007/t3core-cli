@@ -6,27 +6,22 @@
     "eslint-import-resolver-typescript",
     "tsconfig-paths",
     "vitest",
-    "@vitest/coverage-v8"
+    "@vitest/coverage-v8",
+    "@fallow-cli/fallow-cov",
+    "vite-tsconfig-paths"
   ],
   "ignorePatterns": [
     "**/*.generated.ts",
     "**/*.d.ts",
     "./package.json",
-    "tests/**",
-    "vitest.config.ts",
-    "coverage/**",
-    "**/*.test.ts"
+    "vitest.config.mts",
+    "coverage/**"
   ],
   "duplicates": {
-    "minOccurrences": 3
+    "minOccurrences": 3,
+    "ignore": ["**/generated/**"]
   },
   "health": {
-    "maxCrap": 35
-  },
-  "rules": {
-    "unused-dependencies": "warn",
-    "unused-files": "warn",
-    "unused-exports": "warn",
-    "coverage-gaps": "off"
+    "coverage": "coverage/coverage-final.json"
   }
 }
