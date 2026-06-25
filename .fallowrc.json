@@ -4,9 +4,19 @@
   "ignoreDependencies": [
     "jiti",
     "eslint-import-resolver-typescript",
-    "tsconfig-paths"
+    "tsconfig-paths",
+    "vitest",
+    "@vitest/coverage-v8"
   ],
-  "ignorePatterns": ["**/*.generated.ts", "**/*.d.ts", "./package.json"],
+  "ignorePatterns": [
+    "**/*.generated.ts",
+    "**/*.d.ts",
+    "./package.json",
+    "tests/**",
+    "vitest.config.ts",
+    "coverage/**",
+    "**/*.test.ts"
+  ],
   "duplicates": {
     "minOccurrences": 3
   },
