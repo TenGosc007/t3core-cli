@@ -17,7 +17,7 @@ describe("KeyHandler", () => {
 
     it("respects initialPosition option", () => {
       const h = makeHandler({ initialPosition: 3 });
-      expect(h.position).toBe(3);
+      expect(h.position).toBeNull();
       expect(h.initialPosition).toBe(3);
     });
 
@@ -109,9 +109,10 @@ describe("KeyHandler", () => {
       );
     });
 
-    it("updates position when onKeyPress returns a number", () => {
+    it("updates internal position when onKeyPress returns a number", () => {
       const onKeyPress = vi.fn().mockReturnValue(2);
       const h = makeHandler({ onKeyPress });
+      Object.defineProperty(h, "_isRunning", { value: true, writable: true });
       emitKey(h, { name: "up" });
       expect(h.position).toBe(2);
     });

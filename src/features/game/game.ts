@@ -47,6 +47,8 @@ export const GameView = async ({
   while (true) {
     const game = manager.getGame();
     const keyHandler = keyHandlerService.get();
+    console.log("keyHandler", keyHandler);
+
     restoreAndClearDown();
 
     GameEntryMessageUI({ showInfo: gameState.info });

@@ -79,6 +79,7 @@ export class KeyHandler {
    * Gets the current position
    */
   get position() {
+    if (!this._isRunning) return null;
     return this._position;
   }
 

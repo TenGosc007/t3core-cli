@@ -57,7 +57,7 @@ describe("createGameKeyHandlerService", () => {
 
     const handler = service.get();
     expect(handler).toBeDefined();
-    expect(handler.position).toBe(4);
+    expect(handler.initialPosition).toBe(4);
   });
 
   it("does not start handler when TTY is unavailable", () => {

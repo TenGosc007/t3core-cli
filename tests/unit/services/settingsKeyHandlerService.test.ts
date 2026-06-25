@@ -26,7 +26,7 @@ describe("createSettingsKeyHandlerService", () => {
 
     const handler = service.getSyncedHandler();
     expect(handler).toBeDefined();
-    expect(handler.position).toBe(0);
+    expect(handler.initialPosition).toBe(0);
   });
 
   it("does not start handler when TTY is unavailable", () => {
