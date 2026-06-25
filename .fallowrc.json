@@ -15,7 +15,8 @@
     "**/*.d.ts",
     "./package.json",
     "vitest.config.mts",
-    "coverage/**"
+    "coverage/**",
+    "tests/setup.ts"
   ],
   "duplicates": {
     "minOccurrences": 3,
