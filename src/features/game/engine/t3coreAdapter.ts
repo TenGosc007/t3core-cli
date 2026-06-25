@@ -1,4 +1,4 @@
-import type { GameEngine, GameEngineFactory } from "./gameEngine.types";
+import type { GameEngine } from "./gameEngine.types";
 
 import { Game } from "t3core";
 
@@ -48,14 +48,5 @@ export class T3CoreAdapter implements GameEngine {
 
   isGameOver(): boolean {
     return this.getStatus().status !== "running";
-  }
-}
-
-/**
- * Factory for creating T3Core game instances
- */
-export class T3CoreFactory implements GameEngineFactory {
-  create(): GameEngine {
-    return new T3CoreAdapter();
   }
 }

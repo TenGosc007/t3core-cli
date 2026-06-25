@@ -1,11 +1,12 @@
 import type { SettingsKeyHandlerService } from "@/features/settings/services/settingsKeyHandlerService";
 import type { KeyHandler } from "@/services/keyHandlerService";
-import type { SettingsManager } from "@/services/settings";
 
 import { describe, expect, it, vi } from "vitest";
 
 import { SettingsView } from "@/features/settings";
 import { ROUTES } from "@/navigation/routes";
+
+import { createSettingsManager } from "../../../helpers/settings";
 
 vi.mock("@/features/settings/components/SettingsHeader", () => ({
   SettingsHeader: vi.fn(),
@@ -27,20 +28,6 @@ vi.mock("@/utils/viewUtils", () => ({
   restoreAndClearDown: vi.fn(),
   saveCursor: vi.fn(),
 }));
-
-const createSettingsManager = (): SettingsManager => {
-  return {
-    getRuntimeSettings: vi.fn().mockReturnValue({
-      beep: true,
-      style: true,
-      arrowKeyNavigation: true,
-    }),
-    resetSettings: vi.fn(),
-    toggleBeep: vi.fn(),
-    toggleStyle: vi.fn(),
-    toggleArrowKeyNavigation: vi.fn(),
-  } as unknown as SettingsManager;
-};
 
 const createKeyHandlerService = (): SettingsKeyHandlerService => {
   const handler = {

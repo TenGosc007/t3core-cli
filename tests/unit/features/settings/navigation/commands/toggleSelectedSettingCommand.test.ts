@@ -5,19 +5,7 @@ import { describe, expect, it, vi } from "vitest";
 import { ToggleSelectedSettingCommand } from "@/features/settings/navigation/commands/toggleSelectedSettingCommand";
 import { NAV_KEYS } from "@/global/navigationKeys";
 
-const createSettingsManager = () => {
-  return {
-    getRuntimeSettings: vi.fn().mockReturnValue({
-      beep: true,
-      style: true,
-      arrowKeyNavigation: true,
-    }),
-    resetSettings: vi.fn(),
-    toggleBeep: vi.fn(),
-    toggleStyle: vi.fn(),
-    toggleArrowKeyNavigation: vi.fn(),
-  } as unknown as SettingsManager;
-};
+import { createSettingsManager } from "../../../../../helpers/settings";
 
 describe("ToggleSelectedSettingCommand", () => {
   it("handles only enter key", () => {

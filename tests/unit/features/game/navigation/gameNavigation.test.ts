@@ -37,12 +37,20 @@ const createGameState = (overrides: Partial<GameStateManager> = {}) => {
   } as unknown as GameStateManager;
 };
 
+const createNavigation = (
+  gameOverrides: Partial<GameEngine> = {},
+  gameStateOverrides: Partial<GameStateManager> = {},
+) => {
+  const game = createGame(gameOverrides);
+  const manager = createManager(game);
+  const gameState = createGameState(gameStateOverrides);
+  const navigation = gameNavigation({ manager, gameState });
+  return { game, manager, gameState, navigation };
+};
+
 describe("gameNavigation", () => {
   it("moves up in grid", () => {
-    const game = createGame();
-    const manager = createManager(game);
-    const gameState = createGameState();
-    const navigation = gameNavigation({ manager, gameState });
+    const { navigation } = createNavigation();
 
     const result = navigation.handleKey({
       key: { name: NAV_KEYS.UP },
@@ -52,10 +60,7 @@ describe("gameNavigation", () => {
   });
 
   it("moves right in grid", () => {
-    const game = createGame();
-    const manager = createManager(game);
-    const gameState = createGameState();
-    const navigation = gameNavigation({ manager, gameState });
+    const { navigation } = createNavigation();
 
     const result = navigation.handleKey({
       key: { name: NAV_KEYS.RIGHT },
@@ -65,10 +70,7 @@ describe("gameNavigation", () => {
   });
 
   it("selects field on return", () => {
-    const game = createGame();
-    const manager = createManager(game);
-    const gameState = createGameState();
-    const navigation = gameNavigation({ manager, gameState });
+    const { game, navigation } = createNavigation();
 
     const result = navigation.handleKey({
       key: { name: NAV_KEYS.RETURN },
@@ -79,10 +81,9 @@ describe("gameNavigation", () => {
   });
 
   it("toggles history mode on h", () => {
-    const game = createGame({ getMovesCount: vi.fn().mockReturnValue(3) });
-    const manager = createManager(game);
-    const gameState = createGameState();
-    const navigation = gameNavigation({ manager, gameState });
+    const { gameState, navigation } = createNavigation({
+      getMovesCount: vi.fn().mockReturnValue(3),
+    });
 
     const result = navigation.handleKey({
       key: { name: NAV_KEYS.H },
@@ -93,10 +94,7 @@ describe("gameNavigation", () => {
   });
 
   it("toggles info on i", () => {
-    const game = createGame();
-    const manager = createManager(game);
-    const gameState = createGameState();
-    const navigation = gameNavigation({ manager, gameState });
+    const { gameState, navigation } = createNavigation();
 
     const result = navigation.handleKey({
       key: { name: NAV_KEYS.I },
@@ -107,10 +105,7 @@ describe("gameNavigation", () => {
   });
 
   it("resets managers on quit", () => {
-    const game = createGame();
-    const manager = createManager(game);
-    const gameState = createGameState();
-    const navigation = gameNavigation({ manager, gameState });
+    const { manager, gameState, navigation } = createNavigation();
 
     navigation.handleKey({ key: { name: NAV_KEYS.Q }, position: 0 });
     expect(manager.reset).toHaveBeenCalled();
