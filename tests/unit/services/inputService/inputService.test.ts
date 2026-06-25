@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 
-import { closeInput } from "@/services/inputService";
+import {
+  closeInput,
+  startKeyInput,
+  stopKeyInput,
+  waitForInput,
+} from "@/services/inputService";
 
 describe("inputService", () => {
   describe("closeInput", () => {
@@ -9,6 +14,27 @@ describe("inputService", () => {
         closeInput();
         closeInput();
       }).not.toThrow();
+    });
+  });
+
+  describe("waitForInput", () => {
+    it("returns a promise", () => {
+      const result = waitForInput("test: ");
+      expect(result).toBeInstanceOf(Promise);
+      result?.catch(() => {});
+    });
+  });
+
+  describe("startKeyInput", () => {
+    it("returns false when TTY is not available", () => {
+      const result = startKeyInput();
+      expect(result).toBe(false);
+    });
+  });
+
+  describe("stopKeyInput", () => {
+    it("does not throw", () => {
+      expect(() => stopKeyInput()).not.toThrow();
     });
   });
 });
