@@ -6,7 +6,7 @@ on:
   pull_request:
 
 jobs:
-  check:
+  test:
     runs-on: ubuntu-latest
     permissions:
       security-events: write
@@ -23,17 +23,22 @@ jobs:
 
       - run: yarn install --frozen-lockfile
 
-      - run: yarn lint
+      - name: Lint
+        run: yarn lint
 
-      - run: yarn ts:check
+      - name: TypeScript check
+        run: yarn ts:check
 
-      - run: yarn test:coverage
+      - name: Tests with coverage
+        run: yarn test:coverage
 
-      - run: yarn build
+      - name: Build
+        run: yarn build
 
       - uses: fallow-rs/fallow@v2
         with:
           command: health
+          coverage: coverage/coverage-final.json
           format: sarif
           auto-changed-since: true
           comment: true

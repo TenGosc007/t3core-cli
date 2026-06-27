@@ -7,7 +7,6 @@
     "tsconfig-paths",
     "vitest",
     "@vitest/coverage-v8",
-    "@fallow-cli/fallow-cov",
     "vite-tsconfig-paths"
   ],
   "ignorePatterns": [
