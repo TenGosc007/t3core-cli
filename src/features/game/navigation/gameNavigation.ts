@@ -1,3 +1,5 @@
+import type { GameManager } from "@/features/game/engine";
+import type { GameStateManager } from "@/features/game/services/gameState";
 import type { KeyHandlerProps } from "@/services/keyHandlerService";
 
 import {
@@ -21,23 +23,36 @@ const gridNavigationStrategy = new GridNavigationStrategy(
   BOARD_COLS,
 );
 
-const onQuit = () => {
-  gameManager.reset();
-  gameStateManager.reset();
+type GameNavigationProps = {
+  manager?: GameManager;
+  gameState?: GameStateManager;
 };
 
-const navigationController = new NavigationController(gridNavigationStrategy, [
-  new QuitCommand(onQuit),
-  new SelectFieldCommand(),
-  new ToggleHistoryCommand(),
-  new ToggleInfoCommand(),
-]);
+export const gameNavigation = ({
+  manager = gameManager,
+  gameState = gameStateManager,
+}: GameNavigationProps = {}) => {
+  const game = manager.getGame();
 
-const handleKey = ({ key, position }: KeyHandlerProps) => {
-  const currentPos = position ?? INITIAL_BOARD_POSITION;
-  return navigationController.handleKey(currentPos, key.name);
-};
+  const onQuit = () => {
+    manager.reset();
+    gameState.reset();
+  };
 
-export const gameNavigation = {
-  handleKey,
+  const navigationController = new NavigationController(
+    gridNavigationStrategy,
+    [
+      new QuitCommand(onQuit),
+      new SelectFieldCommand(game, gameState),
+      new ToggleHistoryCommand(game, gameState),
+      new ToggleInfoCommand(gameState),
+    ],
+  );
+
+  const handleKey = ({ key, position }: KeyHandlerProps) => {
+    const currentPos = position ?? INITIAL_BOARD_POSITION;
+    return navigationController.handleKey(currentPos, key.name);
+  };
+
+  return { handleKey };
 };

@@ -7,13 +7,13 @@ type PlayAgainProps = {
 };
 
 export const playAgain = async ({ game }: PlayAgainProps) => {
-  const isGameRunning = game.getStatus().status === "running";
+  const isGameOver = game.isGameOver();
 
-  if (!isGameRunning) {
+  if (isGameOver) {
     console.log(`\t`);
     await waitForInput("Press enter to play again ");
     game.reset();
   }
 
-  return !isGameRunning;
+  return isGameOver;
 };

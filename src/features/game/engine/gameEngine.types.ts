@@ -17,10 +17,6 @@ export interface GameEngine {
   isGameOver(): boolean;
 }
 
-export interface GameEngineFactory {
-  create(): GameEngine;
-}
-
 export interface IGameManager {
   getGame(): GameEngine;
   reset(): void;

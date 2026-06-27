@@ -1,2 +1,1 @@
-export { GameEntryMessageUI } from "./GameEntryMessageUI";
-export type { GameEntryMessageUIProps } from "./GameEntryMessageUI";
+export * from "./GameEntryMessageUI";

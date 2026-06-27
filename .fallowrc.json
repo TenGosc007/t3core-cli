@@ -4,19 +4,24 @@
   "ignoreDependencies": [
     "jiti",
     "eslint-import-resolver-typescript",
-    "tsconfig-paths"
+    "tsconfig-paths",
+    "vitest",
+    "@vitest/coverage-v8",
+    "vite-tsconfig-paths"
   ],
-  "ignorePatterns": ["**/*.generated.ts", "**/*.d.ts", "./package.json"],
+  "ignorePatterns": [
+    "**/*.generated.ts",
+    "**/*.d.ts",
+    "./package.json",
+    "vitest.config.mts",
+    "coverage/**",
+    "tests/setup.ts"
+  ],
   "duplicates": {
-    "minOccurrences": 3
+    "minOccurrences": 3,
+    "ignore": ["**/generated/**"]
   },
   "health": {
-    "maxCrap": 35
-  },
-  "rules": {
-    "unused-dependencies": "warn",
-    "unused-files": "warn",
-    "unused-exports": "warn",
-    "coverage-gaps": "off"
+    "coverage": "coverage/coverage-final.json"
   }
 }

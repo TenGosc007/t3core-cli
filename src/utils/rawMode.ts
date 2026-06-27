@@ -34,23 +34,3 @@ export const disableRawMode = (): boolean => {
   process.stdin.setRawMode(false);
   return true;
 };
-
-/**
- * Executes a function in raw mode context, automatically restoring
- * normal mode after completion (even on errors).
- *
- * @param fn Function to execute in raw mode
- * @returns Result of fn
- * @throws Errors from fn
- */
-export const withRawMode = <T>(fn: () => T): T => {
-  const wasEnabled = enableRawMode();
-
-  try {
-    return fn();
-  } finally {
-    if (wasEnabled) {
-      disableRawMode();
-    }
-  }
-};

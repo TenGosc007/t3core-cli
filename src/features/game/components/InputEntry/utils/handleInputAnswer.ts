@@ -1,33 +1,44 @@
 import type { GameEngine } from "@/features/game/engine";
 import type { NavKey } from "@/global/navigationKeys";
+import type { KeyHandler } from "@/services/keyHandlerService";
 
-import { gameKeyHandlerService } from "@/features/game/services/gameKeyHandlerService";
-import { gameStateManager } from "@/features/game/services/gameState";
+import {
+  gameStateManager,
+  type GameStateManager,
+} from "@/features/game/services/gameState";
 
 type HandleInputAnswerProps = {
   answer: number | NavKey | null;
   game: GameEngine;
+  gameState?: GameStateManager;
+  keyHandler?: KeyHandler | null;
 };
 
-const saveAnswer = ({ answer, game }: HandleInputAnswerProps) => {
+const saveAnswer = ({ answer, game, keyHandler }: HandleInputAnswerProps) => {
   if (answer == null || typeof answer === "string") return null;
 
-  const keyHandler = gameKeyHandlerService.get();
   if (keyHandler?.running) return null;
 
   game.makeMove(answer - 1);
 };
 
-export const handleInputAnswer = ({ answer, game }: HandleInputAnswerProps) => {
+export const handleInputAnswer = ({
+  answer,
+  game,
+  gameState,
+  keyHandler,
+}: HandleInputAnswerProps) => {
   if (answer == null || typeof answer === "string") return null;
 
-  if (gameStateManager.historyMode) {
+  const state = gameState ?? gameStateManager;
+
+  if (state.historyMode) {
     game.backToMove(answer);
-    gameStateManager.toggleHistoryMode();
+    state.toggleHistoryMode();
     return null;
   }
 
-  saveAnswer({ answer, game });
+  saveAnswer({ answer, game, keyHandler });
 
   return null;
 };

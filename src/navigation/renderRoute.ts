@@ -9,9 +9,9 @@ export const renderRoute = async (route: Routes): Promise<AppRoute> => {
     case ROUTES.MENU:
       return MenuView();
     case ROUTES.GAME:
-      return GameView();
+      return GameView({});
     case ROUTES.SETTINGS:
-      return SettingsView();
+      return SettingsView({});
 
     default:
       throw new Error(`Unknown route: ${route satisfies never}`);

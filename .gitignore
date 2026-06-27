@@ -5,3 +5,4 @@ package-lock.json
 .fallow/
 .devin/
 .DS_Store
+coverage
