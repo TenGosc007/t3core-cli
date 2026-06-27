@@ -6,7 +6,7 @@ on:
   pull_request:
 
 jobs:
-  test:
+  check:
     runs-on: ubuntu-latest
     permissions:
       security-events: write
@@ -26,6 +26,10 @@ jobs:
       - run: yarn lint
 
       - run: yarn ts:check
+
+      - run: yarn test:run
+
+      - run: yarn build
 
       - uses: fallow-rs/fallow@v2
         with:
