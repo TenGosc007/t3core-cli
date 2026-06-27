@@ -27,7 +27,7 @@ jobs:
 
       - run: yarn ts:check
 
-      - run: yarn test:run
+      - run: yarn test:coverage
 
       - run: yarn build
 
