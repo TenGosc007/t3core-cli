@@ -276,56 +276,6 @@
   resolved "https://registry.yarnpkg.com/@fallow-cli/darwin-x64/-/darwin-x64-2.91.0.tgz#7641c78dc70c4db0babec72be367af352a0b2b48"
   integrity sha512-/6DrBEDtDSAltXi7Bj5UoBG6yhoUCH2gAp/XXZ6Xr2ErLz9X088q6Kw9sfIyhDNpt9mpOQ8K/nsaE7EAjZfeZg==
 
-"@fallow-cli/fallow-cov-darwin-arm64@0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@fallow-cli/fallow-cov-darwin-arm64/-/fallow-cov-darwin-arm64-0.4.0.tgz#464c0ab98190b6ffed04607e8606270f28a51c65"
-  integrity sha512-x0yMrpPUR7uEX0U3Ad0xdBQHRP1onj64f+WxLbDPyJaX9oRNsdMOu8+lteGDD07v0YtylblZI1o51jKkvbIoww==
-
-"@fallow-cli/fallow-cov-darwin-x64@0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@fallow-cli/fallow-cov-darwin-x64/-/fallow-cov-darwin-x64-0.4.0.tgz#05d48ccf57ddbbc13d3549088d3cf74bd8bc9131"
-  integrity sha512-7dAYjD/FGxknPZyqKBytAcIf9Tu6lFdmLYZWO/4uRd+bhlxPDxcU1arfLwID28d1G9uDCUdtwelURWFu7L/5sw==
-
-"@fallow-cli/fallow-cov-linux-arm64-gnu@0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@fallow-cli/fallow-cov-linux-arm64-gnu/-/fallow-cov-linux-arm64-gnu-0.4.0.tgz#7f635bff6d19d0c5f629a4935be8e4ba2fcc4486"
-  integrity sha512-iUPZ5QRj2IrSQKrao7Sb8zTOXMR6SfI3kECJG+34/isvlm3F2oap2D2GyZ2v6jgMOFdpWYOAgc8mRBadki1Qgg==
-
-"@fallow-cli/fallow-cov-linux-arm64-musl@0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@fallow-cli/fallow-cov-linux-arm64-musl/-/fallow-cov-linux-arm64-musl-0.4.0.tgz#ac9debb860c544596e194c398f01f7911603fc6f"
-  integrity sha512-rfli2XkgPQL5h3Xle+yiqOIjEDd7RO6+xVJd93yXa+8Sd0cQrPBSbzJ97vqIf+JqgSkcL15nrNaR3xCorcE6mQ==
-
-"@fallow-cli/fallow-cov-linux-x64-gnu@0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@fallow-cli/fallow-cov-linux-x64-gnu/-/fallow-cov-linux-x64-gnu-0.4.0.tgz#9c0d4d513557663cddf272cb4c54d085134ec1d8"
-  integrity sha512-8U/96aCAFOH03Qm7ZMIzRQLPLZeTzvsyZJU3ioZODCackHuDC9pONyNWb7h9TEwmT/DCUsqKqjSVJR3a3h99pQ==
-
-"@fallow-cli/fallow-cov-linux-x64-musl@0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@fallow-cli/fallow-cov-linux-x64-musl/-/fallow-cov-linux-x64-musl-0.4.0.tgz#8deb0ac52bc12b7f1e1c717c92c3025479a251fe"
-  integrity sha512-lC9k4yQC+EdEZhQGFVP0jE9h/r9wbZ1qyvHzx5mhmAkO0rPjXMCYTl3rgvSVeyHJd/4NGHu4y4NS6UzJhG42PQ==
-
-"@fallow-cli/fallow-cov-win32-x64-msvc@0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@fallow-cli/fallow-cov-win32-x64-msvc/-/fallow-cov-win32-x64-msvc-0.4.0.tgz#6432fe7391cfc8389c5e96b4a80f6389901c238c"
-  integrity sha512-TcrsRpkVWD+at6T72LBSl6xXh1wxnJh+jB1NjKzO5tcccPlx+nm2q174Jzh6wwQfz8KMGuCyoSqrc4lHXzG4/w==
-
-"@fallow-cli/fallow-cov@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@fallow-cli/fallow-cov/-/fallow-cov-0.4.0.tgz#fcb5e550de06e04c07505fa91edec130f96233e1"
-  integrity sha512-8ZlY5Iek6+DkW5vtMPMAxx6Q407x7k0NEDsFD1mySXNlQaGRyfaJMCAKPVHJg/f25M/m6f+CNELz5nT6mn9hkA==
-  dependencies:
-    detect-libc "2.1.2"
-  optionalDependencies:
-    "@fallow-cli/fallow-cov-darwin-arm64" "0.4.0"
-    "@fallow-cli/fallow-cov-darwin-x64" "0.4.0"
-    "@fallow-cli/fallow-cov-linux-arm64-gnu" "0.4.0"
-    "@fallow-cli/fallow-cov-linux-arm64-musl" "0.4.0"
-    "@fallow-cli/fallow-cov-linux-x64-gnu" "0.4.0"
-    "@fallow-cli/fallow-cov-linux-x64-musl" "0.4.0"
-    "@fallow-cli/fallow-cov-win32-x64-msvc" "0.4.0"
-
 "@fallow-cli/linux-arm64-gnu@2.91.0":
   version "2.91.0"
   resolved "https://registry.yarnpkg.com/@fallow-cli/linux-arm64-gnu/-/linux-arm64-gnu-2.91.0.tgz#e40e8b82e831884b6339517279d1936e4a2c875c"
