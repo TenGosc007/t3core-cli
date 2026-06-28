@@ -1,14 +1,18 @@
 import { MemoryRouter, Route, Routes } from "react-router";
 
-import { ROUTES } from "./navigation";
+import { ROUTES, type RoutePath } from "./navigation";
 import { About } from "./screens/About";
 import { Game } from "./screens/Game";
 import { Home } from "./screens/Home";
 import { Settings } from "./screens/Settings";
 
-export const App = () => {
+type AppProps = {
+  initialScreen?: RoutePath;
+};
+
+export const App = ({ initialScreen = ROUTES.home }: AppProps) => {
   return (
-    <MemoryRouter initialEntries={[ROUTES.home]}>
+    <MemoryRouter initialEntries={[initialScreen]}>
       <Routes>
         <Route path={ROUTES.home} element={<Home />} />
         <Route path={ROUTES.settings} element={<Settings />} />
