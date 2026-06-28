@@ -1,19 +1,18 @@
-import { Box, Text, useApp, useInput } from "ink";
+import { MemoryRouter, Route, Routes } from "react-router";
+
+import { ROUTES } from "./navigation";
+import { Game } from "./screens/Game";
+import { Home } from "./screens/Home";
+import { Settings } from "./screens/Settings";
 
 export const App = () => {
-  const { exit } = useApp();
-  useInput((input) => {
-    if (input === "q") {
-      exit();
-    }
-  });
-
   return (
-    <Box flexDirection="column" padding={1}>
-      <Text bold color="cyan">
-        t3core-cli — Ink is running!!!
-      </Text>
-      <Text dimColor>Press q to quit the game</Text>
-    </Box>
+    <MemoryRouter>
+      <Routes>
+        <Route path={ROUTES.home} element={<Home />} />
+        <Route path={ROUTES.settings} element={<Settings />} />
+        <Route path={ROUTES.game} element={<Game />} />
+      </Routes>
+    </MemoryRouter>
   );
 };

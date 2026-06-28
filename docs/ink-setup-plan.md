@@ -99,11 +99,8 @@ Dodać konfigurację dla plików `.tsx`:
 
 ```text
 src/
-  app/
-    App.tsx              # root komponent — routing, layout, stan nawigacji
-    AppContext.tsx       # context provider (ustawienia, stan globalny)
-    index.ts             # export App + render()
-
+  App.tsx              # root komponent — routing, layout, stan nawigacji
+  AppContext.tsx       # context provider (ustawienia, stan globalny)
   features/
     menu/
       MenuView.tsx       # główny widok menu

@@ -65,6 +65,18 @@ export default defineConfig([
         },
       ],
       "no-console": "off",
+      "no-restricted-imports": [
+        "error",
+        {
+          paths: [
+            {
+              name: "react-router",
+              importNames: ["useNavigate"],
+              message: "Please import it from '@navigation'",
+            },
+          ],
+        },
+      ],
       "perfectionist/sort-imports": [
         "error",
         {

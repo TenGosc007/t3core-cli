@@ -4,4 +4,4 @@ import React from "react";
 
 import { App } from "./src/App";
 
-render(React.createElement(App), { alternateScreen: true });
+render(React.createElement(App));
