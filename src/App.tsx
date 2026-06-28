@@ -8,7 +8,7 @@ import { Settings } from "./screens/Settings";
 
 export const App = () => {
   return (
-    <MemoryRouter>
+    <MemoryRouter initialEntries={[ROUTES.home]}>
       <Routes>
         <Route path={ROUTES.home} element={<Home />} />
         <Route path={ROUTES.settings} element={<Settings />} />
