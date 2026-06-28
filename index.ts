@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-// fallow-ignore-file coverage-gaps
-import { app } from "./src-legacy/app";
+import { render } from "ink";
+import React from "react";
 
-console.clear();
-app();
+import { App } from "./src/App";
+
+render(React.createElement(App), { alternateScreen: true });
