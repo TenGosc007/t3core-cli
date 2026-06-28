@@ -67,10 +67,12 @@
     "vitest": "^4.1.9"
   },
   "dependencies": {
+    "conf": "^15.1.0",
     "ink": "^7.1.0",
     "meow": "^14.1.0",
     "react": "^19.2.7",
     "react-router": "^8.0.1",
-    "t3core": "^1.5.0"
+    "t3core": "^1.5.0",
+    "zustand": "^5.0.14"
   }
 }

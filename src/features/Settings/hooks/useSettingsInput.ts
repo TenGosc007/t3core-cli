@@ -2,17 +2,17 @@ import { useInput } from "ink";
 import { useState } from "react";
 
 import { useNavigate } from "@/navigation";
+import { useSettingsStore } from "@/services/settings/useSettingsStore";
 
-import {
-  DEFAULT_SETTINGS,
-  SETTINGS_OPTIONS,
-  type SettingsState,
-} from "../constants/settingsOptions";
+import { SETTINGS_OPTIONS } from "../constants/settingsOptions";
 
 export const useSettingsInput = () => {
   const navigate = useNavigate();
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [settings, setSettings] = useState<SettingsState>(DEFAULT_SETTINGS);
+
+  const settings = useSettingsStore();
+  const toggle = useSettingsStore((s) => s.toggle);
+  const reset = useSettingsStore((s) => s.reset);
 
   const toggleOption = (index: number) => {
     const option = SETTINGS_OPTIONS[index];
@@ -23,15 +23,12 @@ export const useSettingsInput = () => {
         navigate("/");
         return;
       }
-      setSettings(DEFAULT_SETTINGS);
+      reset();
       return;
     }
 
-    if (option.key) {
-      setSettings((prev) => ({
-        ...prev,
-        [option.key!]: !prev[option.key!],
-      }));
+    if (option.type === "toggle" && option.key) {
+      toggle(option.key);
     }
   };
 

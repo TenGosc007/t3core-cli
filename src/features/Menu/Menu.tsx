@@ -19,8 +19,7 @@ export const Menu = () => {
           <MenuItem
             key={option.label}
             label={option.label}
-            index={index}
-            selectedIndex={selectedIndex}
+            selected={index === selectedIndex}
           />
         ))}
       </Box>

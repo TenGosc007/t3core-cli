@@ -10,4 +10,5 @@ export default defineConfig({
   splitting: false,
   sourcemap: false,
   loader: { ".tsx": "tsx" },
+  external: ["conf"],
 });

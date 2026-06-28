@@ -1,17 +1,25 @@
 export type SettingsState = {
   beep: boolean;
-  style: boolean;
   arrowKeyNavigation: boolean;
 };
 
-export type SettingsOption = {
+type BaseSettingsOption = {
   id: number;
   label: string;
-  type: "toggle" | "command";
-  key?: keyof SettingsState;
   emphasis?: boolean;
   disabled?: (settings: SettingsState) => boolean;
 };
+
+type ToggleSettingsOption = BaseSettingsOption & {
+  type: "toggle";
+  key: "beep" | "arrowKeyNavigation";
+};
+
+type CommandSettingsOption = BaseSettingsOption & {
+  type: "command";
+};
+
+export type SettingsOption = ToggleSettingsOption | CommandSettingsOption;
 
 export const SETTINGS_OPTIONS: readonly SettingsOption[] = [
   {
@@ -22,25 +30,18 @@ export const SETTINGS_OPTIONS: readonly SettingsOption[] = [
   },
   {
     id: 2,
-    label: "Style",
-    type: "toggle",
-    key: "style",
-  },
-  {
-    id: 3,
     label: "Use Arrow Keys",
     type: "toggle",
     key: "arrowKeyNavigation",
-    disabled: (settings) => !settings.style,
   },
   {
-    id: 4,
+    id: 3,
     label: "Reset to default",
     type: "command",
     emphasis: true,
   },
   {
-    id: 5,
+    id: 4,
     label: "Back to Menu",
     type: "command",
   },
@@ -48,6 +49,5 @@ export const SETTINGS_OPTIONS: readonly SettingsOption[] = [
 
 export const DEFAULT_SETTINGS: SettingsState = {
   beep: true,
-  style: true,
   arrowKeyNavigation: true,
 };
