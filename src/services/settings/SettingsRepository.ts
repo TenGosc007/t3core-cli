@@ -2,7 +2,11 @@ import type { SettingsState } from "@/features/Settings/constants/settingsOption
 
 import Conf from "conf";
 
-import { DEFAULT_SETTINGS } from "@/features/Settings/constants/settingsOptions";
+import {
+  DEFAULT_SETTINGS,
+  SETTINGS_KEYS,
+} from "@/features/Settings/constants/settingsOptions";
+import packageJson from "package.json";
 
 export type SettingsRepository = {
   load: () => SettingsState;
@@ -18,22 +22,21 @@ export const createSettingsRepository = (
   const store =
     conf ??
     new Conf<SettingsRecord>({
-      projectName: "t3core-cli",
+      projectName: packageJson.name ?? "t3core-cli",
       defaults: DEFAULT_SETTINGS as SettingsRecord,
     });
 
   return {
     load: () => ({
-      beep: store.get("beep") as boolean,
-
-      arrowKeyNavigation: store.get("arrowKeyNavigation") as boolean,
+      beep: store.get(SETTINGS_KEYS.beep) as boolean,
+      arrowKeyNavigation: store.get(
+        SETTINGS_KEYS.arrowKeyNavigation,
+      ) as boolean,
     }),
     save: (settings) => {
-      store.set("beep", settings.beep);
-      store.set("arrowKeyNavigation", settings.arrowKeyNavigation);
+      store.set(SETTINGS_KEYS.beep, settings.beep);
+      store.set(SETTINGS_KEYS.arrowKeyNavigation, settings.arrowKeyNavigation);
     },
     clear: () => store.clear(),
   };
 };
-
-export const settingsRepository = createSettingsRepository();
