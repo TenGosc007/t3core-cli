@@ -47,11 +47,11 @@ export const SETTINGS_OPTIONS: readonly SettingsOption[] = [
     id: 3,
     label: "Reset to default",
     type: "command",
-    emphasis: true,
   },
   {
     id: 4,
     label: "Back to Menu",
     type: "command",
+    emphasis: true,
   },
 ];

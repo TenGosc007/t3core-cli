@@ -30,7 +30,9 @@ const cli = meow<{
 );
 
 const getCli = () => ({
-  initialScreen: ROUTES[cli.flags.screen as keyof typeof ROUTES] ?? ROUTES.home,
+  initialScreen:
+    ROUTES[cli.flags.screen.toLowerCase() as keyof typeof ROUTES] ??
+    ROUTES.home,
   flags: cli.flags,
   showHelp: () => cli.showHelp(),
 });
