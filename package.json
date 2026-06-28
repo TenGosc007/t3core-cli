@@ -17,8 +17,7 @@
     "fallow": "fallow health --coverage coverage/coverage-final.json",
     "publish:dry": "npm run build && npm publish --dry-run",
     "release": "env -i HOME=$HOME PATH=$PATH bash scripts/release.sh",
-    "dev:hot:build": "tsup --watch --no-minify --sourcemap",
-    "dev:hot:run": "node --watch dist/index.js",
+    "dev:ink": "tsup --no-minify --sourcemap && trap 'kill %1' EXIT; tsup --watch --no-minify --sourcemap & node --watch dist/index.js",
     "lint:tsx": "eslint src/**/*.tsx tests/**/*.tsx",
     "build:dev": "tsup --no-minify --sourcemap"
   },
@@ -50,6 +49,7 @@
     "@types/node": "^25.6.0",
     "@types/react": "^19.2.17",
     "@vitest/coverage-v8": "^4.1.9",
+    "concurrently": "^10.0.3",
     "eslint": "^10.3.0",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import-x": "^4.16.2",
