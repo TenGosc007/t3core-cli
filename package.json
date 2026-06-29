@@ -6,7 +6,7 @@
   "preferGlobal": true,
   "scripts": {
     "start": "tsx index.ts",
-    "dev:ink": "tsup --no-minify --sourcemap && trap 'kill %1' EXIT; tsup --watch --no-minify --sourcemap & node --watch dist/index.js",
+    "dev": "tsup --no-minify --sourcemap && trap 'kill %1' EXIT; tsup --watch --no-minify --sourcemap & node --watch dist/index.js",
     "build": "rm -rf dist && tsup",
     "build:watch": "tsup --watch",
     "build:dev": "tsup --no-minify --sourcemap",

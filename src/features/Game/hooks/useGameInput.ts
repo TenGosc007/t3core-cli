@@ -4,6 +4,7 @@ import { useInput, type Key } from "ink";
 import { useReducer } from "react";
 
 import { ROUTES, useNavigate } from "@/navigation";
+import { beep } from "@/services/settings";
 import { useSettingsStore } from "@/services/settings/useSettingsStore";
 
 import {
@@ -61,7 +62,7 @@ export function useGameInput(engine: GameEngine) {
     }
   });
 
-  return { gameState, ui };
+  return { gameState, ui, arrowKeyNavigation };
 }
 
 function handleArrowInput(
@@ -99,6 +100,7 @@ function handleArrowInput(
     } else {
       engine.savePlayerMove(ui.selectedCell);
       dispatch({ type: "SET_ERROR", error: null });
+      beep();
     }
   }
 }
@@ -121,6 +123,7 @@ function handleNumberInput(
     } else {
       engine.savePlayerMove(index);
       dispatch({ type: "SET_ERROR", error: null });
+      beep();
     }
   }
 }

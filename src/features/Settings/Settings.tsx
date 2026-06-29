@@ -5,7 +5,7 @@ import { SETTINGS_OPTIONS } from "./constants/settingsOptions";
 import { useSettingsInput } from "./hooks/useSettingsInput";
 
 export const Settings = () => {
-  const { selectedIndex, settings } = useSettingsInput();
+  const { selectedIndex, settings, arrowKeyNavigation } = useSettingsInput();
 
   return (
     <Box flexDirection="column">
@@ -27,7 +27,13 @@ export const Settings = () => {
         ))}
       </Box>
       <Box marginTop={1}>
-        <Text dimColor>↑↓ Navigate · Enter Toggle · q Back to Menu</Text>
+        {arrowKeyNavigation ? (
+          <Text dimColor>↑↓ Navigate · Enter Toggle · q Back to Menu</Text>
+        ) : (
+          <Text dimColor>
+            Type 1-{SETTINGS_OPTIONS.length} to toggle · q Back to Menu
+          </Text>
+        )}
       </Box>
     </Box>
   );

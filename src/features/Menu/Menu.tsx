@@ -7,7 +7,7 @@ import { MENU_OPTIONS } from "./constants/menuOptions";
 import { useMenuInput } from "./hooks/useMenuInput";
 
 export const Menu = () => {
-  const { selectedIndex } = useMenuInput();
+  const { selectedIndex, arrowKeyNavigation } = useMenuInput();
 
   return (
     <Box flexDirection="column">
@@ -24,7 +24,11 @@ export const Menu = () => {
         ))}
       </Box>
       <Box marginTop={1}>
-        <Text dimColor>↑↓ Navigate · Enter Select · q Quit</Text>
+        {arrowKeyNavigation ? (
+          <Text dimColor>↑↓ Navigate · Enter Select · q Quit</Text>
+        ) : (
+          <Text dimColor>Type 1-{MENU_OPTIONS.length} to select · q Quit</Text>
+        )}
       </Box>
     </Box>
   );
