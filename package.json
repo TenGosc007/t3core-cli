@@ -10,7 +10,7 @@
     "build": "rm -rf dist && tsup",
     "build:watch": "tsup --watch",
     "build:dev": "tsup --no-minify --sourcemap",
-    "lint": "eslint src src/**/*.tsx tests/**/*.tsx",
+    "lint": "eslint src tests",
     "ts:check": "tsc --noEmit",
     "test": "vitest",
     "test:run": "vitest run",
