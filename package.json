@@ -16,7 +16,8 @@
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
     "fallow": "fallow health --coverage coverage/coverage-final.json",
-    "release": "env -i HOME=$HOME PATH=$PATH bash scripts/release.sh"
+    "release": "env -i HOME=$HOME PATH=$PATH bash scripts/release.sh",
+    "canary-release": "env -i HOME=$HOME PATH=$PATH bash scripts/canary-release.sh"
   },
   "keywords": [
     "tic-tac-toe",
