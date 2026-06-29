@@ -6,20 +6,17 @@
   "preferGlobal": true,
   "scripts": {
     "start": "tsx index.ts",
-    "dev": "tsx watch index.ts",
+    "dev:ink": "tsup --no-minify --sourcemap && trap 'kill %1' EXIT; tsup --watch --no-minify --sourcemap & node --watch dist/index.js",
     "build": "rm -rf dist && tsup",
     "build:watch": "tsup --watch",
-    "lint": "eslint src tests vitest.config.mts",
+    "build:dev": "tsup --no-minify --sourcemap",
+    "lint": "eslint src src/**/*.tsx tests/**/*.tsx",
     "ts:check": "tsc --noEmit",
     "test": "vitest",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
     "fallow": "fallow health --coverage coverage/coverage-final.json",
-    "publish:dry": "npm run build && npm publish --dry-run",
-    "release": "env -i HOME=$HOME PATH=$PATH bash scripts/release.sh",
-    "dev:ink": "tsup --no-minify --sourcemap && trap 'kill %1' EXIT; tsup --watch --no-minify --sourcemap & node --watch dist/index.js",
-    "lint:tsx": "eslint src/**/*.tsx tests/**/*.tsx",
-    "build:dev": "tsup --no-minify --sourcemap"
+    "release": "env -i HOME=$HOME PATH=$PATH bash scripts/release.sh"
   },
   "keywords": [
     "tic-tac-toe",
