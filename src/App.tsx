@@ -1,5 +1,6 @@
 import { MemoryRouter, Route, Routes } from "react-router";
 
+import { Header } from "./components/Header";
 import { ROUTES, type RoutePath } from "./navigation";
 import { About } from "./screens/About";
 import { Game } from "./screens/Game";
@@ -12,13 +13,16 @@ type AppProps = {
 
 export const App = ({ initialScreen = ROUTES.home }: AppProps) => {
   return (
-    <MemoryRouter initialEntries={[initialScreen]}>
-      <Routes>
-        <Route path={ROUTES.home} element={<Home />} />
-        <Route path={ROUTES.settings} element={<Settings />} />
-        <Route path={ROUTES.game} element={<Game />} />
-        <Route path={ROUTES.about} element={<About />} />
-      </Routes>
-    </MemoryRouter>
+    <>
+      <Header />
+      <MemoryRouter initialEntries={[initialScreen]}>
+        <Routes>
+          <Route path={ROUTES.home} element={<Home />} />
+          <Route path={ROUTES.settings} element={<Settings />} />
+          <Route path={ROUTES.game} element={<Game />} />
+          <Route path={ROUTES.about} element={<About />} />
+        </Routes>
+      </MemoryRouter>
+    </>
   );
 };
