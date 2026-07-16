@@ -31,20 +31,20 @@ export const SettingsItem = ({
 
   return (
     <Box gap={1}>
-      <Text color={isSelected ? "green" : undefined}>
+      <Text color={isSelected ? "magenta" : undefined}>
         {isSelected ? "❯" : " "}
       </Text>
-      <Text color="yellow">{option.id}</Text>
+      {/* <Text color="yellow">{option.id}</Text> */}
       <Text
         bold={isSelected}
         color={
           isDisabled
             ? "gray"
             : option.emphasis
-              ? "red"
+              ? "cyan"
               : isSelected
-                ? "green"
-                : "magenta"
+                ? "magenta"
+                : undefined
         }
       >
         {option.label}

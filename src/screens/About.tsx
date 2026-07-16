@@ -1,7 +1,5 @@
 import { Box, Newline, Text, useInput } from "ink";
 
-import { AppVersion } from "@/components/AppVersion/AppVersion";
-
 import { ROUTES, useNavigate } from "../navigation";
 
 export const About = () => {
@@ -14,20 +12,19 @@ export const About = () => {
   return (
     <Box flexDirection="column">
       <Box
-        borderTop={false}
         borderLeft={false}
         borderRight={false}
-        borderStyle="single"
-        borderColor="gray"
+        borderStyle="double"
+        borderDimColor
       >
-        <Text bold color="cyan">
-          About
+        <Text bold>
+          <Text color="cyan">❯</Text> About
         </Text>
       </Box>
       <Box marginTop={1}>
         <Text>Tic Tac Toe CLI — built with Ink & React</Text>
       </Box>
-      <AppVersion />
+      {/* <AppVersion /> */}
       <Box flexDirection="column" marginTop={1}>
         <Text bold>Packages:</Text>
         <Text color="magenta" underline>

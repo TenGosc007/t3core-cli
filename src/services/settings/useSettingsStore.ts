@@ -9,7 +9,7 @@ import {
   type SettingsRepository,
 } from "./SettingsRepository";
 
-type SettingsStore = SettingsState & {
+export type SettingsStore = SettingsState & {
   toggle: (key: "beep" | "arrowKeyNavigation") => void;
   reset: () => void;
   load: () => void;

@@ -1,6 +1,6 @@
 import { MemoryRouter, Route, Routes } from "react-router";
 
-import { Header } from "./components/Header";
+import { Layout } from "./components/Layout";
 import { ROUTES, type RoutePath } from "./navigation";
 import { About } from "./screens/About";
 import { Game } from "./screens/Game";
@@ -13,8 +13,7 @@ type AppProps = {
 
 export const App = ({ initialScreen = ROUTES.home }: AppProps) => {
   return (
-    <>
-      <Header />
+    <Layout>
       <MemoryRouter initialEntries={[initialScreen]}>
         <Routes>
           <Route path={ROUTES.home} element={<Home />} />
@@ -23,6 +22,6 @@ export const App = ({ initialScreen = ROUTES.home }: AppProps) => {
           <Route path={ROUTES.about} element={<About />} />
         </Routes>
       </MemoryRouter>
-    </>
+    </Layout>
   );
 };

@@ -8,21 +8,14 @@ export type CliFlags = {
   mobile: boolean | undefined;
 };
 
-const cli = meow<{
-  screen: {
-    type: "string";
-    default: keyof typeof ROUTES;
-  };
-  sound: {
-    type: "boolean";
-  };
-  arrowKey: {
-    type: "boolean";
-  };
-  mobile: {
-    type: "boolean";
-  };
-}>(
+type MeowType = {
+  screen: { type: "string"; default: keyof typeof ROUTES };
+  sound: { type: "boolean"; default: boolean };
+  arrowKey: { type: "boolean"; default: boolean };
+  mobile: { type: "boolean"; default: boolean };
+};
+
+const cli = meow<MeowType>(
   `
   Usage
     $ t3core-cli
@@ -47,12 +40,15 @@ const cli = meow<{
       },
       sound: {
         type: "boolean",
+        default: true,
       },
       arrowKey: {
         type: "boolean",
+        default: true,
       },
       mobile: {
         type: "boolean",
+        default: false,
       },
     },
   },
