@@ -10,7 +10,7 @@ export const Menu = () => {
   return (
     <Box flexDirection="column">
       <MenuList selectedIndex={selectedIndex} />
-      <Box marginTop={1}>
+      <Box marginTop={2}>
         {arrowKeyNavigation ? (
           <Text dimColor>↑↓ Navigate · Enter Select</Text>
         ) : (

@@ -15,7 +15,7 @@ export const Home = () => {
   });
 
   return (
-    <Box flexDirection="column">
+    <Box paddingX={2} paddingY={1}>
       <Menu />
     </Box>
   );
