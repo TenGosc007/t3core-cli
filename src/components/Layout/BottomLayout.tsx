@@ -8,15 +8,15 @@ const appVersion = getAppVersion();
 
 export const BottomLayout = () => {
   const { columns } = useWindowSize();
-  const count = columns - appVersion.length - 6;
+  const count = columns - appVersion.length - 4;
 
   return (
     <Text color={layoutStyles.color} backgroundColor={layoutStyles.background}>
-      ╰{"─".repeat(count)}{" "}
+      ╰{"─".repeat(count * 0.98)}
       <Text dimColor color="white">
-        v{appVersion}
-      </Text>{" "}
-      ─╯
+        {` v${appVersion} `}
+      </Text>
+      {"─".repeat(count * 0.02)}╯
     </Text>
   );
 };
