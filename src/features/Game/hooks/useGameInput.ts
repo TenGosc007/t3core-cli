@@ -3,7 +3,6 @@ import type { GameEngine } from "../engine/gameEngine";
 import { useInput, type Key } from "ink";
 import { useReducer } from "react";
 
-import { ROUTES, useNavigate } from "@/navigation";
 import { beep } from "@/services/settings";
 import { useSettingsStore } from "@/services/settings/useSettingsStore";
 
@@ -22,16 +21,10 @@ export function useGameInput(engine: GameEngine) {
   const gameState = useGameStore(engine);
   const [ui, dispatch] = useReducer(uiReducer, undefined, createInitialUIState);
   const arrowKeyNavigation = useSettingsStore((s) => s.arrowKeyNavigation);
-  const navigate = useNavigate();
 
   const isGameOver = !engine.isRunning;
 
   useInput((input, key) => {
-    if (input === "q") {
-      navigate(ROUTES.home);
-      return;
-    }
-
     if (isGameOver) {
       if (key.return) {
         engine.reset();

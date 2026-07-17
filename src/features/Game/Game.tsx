@@ -1,8 +1,9 @@
-import { Box, Text } from "ink";
+import { Box, Newline, Text } from "ink";
 import { useRef } from "react";
 
+import { Container } from "@/components/Container";
+
 import { Board } from "./components/Board";
-import { GameHeader } from "./components/GameHeader";
 import { GameHint } from "./components/GameHint";
 import { GameInfo } from "./components/GameInfo";
 import { GameStatus } from "./components/GameStatus";
@@ -18,29 +19,31 @@ export const Game = () => {
   const isRunning = engineRef.current.isRunning;
 
   return (
-    <Box flexDirection="column">
-      <GameHeader />
+    <Box flexDirection="column" width="100%">
       <GameInfo showInfo={ui.showInfo} />
-      <Box marginTop={1} justifyContent="center">
+
+      <Container justifyContent="center">
+        <PlayerPrompt currentPlayer={gameState.currentPlayer} />
         <Board board={gameState.board} selectedCell={ui.selectedCell} />
-      </Box>
-      <GameStatus gameStatus={gameState.gameStatus} />
-      {isRunning && (
-        <>
-          <PlayerPrompt currentPlayer={gameState.currentPlayer} />
-          <GameHint
-            movesCount={engineRef.current.movesCount}
-            useArrowKeys={arrowKeyNavigation && !ui.historyMode}
-            isHistoryMode={ui.historyMode}
-          />
-          <InputError error={ui.inputError} />
-        </>
-      )}
-      {!isRunning && (
-        <Box marginTop={1}>
-          <Text dimColor>Enter: play again · q: back to menu</Text>
-        </Box>
-      )}
+        <GameStatus gameStatus={gameState.gameStatus} />
+
+        {isRunning && (
+          <>
+            {ui.inputError ? <InputError error={ui.inputError} /> : <Newline />}
+            <GameHint
+              movesCount={engineRef.current.movesCount}
+              useArrowKeys={arrowKeyNavigation && !ui.historyMode}
+              isHistoryMode={ui.historyMode}
+            />
+          </>
+        )}
+
+        {!isRunning && (
+          <Box marginTop={1}>
+            <Text dimColor>Enter: play again · q: back to menu</Text>
+          </Box>
+        )}
+      </Container>
     </Box>
   );
 };

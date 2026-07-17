@@ -18,14 +18,13 @@ export const GameHint = ({
       : "Select the number of the field (1-9)";
 
   return (
-    <Box flexDirection="column">
-      <Text>{instruction}</Text>
+    <Box flexDirection="column" marginTop={1}>
+      <Text dimColor>{instruction}</Text>
       {movesCount > 0 && (
         <Text dimColor>
           Press "h" to {isHistoryMode ? "hide" : "show"} game history
         </Text>
       )}
-      <Text dimColor>Press "q" to back to the main menu</Text>
     </Box>
   );
 };

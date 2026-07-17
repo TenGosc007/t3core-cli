@@ -10,7 +10,7 @@ export const InputError = ({ error }: InputErrorProps) => {
   }
 
   return (
-    <Box marginTop={1}>
+    <Box justifyContent="center" marginTop={1}>
       <Text color="red">{error}</Text>
     </Box>
   );

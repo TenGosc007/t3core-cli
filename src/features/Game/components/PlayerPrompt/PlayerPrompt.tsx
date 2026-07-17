@@ -12,10 +12,9 @@ export const PlayerPrompt = ({ currentPlayer }: PlayerPromptProps) => {
   const color = isX ? "green" : "red";
 
   return (
-    <Box marginTop={1}>
+    <Box justifyContent="center" gap={1}>
       <Text underline>Player:</Text>
       <Text color={color} bold>
-        {" "}
         {currentPlayer}
       </Text>
     </Box>

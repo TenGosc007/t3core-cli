@@ -1,11 +1,9 @@
-import { Box } from "ink";
+import { useGoBack } from "@/hooks/useGoBack";
 
 import { Game as GameView } from "../features/Game";
 
 export const Game = () => {
-  return (
-    <Box flexDirection="column">
-      <GameView />
-    </Box>
-  );
+  useGoBack();
+
+  return <GameView />;
 };
