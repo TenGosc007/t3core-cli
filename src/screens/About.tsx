@@ -1,26 +1,15 @@
-import { Box, Newline, Text, useInput } from "ink";
+import { Box, Newline, Text } from "ink";
 
-import { ROUTES, useNavigate } from "../navigation";
+import { Container } from "@/components/Container";
+import { Header } from "@/components/Header";
+import { useGoBack } from "@/hooks/useGoBack";
 
 export const About = () => {
-  const navigate = useNavigate();
-
-  useInput((_, key) => {
-    if (key.return) navigate(ROUTES.home);
-  });
+  useGoBack({ specialKeys: ["return"] });
 
   return (
-    <Box flexDirection="column">
-      <Box
-        borderLeft={false}
-        borderRight={false}
-        borderStyle="double"
-        borderDimColor
-      >
-        <Text bold>
-          <Text color="cyan">❯</Text> About
-        </Text>
-      </Box>
+    <Container>
+      <Header label="About" />
       <Box marginTop={1}>
         <Text>Tic Tac Toe CLI — built with Ink & React</Text>
       </Box>
@@ -36,6 +25,6 @@ export const About = () => {
       </Box>
       <Newline />
       <Text dimColor>Press Enter to go back</Text>
-    </Box>
+    </Container>
   );
 };

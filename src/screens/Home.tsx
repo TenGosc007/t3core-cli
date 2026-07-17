@@ -1,5 +1,6 @@
-import { Box, useApp, useInput } from "ink";
+import { useApp, useInput } from "ink";
 
+import { Container } from "@/components/Container";
 import { beep } from "@/services/settings";
 
 import { Menu } from "../features/Menu/Menu";
@@ -15,8 +16,8 @@ export const Home = () => {
   });
 
   return (
-    <Box paddingX={2} paddingY={1}>
+    <Container>
       <Menu />
-    </Box>
+    </Container>
   );
 };

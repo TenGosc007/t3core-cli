@@ -59,10 +59,6 @@ export const useSettingsInput = () => {
     if (key.return) {
       toggleOption(selectedIndex);
     }
-
-    if (input === "q") {
-      navigate("/");
-    }
   });
 
   return {

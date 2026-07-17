@@ -1,6 +1,7 @@
 import { Box, Text } from "ink";
 
-import { SettingsHeader } from "./components/SettingsHeader";
+import { Header } from "@/components/Header";
+
 import { SettingsList } from "./components/SettingsList";
 import { SETTINGS_OPTIONS } from "./constants/settingsOptions";
 import { useSettingsInput } from "./hooks/useSettingsInput";
@@ -9,8 +10,9 @@ export const SettingsView = () => {
   const { selectedIndex, settings, arrowKeyNavigation } = useSettingsInput();
 
   return (
-    <Box flexDirection="column">
-      <SettingsHeader />
+    <>
+      <Header label="Settings" />
+
       <SettingsList selectedIndex={selectedIndex} settings={settings} />
 
       <Box marginTop={1}>
@@ -22,6 +24,6 @@ export const SettingsView = () => {
           </Text>
         )}
       </Box>
-    </Box>
+    </>
   );
 };

@@ -15,3 +15,11 @@ export const useNavigate = () => {
 
   return typedNavigate;
 };
+
+export const useNavigateBack = () => {
+  const navigate = useNavigateOriginal();
+
+  return () => {
+    navigate(-1);
+  };
+};
