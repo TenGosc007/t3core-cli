@@ -1,160 +1,84 @@
 import type { GameEngine } from "../engine/gameEngine";
+import type { UIState } from "../reducers/gameReducer";
+import type { GameCommands } from "./useGameViewModel";
 
 import { useInput, type Key } from "ink";
-import { useReducer } from "react";
 
-import { beep } from "@/services/settings";
 import { useSettingsStore } from "@/services/settings/useSettingsStore";
 
-import {
-  createInitialUIState,
-  uiReducer,
-  type UIAction,
-  type UIState,
-} from "../reducers/gameReducer";
-import { validateMove } from "../validation";
-import { useGameStore } from "./useGameStore";
-
-type Dispatch = React.Dispatch<UIAction>;
+import { useGameViewModel } from "./useGameViewModel";
 
 export function useGameInput(engine: GameEngine) {
-  const gameState = useGameStore(engine);
-  const [ui, dispatch] = useReducer(uiReducer, undefined, createInitialUIState);
+  const { gameState, ui, commands } = useGameViewModel(engine);
   const arrowKeyNavigation = useSettingsStore((s) => s.arrowKeyNavigation);
 
-  const isGameOver = !engine.isRunning;
-
   useInput((input, key) => {
-    if (isGameOver) {
-      if (key.return) {
-        engine.reset();
-        dispatch({ type: "RESET" });
-      }
+    if (!engine.isRunning) {
+      if (key.return) commands.reset();
       return;
     }
 
     if (input === "i") {
-      dispatch({ type: "TOGGLE_INFO" });
+      commands.toggleInfo();
       return;
     }
 
     if (input === "h" && engine.movesCount > 0) {
-      dispatch({ type: "TOGGLE_HISTORY" });
+      commands.toggleHistory();
       return;
     }
 
     if (ui.historyMode) {
-      handleHistoryInput(input, key, engine, ui, dispatch);
+      parseHistoryInput(input, key, ui, commands);
       return;
     }
 
     if (arrowKeyNavigation) {
-      handleArrowInput(input, key, engine, ui, dispatch);
+      parseArrowInput(input, key, ui, commands);
     } else {
-      handleNumberInput(input, engine, dispatch);
+      parseNumberInput(input, commands);
     }
   });
 
   return { gameState, ui, arrowKeyNavigation };
 }
 
-function handleArrowInput(
+function parseArrowInput(
   input: string,
   key: Key,
-  engine: GameEngine,
   ui: UIState,
-  dispatch: Dispatch,
+  commands: GameCommands,
 ) {
-  if (key.upArrow) {
-    dispatch({ type: "NAVIGATE", direction: "up" });
-    return;
-  }
-  if (key.downArrow) {
-    dispatch({ type: "NAVIGATE", direction: "down" });
-    return;
-  }
-  if (key.leftArrow) {
-    dispatch({ type: "NAVIGATE", direction: "left" });
-    return;
-  }
-  if (key.rightArrow) {
-    dispatch({ type: "NAVIGATE", direction: "right" });
-    return;
-  }
+  if (key.upArrow) return commands.navigate("up");
+  if (key.downArrow) return commands.navigate("down");
+  if (key.leftArrow) return commands.navigate("left");
+  if (key.rightArrow) return commands.navigate("right");
 
   if (key.return || input === " ") {
-    const error = validateMove({
-      index: ui.selectedCell,
-      game: engine,
-      isHistoryMode: false,
-    });
-    if (error) {
-      dispatch({ type: "SET_ERROR", error });
-    } else {
-      engine.savePlayerMove(ui.selectedCell);
-      dispatch({ type: "SET_ERROR", error: null });
-      beep();
-    }
+    commands.makeMove(ui.selectedCell);
   }
 }
 
-function handleNumberInput(
-  input: string,
-  engine: GameEngine,
-  dispatch: Dispatch,
-) {
+function parseNumberInput(input: string, commands: GameCommands) {
   const num = Number.parseInt(input, 10);
   if (num >= 1 && num <= 9) {
-    const index = num - 1;
-    const error = validateMove({
-      index,
-      game: engine,
-      isHistoryMode: false,
-    });
-    if (error) {
-      dispatch({ type: "SET_ERROR", error });
-    } else {
-      engine.savePlayerMove(index);
-      dispatch({ type: "SET_ERROR", error: null });
-      beep();
-    }
+    commands.makeMove(num - 1);
   }
 }
 
-function handleHistoryInput(
+function parseHistoryInput(
   input: string,
   key: Key,
-  engine: GameEngine,
   ui: UIState,
-  dispatch: Dispatch,
+  commands: GameCommands,
 ) {
   if (key.return || input === " ") {
-    const error = validateMove({
-      index: ui.selectedCell,
-      game: engine,
-      isHistoryMode: true,
-    });
-    if (error) {
-      dispatch({ type: "SET_ERROR", error });
-    } else {
-      engine.backToMove(ui.selectedCell);
-      dispatch({ type: "SET_ERROR", error: null });
-    }
+    commands.backToMove(ui.selectedCell);
     return;
   }
 
   const num = Number.parseInt(input, 10);
   if (!Number.isNaN(num)) {
-    const error = validateMove({
-      index: num,
-      game: engine,
-      isHistoryMode: true,
-    });
-    if (error) {
-      dispatch({ type: "SET_ERROR", error });
-    } else {
-      engine.backToMove(num);
-      dispatch({ type: "SET_ERROR", error: null });
-    }
+    commands.backToMove(num);
   }
 }
