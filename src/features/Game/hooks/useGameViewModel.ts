@@ -11,7 +11,7 @@ import { useGameStore } from "./useGameStore";
 
 export type GameCommands = {
   makeMove: (index: number) => void;
-  backToMove: (index: number) => void;
+  backToMove: (index: number) => boolean;
   navigate: (direction: Direction) => void;
   toggleInfo: () => void;
   toggleHistory: () => void;
@@ -45,10 +45,11 @@ export const useGameViewModel = (engine: GameEngine) => {
     });
     if (error) {
       dispatch({ type: "SET_ERROR", error });
-      return;
+      return false;
     }
     engine.backToMove(index);
     dispatch({ type: "SET_ERROR", error: null });
+    return true;
   };
 
   const navigate = (direction: Direction) =>

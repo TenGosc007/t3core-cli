@@ -4,6 +4,7 @@ import type { GameCommands } from "./useGameViewModel";
 
 import { useInput, type Key } from "ink";
 
+import { beep } from "@/services/settings";
 import { useSettingsStore } from "@/services/settings/useSettingsStore";
 
 import { useGameViewModel } from "./useGameViewModel";
@@ -29,7 +30,11 @@ export function useGameInput(engine: GameEngine) {
     }
 
     if (ui.historyMode) {
-      parseHistoryInput(input, key, ui, commands);
+      const isSuccess = parseHistoryInput(input, commands);
+      if (isSuccess) {
+        beep();
+        commands.toggleHistory();
+      }
       return;
     }
 
@@ -66,19 +71,11 @@ function parseNumberInput(input: string, commands: GameCommands) {
   }
 }
 
-function parseHistoryInput(
-  input: string,
-  key: Key,
-  ui: UIState,
-  commands: GameCommands,
-) {
-  if (key.return || input === " ") {
-    commands.backToMove(ui.selectedCell);
-    return;
-  }
-
+function parseHistoryInput(input: string, commands: GameCommands) {
   const num = Number.parseInt(input, 10);
   if (!Number.isNaN(num)) {
-    commands.backToMove(num);
+    return commands.backToMove(num);
   }
+
+  return false;
 }

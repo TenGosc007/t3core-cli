@@ -16,7 +16,7 @@ export type GameEngine = {
   readonly isRunning: boolean;
   isFieldSelectedByIndex: (index: number) => boolean;
   savePlayerMove: (index: number) => void;
-  backToMove: (index: number) => void;
+  backToMove: (index: number) => boolean;
   reset: () => void;
   subscribe: (callback: () => void) => () => void;
   getSnapshot: () => GameEventPayload;
@@ -50,7 +50,8 @@ export const createGameEngine = (game: Game = new Game()): GameEngine => {
       game.savePlayerMove(index);
     },
     backToMove: (index) => {
-      game.backToMove(index);
+      const status = game.backToMove(index);
+      return status === "success";
     },
     reset: () => {
       game.reset();

@@ -20,9 +20,10 @@ export const GameHint = ({
   return (
     <Box flexDirection="column" marginTop={1}>
       <Text dimColor>{instruction}</Text>
+      <Text dimColor>- Press "q" to quit</Text>
       {movesCount > 0 && (
         <Text dimColor>
-          Press "h" to {isHistoryMode ? "hide" : "show"} game history
+          - Press "h" to {isHistoryMode ? "hide" : "show"} game history
         </Text>
       )}
     </Box>
