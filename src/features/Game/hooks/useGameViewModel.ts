@@ -1,5 +1,6 @@
 import type { GameEngine } from "../engine/gameEngine";
 import type { Direction } from "../reducers/gameReducer";
+import type { BackToMoveStatus, PlayerMoveStatus } from "t3core";
 
 import { useReducer } from "react";
 
@@ -10,8 +11,8 @@ import { validateMove } from "../validation";
 import { useGameStore } from "./useGameStore";
 
 export type GameCommands = {
-  makeMove: (index: number) => void;
-  backToMove: (index: number) => boolean;
+  makeMove: (index: number) => PlayerMoveStatus | undefined;
+  backToMove: (index: number) => BackToMoveStatus | undefined;
   navigate: (direction: Direction) => void;
   toggleInfo: () => void;
   toggleHistory: () => void;
@@ -32,9 +33,10 @@ export const useGameViewModel = (engine: GameEngine) => {
       dispatch({ type: "SET_ERROR", error });
       return;
     }
-    engine.savePlayerMove(index);
+    const status = engine.savePlayerMove(index);
     dispatch({ type: "SET_ERROR", error: null });
     beep();
+    return status;
   };
 
   const backToMove = (index: number) => {
@@ -45,11 +47,11 @@ export const useGameViewModel = (engine: GameEngine) => {
     });
     if (error) {
       dispatch({ type: "SET_ERROR", error });
-      return false;
+      return;
     }
-    engine.backToMove(index);
+    const status = engine.backToMove(index);
     dispatch({ type: "SET_ERROR", error: null });
-    return true;
+    return status;
   };
 
   const navigate = (direction: Direction) =>

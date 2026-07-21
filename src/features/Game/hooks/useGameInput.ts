@@ -1,6 +1,7 @@
 import type { GameEngine } from "../engine/gameEngine";
 import type { UIState } from "../reducers/gameReducer";
 import type { GameCommands } from "./useGameViewModel";
+import type { BackToMoveStatus } from "t3core";
 
 import { useInput, type Key } from "ink";
 
@@ -30,8 +31,8 @@ export function useGameInput(engine: GameEngine) {
     }
 
     if (ui.historyMode) {
-      const isSuccess = parseHistoryInput(input, commands);
-      if (isSuccess) {
+      const status = parseHistoryInput(input, commands);
+      if (status === "success") {
         beep();
         commands.toggleHistory();
       }
@@ -71,11 +72,12 @@ function parseNumberInput(input: string, commands: GameCommands) {
   }
 }
 
-function parseHistoryInput(input: string, commands: GameCommands) {
+function parseHistoryInput(
+  input: string,
+  commands: GameCommands,
+): BackToMoveStatus | undefined {
   const num = Number.parseInt(input, 10);
   if (!Number.isNaN(num)) {
     return commands.backToMove(num);
   }
-
-  return false;
 }

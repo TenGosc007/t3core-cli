@@ -1,9 +1,11 @@
 import {
   Game,
   GameEvent,
+  type BackToMoveStatus,
   type BoardSnapshot,
   type GameEventPayload,
   type GameStatus,
+  type PlayerMoveStatus,
   type PlayerSymbol,
 } from "t3core";
 
@@ -15,8 +17,8 @@ export type GameEngine = {
   readonly movesCount: number;
   readonly isRunning: boolean;
   isFieldSelectedByIndex: (index: number) => boolean;
-  savePlayerMove: (index: number) => void;
-  backToMove: (index: number) => boolean;
+  savePlayerMove: (index: number) => PlayerMoveStatus;
+  backToMove: (index: number) => BackToMoveStatus;
   reset: () => void;
   subscribe: (callback: () => void) => () => void;
   getSnapshot: () => GameEventPayload;
@@ -47,11 +49,10 @@ export const createGameEngine = (game: Game = new Game()): GameEngine => {
       return game.isFieldSelectedByIndex(index);
     },
     savePlayerMove: (index) => {
-      game.savePlayerMove(index);
+      return game.savePlayerMove(index);
     },
     backToMove: (index) => {
-      const status = game.backToMove(index);
-      return status === "success";
+      return game.backToMove(index);
     },
     reset: () => {
       game.reset();
