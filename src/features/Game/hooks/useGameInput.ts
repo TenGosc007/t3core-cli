@@ -1,7 +1,7 @@
 import type { GameEngine } from "../engine/gameEngine";
+import type { HistoryMoveResult } from "../engine/gameEngine";
 import type { UIState } from "../reducers/gameReducer";
 import type { GameCommands } from "./useGameViewModel";
-import type { BackToMoveStatus } from "t3core";
 
 import { useInput, type Key } from "ink";
 
@@ -75,7 +75,7 @@ function parseNumberInput(input: string, commands: GameCommands) {
 function parseHistoryInput(
   input: string,
   commands: GameCommands,
-): BackToMoveStatus | undefined {
+): HistoryMoveResult | undefined {
   const num = Number.parseInt(input, 10);
   if (!Number.isNaN(num)) {
     return commands.backToMove(num);

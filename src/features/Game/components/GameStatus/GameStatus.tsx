@@ -1,7 +1,8 @@
-import type { GameStatus as GameStatusType } from "t3core";
+import type { GameStatus as GameStatusType } from "../../engine/gameEngine";
 
 import { Box, Text } from "ink";
-import { DEFAULT_GAME_SYMBOLS } from "t3core";
+
+import { DEFAULT_SYMBOLS } from "../../engine/gameEngine";
 
 type GameStatusProps = {
   gameStatus: GameStatusType;
@@ -22,7 +23,7 @@ export const GameStatus = ({ gameStatus }: GameStatusProps) => {
     );
   }
 
-  const isX = gameStatus.winner === DEFAULT_GAME_SYMBOLS[0];
+  const isX = gameStatus.winner === DEFAULT_SYMBOLS[0];
   const color = isX ? "green" : "red";
 
   return (

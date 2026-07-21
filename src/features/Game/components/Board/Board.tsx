@@ -1,4 +1,4 @@
-import type { BoardField } from "t3core";
+import type { BoardField } from "../../engine/gameEngine";
 
 import { Box } from "ink";
 import { Fragment } from "react";

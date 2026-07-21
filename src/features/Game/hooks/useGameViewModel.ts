@@ -1,6 +1,9 @@
-import type { GameEngine } from "../engine/gameEngine";
+import type {
+  GameEngine,
+  HistoryMoveResult,
+  MoveResult,
+} from "../engine/gameEngine";
 import type { Direction } from "../reducers/gameReducer";
-import type { BackToMoveStatus, PlayerMoveStatus } from "t3core";
 
 import { useReducer } from "react";
 
@@ -11,8 +14,8 @@ import { validateMove } from "../validation";
 import { useGameStore } from "./useGameStore";
 
 export type GameCommands = {
-  makeMove: (index: number) => PlayerMoveStatus | undefined;
-  backToMove: (index: number) => BackToMoveStatus | undefined;
+  makeMove: (index: number) => MoveResult | undefined;
+  backToMove: (index: number) => HistoryMoveResult | undefined;
   navigate: (direction: Direction) => void;
   toggleInfo: () => void;
   toggleHistory: () => void;

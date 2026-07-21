@@ -1,7 +1,8 @@
 import type { CellViewModel } from "../boardAdapter";
 
 import { Text } from "ink";
-import { DEFAULT_GAME_SYMBOLS } from "t3core";
+
+import { DEFAULT_SYMBOLS } from "../../../engine/gameEngine";
 
 type BoardItemProps = {
   cell: CellViewModel;
@@ -11,10 +12,10 @@ const getColor = (isSelected: boolean, value: CellViewModel["value"]) => {
   if (isSelected) {
     return "yellow";
   }
-  if (value === DEFAULT_GAME_SYMBOLS[0]) {
+  if (value === DEFAULT_SYMBOLS[0]) {
     return "green";
   }
-  if (value === DEFAULT_GAME_SYMBOLS[1]) {
+  if (value === DEFAULT_SYMBOLS[1]) {
     return "red";
   }
   return "gray";
@@ -22,7 +23,7 @@ const getColor = (isSelected: boolean, value: CellViewModel["value"]) => {
 
 export const BoardItem = ({ cell }: BoardItemProps) => {
   const isBold =
-    cell.isSelected || DEFAULT_GAME_SYMBOLS.some((v) => v === cell.value);
+    cell.isSelected || DEFAULT_SYMBOLS.some((v) => v === cell.value);
   const color = getColor(cell.isSelected, cell.value);
   const content = cell.isSelected ? `[${cell.value}]` : ` ${cell.value} `;
 

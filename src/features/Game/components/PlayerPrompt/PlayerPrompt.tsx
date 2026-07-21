@@ -1,14 +1,15 @@
-import type { PlayerSymbol } from "t3core";
+import type { PlayerSymbol } from "../../engine/gameEngine";
 
 import { Box, Text } from "ink";
-import { DEFAULT_GAME_SYMBOLS } from "t3core";
+
+import { DEFAULT_SYMBOLS } from "../../engine/gameEngine";
 
 type PlayerPromptProps = {
   currentPlayer: PlayerSymbol;
 };
 
 export const PlayerPrompt = ({ currentPlayer }: PlayerPromptProps) => {
-  const isX = currentPlayer === DEFAULT_GAME_SYMBOLS[0];
+  const isX = currentPlayer === DEFAULT_SYMBOLS[0];
   const color = isX ? "green" : "red";
 
   return (

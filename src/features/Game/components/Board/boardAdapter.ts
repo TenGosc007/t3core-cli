@@ -1,6 +1,9 @@
-import type { BoardField } from "t3core";
+import type { BoardField } from "../../engine/gameEngine";
 
-import { BOARD_COLS, BOARD_ROWS } from "@/features/Game/constants/gameConstants";
+import {
+  BOARD_COLS,
+  BOARD_ROWS,
+} from "@/features/Game/constants/gameConstants";
 
 export type CellViewModel = {
   index: number;

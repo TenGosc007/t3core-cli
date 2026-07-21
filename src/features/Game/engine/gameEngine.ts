@@ -1,27 +1,38 @@
-import {
-  Game,
-  GameEvent,
-  type BackToMoveStatus,
+import type {
+  BoardSnapshot,
+  GameSnapshot,
+  GameStatus,
+  HistoryMoveResult,
+  MoveResult,
+  PlayerSymbol,
+} from "./types";
+
+import { Game, GameEvent } from "t3core";
+
+export {
+  DEFAULT_SYMBOLS,
+  type BoardField,
   type BoardSnapshot,
-  type GameEventPayload,
+  type GameSnapshot,
   type GameStatus,
-  type PlayerMoveStatus,
+  type HistoryMoveResult,
+  type MoveResult,
   type PlayerSymbol,
-} from "t3core";
+} from "./types";
 
 export type GameEngine = {
-  readonly snapshot: GameEventPayload;
+  readonly snapshot: GameSnapshot;
   readonly board: BoardSnapshot;
   readonly currentPlayer: PlayerSymbol;
   readonly gameStatus: GameStatus;
   readonly movesCount: number;
   readonly isRunning: boolean;
   isFieldSelectedByIndex: (index: number) => boolean;
-  savePlayerMove: (index: number) => PlayerMoveStatus;
-  backToMove: (index: number) => BackToMoveStatus;
+  savePlayerMove: (index: number) => MoveResult;
+  backToMove: (index: number) => HistoryMoveResult;
   reset: () => void;
   subscribe: (callback: () => void) => () => void;
-  getSnapshot: () => GameEventPayload;
+  getSnapshot: () => GameSnapshot;
 };
 
 export const createGameEngine = (game: Game = new Game()): GameEngine => {
