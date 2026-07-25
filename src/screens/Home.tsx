@@ -1,23 +1,31 @@
-import { useApp, useInput } from "ink";
-
 import { Container } from "@/components/Container";
-import { beep } from "@/services/settings";
-
-import { Menu } from "../features/Menu/Menu";
+import { Footer } from "@/components/Footer";
+import { Menu } from "@/features/Menu";
+import {
+  MENU_OPTIONS,
+  menuInputSchema,
+} from "@/features/Menu/constants/menuOptions";
+import { useMenuNavigation } from "@/features/Menu/hooks/navigateToMenuOption";
 
 export const Home = () => {
-  const { exit } = useApp();
+  const navigateToMenuOption = useMenuNavigation();
 
-  useInput((input) => {
-    if (input === "q") {
-      beep();
-      exit();
-    }
-  });
+  const handleOptionSelect = (value: string) => {
+    if (isNaN(+value)) return;
+    navigateToMenuOption(+value - 1);
+  };
 
   return (
-    <Container>
-      <Menu />
-    </Container>
+    <>
+      <Container>
+        <Menu />
+      </Container>
+
+      <Footer
+        onSubmit={handleOptionSelect}
+        hints={[`Type 1-${MENU_OPTIONS.length} to select`, `q Quit`]}
+        validationSchema={menuInputSchema}
+      />
+    </>
   );
 };

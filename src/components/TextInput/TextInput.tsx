@@ -3,7 +3,7 @@ import type { ComponentProps } from "react";
 import { Text, useInput } from "ink";
 import { useState } from "react";
 
-type Props = Omit<ComponentProps<typeof Text>, "children"> & {
+export type TextInputProps = Omit<ComponentProps<typeof Text>, "children"> & {
   value: string;
   onChange: (value: string) => void;
   onSubmit?: (value: string) => void;
@@ -18,7 +18,7 @@ export const TextInput = ({
   placeholder = "",
   focus = true,
   ...textProps
-}: Props) => {
+}: TextInputProps) => {
   const [cursorIndex, setCursorIndex] = useState(value.length);
   const cursor = Math.min(cursorIndex, value.length);
 

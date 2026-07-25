@@ -1,7 +1,6 @@
 import { Box } from "ink";
 import { type ReactNode } from "react";
 
-import { GlobalInput } from "../GlobalInput";
 import { BottomLayout } from "./BottomLayout";
 import { layoutStyles } from "./layoutStyles";
 import { TopLayout } from "./TopLayout";
@@ -24,7 +23,6 @@ export const Layout = ({ children }: Props) => {
         flexDirection="column"
       >
         {children}
-        <GlobalInput />
       </Box>
       <BottomLayout />
     </>
