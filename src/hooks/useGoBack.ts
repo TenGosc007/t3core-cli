@@ -18,7 +18,7 @@ export const useGoBack = ({ specialKeys, specialInputs }: Props = {}) => {
   const goBack = useNavigateBack();
 
   useInput((input, key) => {
-    const isDefaultKey = key.escape;
+    const isDefaultKey = key.escape || input === "q";
     const isSpecialInput = specialInputs?.includes(input);
     const isSpecialKeyCode = isSpecialKey(key, specialKeys);
 
