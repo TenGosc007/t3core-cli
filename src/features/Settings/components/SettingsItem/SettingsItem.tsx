@@ -39,10 +39,11 @@ export const SettingsItem = ({
 
   return (
     <Box gap={1}>
-      <Text color={selected ? "magenta" : undefined}>
-        {selected ? "❯" : ""}
-      </Text>
-      {!arrowNav && (
+      {arrowNav ? (
+        <Text color={selected ? "magenta" : undefined}>
+          {selected ? "❯" : " "}
+        </Text>
+      ) : (
         <Text>
           [<Text color="magenta">{index + 1}</Text>]
         </Text>
