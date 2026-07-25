@@ -4,12 +4,12 @@ import { useState } from "react";
 import { useSettingsArrowNav } from "@/services/settings/useSettingsStore";
 
 import { MENU_OPTIONS } from "../constants/menuOptions";
-import { useMenuNavigation } from "./navigateToMenuOption";
+import { useMenuNavigation } from "./useMenuNavigation";
 
 export const useMenuInput = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const arrowNav = useSettingsArrowNav();
-  const navigateToMenuOption = useMenuNavigation();
+  const { navigateToMenuOption } = useMenuNavigation();
 
   useInput((_, key) => {
     if (!arrowNav) {

@@ -5,10 +5,10 @@ import {
   MENU_OPTIONS,
   menuInputSchema,
 } from "@/features/Menu/constants/menuOptions";
-import { useMenuNavigation } from "@/features/Menu/hooks/navigateToMenuOption";
+import { useMenuNavigation } from "@/features/Menu/hooks/useMenuNavigation";
 
 export const Home = () => {
-  const navigateToMenuOption = useMenuNavigation();
+  const { navigateToMenuOption } = useMenuNavigation();
 
   const handleOptionSelect = (value: string) => {
     if (isNaN(+value)) return;

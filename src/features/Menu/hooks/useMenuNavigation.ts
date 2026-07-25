@@ -16,5 +16,5 @@ export const useMenuNavigation = () => {
     }
   };
 
-  return navigateToMenuOption;
+  return { navigateToMenuOption };
 };

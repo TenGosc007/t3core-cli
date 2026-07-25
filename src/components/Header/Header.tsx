@@ -7,8 +7,11 @@ type Props = {
 export const Header = ({ label }: Props) => {
   return (
     <Box borderLeft={false} borderRight={false} borderDimColor>
-      <Text bold>
-        <Text color="cyan">❯</Text> {label}
+      <Text>
+        <Text color="cyan" bold>
+          ❯
+        </Text>{" "}
+        <Text underline>{label}</Text>
       </Text>
     </Box>
   );

@@ -30,7 +30,7 @@ export const SettingsItem = ({
   const valueText = getValueText();
 
   return (
-    <Box gap={1} marginTop={option.space ? 1 : 0}>
+    <Box gap={1}>
       <Text color={isSelected ? "magenta" : undefined}>
         {isSelected ? "❯" : " "}
       </Text>

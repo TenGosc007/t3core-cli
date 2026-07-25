@@ -1,47 +1,23 @@
 import { useInput } from "ink";
 import { useState } from "react";
 
-import { useNavigate } from "@/navigation";
-import { useSettingsStore } from "@/services/settings/useSettingsStore";
+import {
+  useSettingsArrowNav,
+  useSettingsStore,
+} from "@/services/settings/useSettingsStore";
 
 import { SETTINGS_OPTIONS } from "../constants/settingsOptions";
+import { useSettingsToggleOption } from "./useSettingsToggleOption";
 
 export const useSettingsInput = () => {
-  const navigate = useNavigate();
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const { toggleOption } = useSettingsToggleOption();
 
   const settings = useSettingsStore();
-  const toggle = useSettingsStore((s) => s.toggle);
-  const reset = useSettingsStore((s) => s.reset);
-  const arrowNav = useSettingsStore((s) => s.arrowNav);
+  const arrowNav = useSettingsArrowNav();
 
-  const toggleOption = (index: number) => {
-    const option = SETTINGS_OPTIONS[index];
-    if (!option || option.disabled?.(settings)) return;
-
-    if (option.type === "command") {
-      if (option.label === "Back to Menu") {
-        navigate("/");
-        return;
-      }
-      reset();
-      return;
-    }
-
-    if (option.type === "toggle" && option.key) {
-      toggle(option.key);
-    }
-  };
-
-  useInput((input, key) => {
+  useInput((_, key) => {
     if (!arrowNav) {
-      const num = Number.parseInt(input, 10);
-      if (num >= 1 && num <= SETTINGS_OPTIONS.length) {
-        toggleOption(num - 1);
-      }
-      if (input === "q") {
-        navigate("/");
-      }
       return;
     }
 
@@ -64,6 +40,5 @@ export const useSettingsInput = () => {
   return {
     selectedIndex,
     settings,
-    arrowNav,
   };
 };

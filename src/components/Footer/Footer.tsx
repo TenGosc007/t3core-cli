@@ -10,9 +10,9 @@ import { GlobalInput } from "../GlobalInput";
 
 type Props = {
   onSubmit: (value: string) => void;
-  hints: string[];
+  hints?: string[];
   arrowNavHints?: string[];
-  validationSchema: z.ZodCoercedNumber<unknown>;
+  validationSchema?: z.ZodCoercedNumber<unknown>;
 };
 
 export const Footer = ({

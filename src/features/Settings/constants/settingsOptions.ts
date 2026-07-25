@@ -17,7 +17,6 @@ type BaseSettingsOption = {
   label: string;
   emphasis?: boolean;
   disabled?: (settings: SettingsState) => boolean;
-  space?: boolean;
 };
 
 type ToggleSettingsOption = BaseSettingsOption & {
@@ -48,7 +47,6 @@ export const SETTINGS_OPTIONS: readonly SettingsOption[] = [
     id: 3,
     label: "Reset to default",
     type: "command",
-    space: true,
   },
   {
     id: 4,
