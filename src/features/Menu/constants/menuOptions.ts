@@ -1,5 +1,3 @@
-import { z } from "zod";
-
 import { ROUTES } from "@/navigation";
 
 export const MENU_OPTIONS = [
@@ -8,9 +6,3 @@ export const MENU_OPTIONS = [
   { label: "About", route: ROUTES.about },
   { label: "Exit", route: null },
 ] as const;
-
-export const menuInputSchema = z.coerce
-  .number()
-  .int()
-  .min(1)
-  .max(MENU_OPTIONS.length);

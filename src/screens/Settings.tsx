@@ -3,6 +3,7 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { SETTINGS_OPTIONS } from "@/features/Settings/constants/settingsOptions";
 import { useSettingsToggleOption } from "@/features/Settings/hooks/useSettingsToggleOption";
+import { settingsInputSchema } from "@/features/Settings/validation";
 import { useGoBack } from "@/hooks/useGoBack";
 
 import { SettingsView } from "../features/Settings/Settings";
@@ -31,6 +32,7 @@ export const Settings = () => {
           "esc Back to Menu",
         ]}
         arrowNavHints={["↑↓ Navigate", "Enter Toggle", "esc Back to Menu"]}
+        validationSchema={settingsInputSchema}
       />
     </>
   );

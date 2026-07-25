@@ -1,11 +1,9 @@
 import { Container } from "@/components/Container";
 import { Footer } from "@/components/Footer";
 import { Menu } from "@/features/Menu";
-import {
-  MENU_OPTIONS,
-  menuInputSchema,
-} from "@/features/Menu/constants/menuOptions";
+import { MENU_OPTIONS } from "@/features/Menu/constants/menuOptions";
 import { useMenuNavigation } from "@/features/Menu/hooks/useMenuNavigation";
+import { menuInputSchema } from "@/features/Menu/validation";
 
 export const Home = () => {
   const { navigateToMenuOption } = useMenuNavigation();
