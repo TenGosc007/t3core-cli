@@ -20,7 +20,7 @@ export const MenuItem = ({ label, selected, arrowNav, index }: Props) => {
         </Text>
       )}
       <Text bold={selected} color={selected ? "cyan" : undefined}>
-        2{label}
+        {label}
       </Text>
     </Box>
   );
