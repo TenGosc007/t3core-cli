@@ -2,7 +2,7 @@ import type z from "zod";
 
 import { Box, Text } from "ink";
 
-import { useExitApp } from "@/hooks/useExitApp";
+import { useExitConfirm } from "@/hooks/useExitConfirm";
 
 import { GlobalInput } from "../GlobalInput";
 
@@ -13,23 +13,21 @@ type Props = {
 };
 
 export const Footer = ({ onSubmit, hints, validationSchema }: Props) => {
-  const { confirming } = useExitApp();
+  const { confirming } = useExitConfirm();
+
+  if (confirming) {
+    return (
+      <Box padding={1}>
+        <Text bold>Are you sure you want to quit? Y/N</Text>
+      </Box>
+    );
+  }
 
   return (
-    <>
-      {confirming ? (
-        <Box padding={1}>
-          <Text bold color="yellow">
-            Are you sure you want to quit? Y/N
-          </Text>
-        </Box>
-      ) : (
-        <GlobalInput
-          onSubmit={onSubmit}
-          hints={hints}
-          validationSchema={validationSchema}
-        />
-      )}
-    </>
+    <GlobalInput
+      onSubmit={onSubmit}
+      hints={hints}
+      validationSchema={validationSchema}
+    />
   );
 };

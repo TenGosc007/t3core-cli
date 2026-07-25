@@ -5,8 +5,8 @@ import z from "zod";
 import { beep, useSettingsStore } from "@/services/settings";
 
 import { TextInput } from "../TextInput";
-
-type GlobalInputError = string | string[] | undefined;
+import { GlobalInputError } from "./GlobalInputError";
+import { GlobalInputHint } from "./GlobalInputHint";
 
 type Props = {
   onSubmit?: (value: string) => void;
@@ -15,10 +15,6 @@ type Props = {
   hints?: string[];
   validationSchema?: z.ZodCoercedNumber<unknown>;
   error?: GlobalInputError;
-};
-
-const errorHelper = (error: GlobalInputError) => {
-  return Array.isArray(error) ? error?.join(" · ") : error;
 };
 
 export const GlobalInput = ({
@@ -31,7 +27,6 @@ export const GlobalInput = ({
 }: Props) => {
   const [value, setValue] = useState("");
   const [error, setError] = useState<GlobalInputError>(errorProp);
-  const errorMessage = errorHelper(error || errorProp);
   const arrowNav = useSettingsStore((s) => s.arrowNav);
 
   const handleChange = (v: string) => {
@@ -66,9 +61,7 @@ export const GlobalInput = ({
 
   return (
     <>
-      <Box height={1} paddingX={1}>
-        <Text color="red">{errorMessage}</Text>
-      </Box>
+      <GlobalInputError error={error || errorProp} />
       <Box
         borderStyle="single"
         borderColor="gray"
@@ -86,13 +79,7 @@ export const GlobalInput = ({
           placeholder={placeholder}
         />
       </Box>
-      <Box paddingX={1} flexDirection="column">
-        {hints?.map((hint, index) => (
-          <Text key={index} dimColor>
-            · {hint}
-          </Text>
-        ))}
-      </Box>
+      <GlobalInputHint hints={hints} />
     </>
   );
 };

@@ -1,4 +1,4 @@
-import { Box, Text } from "ink";
+import { ArrowNavHint } from "@/components/ArrowNavHint";
 
 import { MenuList } from "./components/MenuList";
 import { useMenuInput } from "./hooks/useMenuInput";
@@ -9,12 +9,7 @@ export const Menu = () => {
   return (
     <>
       <MenuList selectedIndex={selectedIndex} arrowNav={arrowNav} />
-
-      {arrowNav && (
-        <Box marginTop={2}>
-          <Text dimColor>↑↓ Navigate · Enter Select</Text>
-        </Box>
-      )}
+      <ArrowNavHint hints={["↑↓ Navigate", "Enter Select"]} />
     </>
   );
 };
