@@ -27,7 +27,9 @@ export const Footer = ({
   if (confirming) {
     return (
       <Box padding={1}>
-        <Text bold>Are you sure you want to quit? Y/N</Text>
+        <Text bold>
+          Are you sure you want to quit? <Text underline>Y</Text>/N
+        </Text>
       </Box>
     );
   }
