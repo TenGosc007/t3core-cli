@@ -2,7 +2,13 @@ import { SettingsList } from "./components/SettingsList";
 import { useSettingsInput } from "./hooks/useSettingsInput";
 
 export const SettingsView = () => {
-  const { selectedIndex, settings } = useSettingsInput();
+  const { selectedIndex, settings, arrowNav } = useSettingsInput();
 
-  return <SettingsList selectedIndex={selectedIndex} settings={settings} />;
+  return (
+    <SettingsList
+      selectedIndex={selectedIndex}
+      settings={settings}
+      arrowNav={arrowNav}
+    />
+  );
 };

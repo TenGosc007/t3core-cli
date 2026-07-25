@@ -40,5 +40,6 @@ export const useSettingsInput = () => {
   return {
     selectedIndex,
     settings,
+    arrowNav,
   };
 };

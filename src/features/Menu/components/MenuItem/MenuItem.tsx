@@ -10,7 +10,7 @@ type Props = {
 export const MenuItem = ({ label, selected, arrowNav, index }: Props) => {
   return (
     <Box key={label} gap={1}>
-      <Text color={selected ? "cyan" : undefined}>{selected ? "❯" : " "}</Text>
+      <Text color={selected ? "cyan" : undefined}>{selected ? "❯" : ""}</Text>
       {!arrowNav && (
         <Text>
           [<Text color="cyan">{index + 1}</Text>]

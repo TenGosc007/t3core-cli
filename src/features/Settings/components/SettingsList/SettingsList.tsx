@@ -8,18 +8,20 @@ import { SettingsItem } from "../SettingsItem";
 type Props = {
   selectedIndex: number;
   settings: SettingsStore;
+  arrowNav: boolean;
 };
 
-export const SettingsList = ({ selectedIndex, settings }: Props) => {
+export const SettingsList = ({ selectedIndex, settings, arrowNav }: Props) => {
   return (
     <Box flexDirection="column" marginTop={1}>
       {SETTINGS_OPTIONS.map((option, index) => (
         <SettingsItem
           key={option.id}
           option={option}
-          index={index}
-          selectedIndex={selectedIndex}
+          selected={arrowNav && selectedIndex === index}
           settings={settings}
+          arrowNav={arrowNav}
+          index={index}
         />
       ))}
     </Box>

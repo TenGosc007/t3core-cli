@@ -7,18 +7,19 @@ import { Box, Text } from "ink";
 
 type Props = {
   option: SettingsOption;
-  index: number;
-  selectedIndex: number;
   settings: SettingsState;
+  selected: boolean;
+  arrowNav: boolean;
+  index: number;
 };
 
 export const SettingsItem = ({
   option,
-  index,
-  selectedIndex,
+  selected,
   settings,
+  arrowNav,
+  index,
 }: Props) => {
-  const isSelected = index === selectedIndex;
   const isDisabled = option.disabled?.(settings) ?? false;
 
   const getValueText = () => {
@@ -29,25 +30,27 @@ export const SettingsItem = ({
 
   const valueText = getValueText();
 
+  const getLabelColor = () => {
+    if (isDisabled) return "gray";
+    if (option.emphasis) return "cyan";
+    if (selected) return "magenta";
+    return undefined;
+  };
+
   return (
     <Box gap={1}>
-      <Text color={isSelected ? "magenta" : undefined}>
-        {isSelected ? "❯" : " "}
+      <Text color={selected ? "magenta" : undefined}>
+        {selected ? "❯" : ""}
       </Text>
-      {/* <Text color="yellow">{option.id}</Text> */}
-      <Text
-        bold={isSelected}
-        color={
-          isDisabled
-            ? "gray"
-            : option.emphasis
-              ? "cyan"
-              : isSelected
-                ? "magenta"
-                : undefined
-        }
-      >
+      {!arrowNav && (
+        <Text>
+          [<Text color="magenta">{index + 1}</Text>]
+        </Text>
+      )}
+
+      <Text bold={selected} color={getLabelColor()}>
         {option.label}
+
         {valueText !== null && (
           <Text color={valueText === "ON" ? "green" : "red"}>
             {" "}
