@@ -56,7 +56,7 @@ export const useGameViewModel = (engine: GameEngine) => {
 ```ts
 export const useGameInput = (engine: GameEngine) => {
   const { gameState, ui, commands } = useGameViewModel(engine);
-  const arrowKeyNavigation = useSettingsStore((s) => s.arrowKeyNavigation);
+  const arrowNav = useSettingsStore((s) => s.arrowNav);
 
   useInput((input, key) => {
     if (!engine.isRunning) {
@@ -66,11 +66,11 @@ export const useGameInput = (engine: GameEngine) => {
     if (input === "i") return commands.toggleInfo();
     if (input === "h" && engine.movesCount > 0) return commands.toggleHistory();
     if (ui.historyMode) return parseHistoryInput(input, key, ui, commands);
-    if (arrowKeyNavigation) return parseArrowInput(input, key, ui, commands);
+    if (arrowNav) return parseArrowInput(input, key, ui, commands);
     return parseNumberInput(input, commands);
   });
 
-  return { gameState, ui, arrowKeyNavigation };
+  return { gameState, ui, arrowNav };
 };
 ```
 
@@ -78,7 +78,7 @@ Funkcje `handleArrowInput`, `handleNumberInput`, `handleHistoryInput` zostają z
 
 ### 1.3 `Game.tsx` — bez zmian
 
-Komponent główny nie wymaga zmian — nadal woła `useGameInput` i otrzymuje `{ gameState, ui, arrowKeyNavigation }`.
+Komponent główny nie wymaga zmian — nadal woła `useGameInput` i otrzymuje `{ gameState, ui, arrowNav }`.
 
 ### Pliki dotknięte fazą 1
 

@@ -29,13 +29,11 @@ export const createSettingsRepository = (
   return {
     load: () => ({
       beep: store.get(SETTINGS_KEYS.beep) as boolean,
-      arrowKeyNavigation: store.get(
-        SETTINGS_KEYS.arrowKeyNavigation,
-      ) as boolean,
+      arrowNav: store.get(SETTINGS_KEYS.arrowNav) as boolean,
     }),
     save: (settings) => {
       store.set(SETTINGS_KEYS.beep, settings.beep);
-      store.set(SETTINGS_KEYS.arrowKeyNavigation, settings.arrowKeyNavigation);
+      store.set(SETTINGS_KEYS.arrowNav, settings.arrowNav);
     },
     clear: () => store.clear(),
   };

@@ -32,7 +32,7 @@ describe("SettingsOptions", () => {
     const settings: Settings = {
       beep: true,
       style: true,
-      arrowKeyNavigation: false,
+      arrowNav: false,
     };
 
     SettingsOptions({ options: SETTINGS_OPTIONS, settings, activePosition: 0 });
@@ -48,7 +48,7 @@ describe("SettingsOptions", () => {
     const settings: Settings = {
       beep: false,
       style: false,
-      arrowKeyNavigation: false,
+      arrowNav: false,
     };
 
     SettingsOptions({
@@ -66,7 +66,7 @@ describe("SettingsOptions", () => {
     const settings: Settings = {
       beep: true,
       style: false,
-      arrowKeyNavigation: false,
+      arrowNav: false,
     };
 
     SettingsOptions({ options: SETTINGS_OPTIONS, settings });

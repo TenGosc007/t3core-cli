@@ -36,7 +36,7 @@ export const SETTINGS_OPTIONS: readonly SettingsOption[] = [
     id: 3,
     label: "Use Arrow Keys",
     type: "toggle",
-    key: "arrowKeyNavigation",
+    key: "arrowNav",
     disabled: (settings) => !isTTYAvailable || !settings.style,
   },
   {

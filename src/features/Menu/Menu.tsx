@@ -4,16 +4,13 @@ import { MenuList } from "./components/MenuList";
 import { useMenuInput } from "./hooks/useMenuInput";
 
 export const Menu = () => {
-  const { selectedIndex, arrowKeyNavigation } = useMenuInput();
+  const { selectedIndex, arrowNav } = useMenuInput();
 
   return (
     <>
-      <MenuList
-        selectedIndex={selectedIndex}
-        arrowKeyNavigation={arrowKeyNavigation}
-      />
+      <MenuList selectedIndex={selectedIndex} arrowNav={arrowNav} />
 
-      {arrowKeyNavigation && (
+      {arrowNav && (
         <Box marginTop={2}>
           <Text dimColor>↑↓ Navigate · Enter Select</Text>
         </Box>

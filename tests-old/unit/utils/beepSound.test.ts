@@ -21,7 +21,7 @@ describe("beepSound", () => {
   it("writes beep character when beep is enabled", () => {
     settingsSpy = vi
       .spyOn(settingsManager, "getRuntimeSettings")
-      .mockReturnValue({ beep: true, style: true, arrowKeyNavigation: true });
+      .mockReturnValue({ beep: true, style: true, arrowNav: true });
 
     beepSound();
     expect(stdoutSpy).toHaveBeenCalledWith("\x07");
@@ -30,7 +30,7 @@ describe("beepSound", () => {
   it("does not write beep character when beep is disabled", () => {
     settingsSpy = vi
       .spyOn(settingsManager, "getRuntimeSettings")
-      .mockReturnValue({ beep: false, style: true, arrowKeyNavigation: true });
+      .mockReturnValue({ beep: false, style: true, arrowNav: true });
 
     beepSound();
     expect(stdoutSpy).not.toHaveBeenCalled();

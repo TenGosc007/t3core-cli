@@ -37,12 +37,12 @@ describe("ToggleSelectedSettingCommand", () => {
       getRuntimeSettings: vi.fn().mockReturnValue({
         beep: true,
         style: false,
-        arrowKeyNavigation: false,
+        arrowNav: false,
       }),
     } as unknown as SettingsManager;
     const command = new ToggleSelectedSettingCommand(manager);
 
     command.execute(2);
-    expect(manager.toggleArrowKeyNavigation).not.toHaveBeenCalled();
+    expect(manager.togglearrowNav).not.toHaveBeenCalled();
   });
 });

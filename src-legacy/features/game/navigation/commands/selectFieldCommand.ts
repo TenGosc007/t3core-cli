@@ -28,7 +28,7 @@ export class SelectFieldCommand implements KeyCommand {
     validateInputEntry({
       entryProp: position,
       game: this._game,
-      isArrowKeyOn: true,
+      isArrowNavOn: true,
       isInHistoryMode: this._gameState.historyMode,
       gameState: this._gameState,
     });

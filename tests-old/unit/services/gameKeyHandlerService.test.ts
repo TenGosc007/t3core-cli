@@ -10,12 +10,12 @@ vi.mock("@/global/tty.global", () => ({
   isTTYAvailable: false,
 }));
 
-const createSettingsManager = (arrowKeyNavigation: boolean) => {
+const createSettingsManager = (arrowNav: boolean) => {
   return {
     getRuntimeSettings: vi.fn().mockReturnValue({
       beep: true,
       style: true,
-      arrowKeyNavigation,
+      arrowNav,
     }),
   } as unknown as SettingsManager;
 };

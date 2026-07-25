@@ -7,7 +7,7 @@ import { SETTINGS_OPTIONS } from "./constants/settingsOptions";
 import { useSettingsInput } from "./hooks/useSettingsInput";
 
 export const SettingsView = () => {
-  const { selectedIndex, settings, arrowKeyNavigation } = useSettingsInput();
+  const { selectedIndex, settings, arrowNav } = useSettingsInput();
 
   return (
     <>
@@ -16,7 +16,7 @@ export const SettingsView = () => {
       <SettingsList selectedIndex={selectedIndex} settings={settings} />
 
       <Box marginTop={1}>
-        {arrowKeyNavigation ? (
+        {arrowNav ? (
           <Text dimColor>↑↓ Navigate · Enter Toggle</Text>
         ) : (
           <Text dimColor>

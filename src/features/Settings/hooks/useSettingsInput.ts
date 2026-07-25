@@ -13,7 +13,7 @@ export const useSettingsInput = () => {
   const settings = useSettingsStore();
   const toggle = useSettingsStore((s) => s.toggle);
   const reset = useSettingsStore((s) => s.reset);
-  const arrowKeyNavigation = useSettingsStore((s) => s.arrowKeyNavigation);
+  const arrowNav = useSettingsStore((s) => s.arrowNav);
 
   const toggleOption = (index: number) => {
     const option = SETTINGS_OPTIONS[index];
@@ -34,7 +34,7 @@ export const useSettingsInput = () => {
   };
 
   useInput((input, key) => {
-    if (!arrowKeyNavigation) {
+    if (!arrowNav) {
       const num = Number.parseInt(input, 10);
       if (num >= 1 && num <= SETTINGS_OPTIONS.length) {
         toggleOption(num - 1);
@@ -64,6 +64,6 @@ export const useSettingsInput = () => {
   return {
     selectedIndex,
     settings,
-    arrowKeyNavigation,
+    arrowNav,
   };
 };

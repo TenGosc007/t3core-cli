@@ -31,10 +31,10 @@ describe("SettingsManager", () => {
     expect(manager.getRuntimeSettings().style).toBe(true);
   });
 
-  it("toggleArrowKeyNavigation does nothing when style is off", () => {
-    const manager = new SettingsManager({ style: false, arrowKeyNavigation: true });
-    manager.toggleArrowKeyNavigation();
-    expect(manager.getRuntimeSettings().arrowKeyNavigation).toBe(false);
+  it("togglearrowNav does nothing when style is off", () => {
+    const manager = new SettingsManager({ style: false, arrowNav: true });
+    manager.togglearrowNav();
+    expect(manager.getRuntimeSettings().arrowNav).toBe(false);
   });
 
   it("resetSettings restores defaults", () => {
@@ -46,8 +46,8 @@ describe("SettingsManager", () => {
     expect(manager.getRuntimeSettings().style).toBe(true);
   });
 
-  it("getRuntimeSettings returns arrowKeyNavigation false when style is off", () => {
-    const manager = new SettingsManager({ style: false, arrowKeyNavigation: true });
-    expect(manager.getRuntimeSettings().arrowKeyNavigation).toBe(false);
+  it("getRuntimeSettings returns arrowNav false when style is off", () => {
+    const manager = new SettingsManager({ style: false, arrowNav: true });
+    expect(manager.getRuntimeSettings().arrowNav).toBe(false);
   });
 });

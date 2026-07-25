@@ -14,7 +14,7 @@ import { useGameInput } from "./hooks/useGameInput";
 
 export const Game = () => {
   const engineRef = useRef(createGameEngine());
-  const { gameState, ui, arrowKeyNavigation } = useGameInput(engineRef.current);
+  const { gameState, ui, arrowNav } = useGameInput(engineRef.current);
 
   const isRunning = engineRef.current.isRunning;
 
@@ -32,7 +32,7 @@ export const Game = () => {
             {ui.inputError ? <InputError error={ui.inputError} /> : <Newline />}
             <GameHint
               movesCount={engineRef.current.movesCount}
-              useArrowKeys={arrowKeyNavigation && !ui.historyMode}
+              useArrowNavs={arrowNav && !ui.historyMode}
               isHistoryMode={ui.historyMode}
             />
           </>

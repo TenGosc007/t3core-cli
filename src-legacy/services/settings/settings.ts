@@ -3,7 +3,7 @@ import { isTTYAvailable } from "@/global/tty.global";
 export type Settings = {
   beep: boolean;
   style: boolean;
-  arrowKeyNavigation: boolean;
+  arrowNav: boolean;
 };
 
 export type SettingsKey = keyof Settings;
@@ -11,7 +11,7 @@ export type SettingsKey = keyof Settings;
 const createInitialSettings = (): Settings => ({
   beep: true,
   style: true,
-  arrowKeyNavigation: isTTYAvailable,
+  arrowNav: isTTYAvailable,
 });
 
 export class SettingsManager {
@@ -24,10 +24,8 @@ export class SettingsManager {
   getRuntimeSettings = (): Readonly<Settings> => {
     return {
       ...this._settings,
-      arrowKeyNavigation:
-        isTTYAvailable &&
-        this._settings.style &&
-        this._settings.arrowKeyNavigation,
+      arrowNav:
+        isTTYAvailable && this._settings.style && this._settings.arrowNav,
     };
   };
 
@@ -43,9 +41,9 @@ export class SettingsManager {
     this._settings.style = !this._settings.style;
   };
 
-  toggleArrowKeyNavigation = (): void => {
+  togglearrowNav = (): void => {
     if (!isTTYAvailable || !this._settings.style) return;
-    this._settings.arrowKeyNavigation = !this._settings.arrowKeyNavigation;
+    this._settings.arrowNav = !this._settings.arrowNav;
   };
 }
 

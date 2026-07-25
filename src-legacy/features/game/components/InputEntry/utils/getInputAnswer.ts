@@ -28,7 +28,7 @@ export const getInputAnswer = async ({
   return validateInputEntry({
     entryProp: parseInt(answer ?? ""),
     game,
-    isArrowKeyOn: false,
+    isArrowNavOn: false,
     isInHistoryMode: gameState.historyMode,
     gameState,
   });

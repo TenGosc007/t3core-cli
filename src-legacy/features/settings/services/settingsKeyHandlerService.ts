@@ -23,7 +23,7 @@ export const createSettingsKeyHandlerService = ({
 
   const getSyncedHandler = () => {
     const settings = manager.getRuntimeSettings();
-    if (settings.arrowKeyNavigation) handler.start();
+    if (settings.arrowNav) handler.start();
     else handler.stop();
 
     return handler;

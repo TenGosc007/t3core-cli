@@ -8,11 +8,11 @@ import { useMenuNavigation } from "./navigateToMenuOption";
 
 export const useMenuInput = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const arrowKeyNavigation = useSettingsStore((s) => s.arrowKeyNavigation);
+  const arrowNav = useSettingsStore((s) => s.arrowNav);
   const navigateToMenuOption = useMenuNavigation();
 
   useInput((_, key) => {
-    if (!arrowKeyNavigation) {
+    if (!arrowNav) {
       return;
     }
 
@@ -33,6 +33,6 @@ export const useMenuInput = () => {
 
   return {
     selectedIndex,
-    arrowKeyNavigation,
+    arrowNav,
   };
 };

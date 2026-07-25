@@ -13,7 +13,7 @@ describe("styledLabel", () => {
   it("returns plain text when style is disabled", () => {
     settingsSpy = vi
       .spyOn(settingsManager, "getRuntimeSettings")
-      .mockReturnValue({ beep: true, style: false, arrowKeyNavigation: true });
+      .mockReturnValue({ beep: true, style: false, arrowNav: true });
 
     expect(s.red("hello")).toBe("hello");
   });
@@ -21,7 +21,7 @@ describe("styledLabel", () => {
   it("returns styled text when style is enabled", () => {
     settingsSpy = vi
       .spyOn(settingsManager, "getRuntimeSettings")
-      .mockReturnValue({ beep: true, style: true, arrowKeyNavigation: true });
+      .mockReturnValue({ beep: true, style: true, arrowNav: true });
 
     expect(s.red("hello")).toContain("hello");
     expect(s.red("hello")).toContain("\x1b[31m");
@@ -38,7 +38,7 @@ describe("styledLabel", () => {
   it("supports chained modifiers", () => {
     settingsSpy = vi
       .spyOn(settingsManager, "getRuntimeSettings")
-      .mockReturnValue({ beep: true, style: true, arrowKeyNavigation: true });
+      .mockReturnValue({ beep: true, style: true, arrowNav: true });
 
     const result = s.red.bold("hello");
     expect(result).toContain("hello");

@@ -10,9 +10,9 @@ export const appInit = () => {
     useSettingsStore.setState({ beep: flags.sound });
   }
   if (flags.mobile) {
-    useSettingsStore.setState({ arrowKeyNavigation: false });
+    useSettingsStore.setState({ arrowNav: false });
   }
-  if (flags.arrowKey !== undefined) {
-    useSettingsStore.setState({ arrowKeyNavigation: flags.arrowKey });
+  if (flags.arrowNav !== undefined) {
+    useSettingsStore.setState({ arrowNav: flags.arrowNav });
   }
 };

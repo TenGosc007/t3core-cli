@@ -134,8 +134,8 @@ Game.tsx
   │         ├─ "h"         →  commands.toggleHistory() (gdy movesCount > 0)
   │         ├─ historyMode →  parseHistoryInput (Enter/num → commands.backToMove)
   │         └─ normal mode:
-  │              ├─ arrowKeyNavigation ON  →  parseArrowInput (arrows → commands.navigate, Enter → commands.makeMove)
-  │              └─ arrowKeyNavigation OFF →  parseNumberInput (1-9 → commands.makeMove)
+  │              ├─ arrowNav ON  →  parseArrowInput (arrows → commands.navigate, Enter → commands.makeMove)
+  │              └─ arrowNav OFF →  parseNumberInput (1-9 → commands.makeMove)
   │
   │  Komendy enkapsulują: validateMove → engine.savePlayerMove + beep | dispatch SET_ERROR
   │
@@ -153,8 +153,8 @@ Game.tsx
 
 - `i` — toggle info panel
 - `h` — toggle history mode (gdy movesCount > 0)
-- Strzałki — nawigacja (gdy arrowKeyNavigation włączone w settings)
-- `1-9` — wybór pola (gdy arrowKeyNavigation wyłączone)
+- Strzałki — nawigacja (gdy arrowNav włączone w settings)
+- `1-9` — wybór pola (gdy arrowNav wyłączone)
 - `Enter`/`Space` — potwierdzenie ruchu / cofnięcie w history mode
 
 ---
@@ -164,7 +164,7 @@ Game.tsx
 - ~~**Duplikacja stałych**~~: usunięte — `BOARD_ROWS`/`BOARD_COLS` tylko w `constants/gameConstants.ts`, `Board/constants.ts` zawiera tylko `BORDER_CHARS`.
 - ~~`validateFieldRange.ts`~~: usunięte jako dead code.
 - ~~`Board` renderuje imperatywnie~~: refaktorowane na deklaratywne `.map()` z Data Adapter.
-- `arrowKeyNavigation` czytany z `useSettingsStore` — integracja z globalnym store ustawień.
+- `arrowNav` czytany z `useSettingsStore` — integracja z globalnym store ustawień.
 - `useGameInput` zredukowany z 161 do 85 linii — thin parser bez logiki biznesowej.
 - `useGameViewModel` — nowy hook z komendami testowalnymi w izolacji (bez Ink's `useInput`).
 - `boardAdapter.ts` — `toGrid()` jako jedyna funkcja transformująca flat array → grid.

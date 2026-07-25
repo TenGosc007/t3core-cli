@@ -12,7 +12,7 @@ import { useGameViewModel } from "./useGameViewModel";
 
 export function useGameInput(engine: GameEngine) {
   const { gameState, ui, commands } = useGameViewModel(engine);
-  const arrowKeyNavigation = useSettingsStore((s) => s.arrowKeyNavigation);
+  const arrowNav = useSettingsStore((s) => s.arrowNav);
 
   useInput((input, key) => {
     if (!engine.isRunning) {
@@ -39,14 +39,14 @@ export function useGameInput(engine: GameEngine) {
       return;
     }
 
-    if (arrowKeyNavigation) {
+    if (arrowNav) {
       parseArrowInput(input, key, ui, commands);
     } else {
       parseNumberInput(input, commands);
     }
   });
 
-  return { gameState, ui, arrowKeyNavigation };
+  return { gameState, ui, arrowNav };
 }
 
 function parseArrowInput(

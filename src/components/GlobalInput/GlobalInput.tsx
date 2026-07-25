@@ -32,7 +32,7 @@ export const GlobalInput = ({
   const [value, setValue] = useState("");
   const [error, setError] = useState<GlobalInputError>(errorProp);
   const errorMessage = errorHelper(error || errorProp);
-  const arrowKeyNavigation = useSettingsStore((s) => s.arrowKeyNavigation);
+  const arrowNav = useSettingsStore((s) => s.arrowNav);
 
   const handleChange = (v: string) => {
     setValue(v);
@@ -60,7 +60,7 @@ export const GlobalInput = ({
     setError(resultError.formErrors);
   };
 
-  if (arrowKeyNavigation) {
+  if (arrowNav) {
     return null;
   }
 

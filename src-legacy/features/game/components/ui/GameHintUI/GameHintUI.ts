@@ -2,12 +2,12 @@ import { s } from "@/utils/styledLabel";
 
 const getHistoryInstruction = ({
   movesCount,
-  useArrowKeys,
+  useArrowNavs,
 }: {
   movesCount: number;
-  useArrowKeys: boolean;
+  useArrowNavs: boolean;
 }) => {
-  return useArrowKeys
+  return useArrowNavs
     ? "Select previous move"
     : `Back to previous move from 0 to ${movesCount}.
 (0 is start from the beginning)`;
@@ -22,14 +22,14 @@ const showInstructionMessage = ({
   isKeyHandlerRunning: boolean;
   isHistoryMode: boolean;
 }) => {
-  const useArrowKeys = isKeyHandlerRunning && !isHistoryMode;
+  const useArrowNavs = isKeyHandlerRunning && !isHistoryMode;
 
   const instruction = isHistoryMode
     ? getHistoryInstruction({
         movesCount,
-        useArrowKeys,
+        useArrowNavs,
       })
-    : useArrowKeys
+    : useArrowNavs
       ? "Use arrow keys to navigate,\nEnter to confirm"
       : "Select the number of the field (1-9)";
 

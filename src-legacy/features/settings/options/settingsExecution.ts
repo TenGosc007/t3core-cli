@@ -24,7 +24,7 @@ const executeOption = (
   const toggleActions: Record<SettingsKey, () => void> = {
     beep: manager.toggleBeep,
     style: manager.toggleStyle,
-    arrowKeyNavigation: manager.toggleArrowKeyNavigation,
+    arrowNav: manager.togglearrowNav,
   };
 
   toggleActions[option.key]();

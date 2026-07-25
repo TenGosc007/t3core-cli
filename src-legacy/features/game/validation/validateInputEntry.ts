@@ -10,7 +10,7 @@ import { validateSelectedField } from "./validateSelectedField";
 type ValidateInputEntryProps = {
   entryProp: number;
   game: GameEngine;
-  isArrowKeyOn: boolean;
+  isArrowNavOn: boolean;
   isInHistoryMode: boolean;
   gameState?: GameStateManager;
 };
@@ -22,9 +22,9 @@ const getStartAndRange = (movesCount: number, isHistoryMode: boolean) => {
   return { range, start };
 };
 
-const entryHelper = (entryProp: number, isArrowKeyOn: boolean) => {
-  const index = isArrowKeyOn ? entryProp : entryProp - 1;
-  const entry = isArrowKeyOn ? entryProp + 1 : entryProp;
+const entryHelper = (entryProp: number, isArrowNavOn: boolean) => {
+  const index = isArrowNavOn ? entryProp : entryProp - 1;
+  const entry = isArrowNavOn ? entryProp + 1 : entryProp;
 
   return { index, entry };
 };
@@ -32,7 +32,7 @@ const entryHelper = (entryProp: number, isArrowKeyOn: boolean) => {
 export const validateInputEntry = ({
   entryProp,
   game,
-  isArrowKeyOn,
+  isArrowNavOn,
   isInHistoryMode,
   gameState,
 }: ValidateInputEntryProps) => {
@@ -41,7 +41,7 @@ export const validateInputEntry = ({
     game.getMovesCount(),
     isInHistoryMode,
   );
-  const { index, entry } = entryHelper(entryProp, isArrowKeyOn);
+  const { index, entry } = entryHelper(entryProp, isArrowNavOn);
 
   gameState?.setInputError(null);
 

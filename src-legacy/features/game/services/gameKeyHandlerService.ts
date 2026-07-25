@@ -33,7 +33,7 @@ export const createGameKeyHandlerService = ({
     const runtimeSettings = settings.getRuntimeSettings();
     const isHistoryModeOn = gameState.historyMode;
 
-    if (runtimeSettings.arrowKeyNavigation && !isHistoryModeOn) handler.start();
+    if (runtimeSettings.arrowNav && !isHistoryModeOn) handler.start();
     else handler.stop();
 
     return handler;

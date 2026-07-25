@@ -1,6 +1,6 @@
 export const SETTINGS_KEYS = {
   beep: "beep",
-  arrowKeyNavigation: "arrowKeyNavigation",
+  arrowNav: "arrowNav",
 } as const;
 
 export type SettingsKey = keyof typeof SETTINGS_KEYS;
@@ -9,7 +9,7 @@ export type SettingsState = Record<SettingsKey, boolean>;
 
 export const DEFAULT_SETTINGS: SettingsState = {
   [SETTINGS_KEYS.beep]: true,
-  [SETTINGS_KEYS.arrowKeyNavigation]: true,
+  [SETTINGS_KEYS.arrowNav]: true,
 };
 
 type BaseSettingsOption = {
@@ -42,7 +42,7 @@ export const SETTINGS_OPTIONS: readonly SettingsOption[] = [
     id: 2,
     label: "Use Arrow Keys",
     type: "toggle",
-    key: "arrowKeyNavigation",
+    key: "arrowNav",
   },
   {
     id: 3,

@@ -10,7 +10,7 @@ import {
 } from "./SettingsRepository";
 
 export type SettingsStore = SettingsState & {
-  toggle: (key: "beep" | "arrowKeyNavigation") => void;
+  toggle: (key: "beep" | "arrowNav") => void;
   reset: () => void;
   load: () => void;
 };
@@ -18,7 +18,7 @@ export type SettingsStore = SettingsState & {
 const persist = (state: SettingsState, repository: SettingsRepository) => {
   repository.save({
     beep: state.beep,
-    arrowKeyNavigation: state.arrowKeyNavigation,
+    arrowNav: state.arrowNav,
   });
 };
 

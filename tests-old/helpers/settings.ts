@@ -7,11 +7,11 @@ export const createSettingsManager = (): SettingsManager => {
     getRuntimeSettings: vi.fn().mockReturnValue({
       beep: true,
       style: true,
-      arrowKeyNavigation: true,
+      arrowNav: true,
     }),
     resetSettings: vi.fn(),
     toggleBeep: vi.fn(),
     toggleStyle: vi.fn(),
-    toggleArrowKeyNavigation: vi.fn(),
+    togglearrowNav: vi.fn(),
   } as unknown as SettingsManager;
 };

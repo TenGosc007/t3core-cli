@@ -31,7 +31,7 @@ describe("validateInputEntry", () => {
       validateInputEntry({
         entryProp: 5,
         game,
-        isArrowKeyOn: false,
+        isArrowNavOn: false,
         isInHistoryMode: false,
         gameState,
       }),
@@ -46,7 +46,7 @@ describe("validateInputEntry", () => {
       validateInputEntry({
         entryProp: 10,
         game,
-        isArrowKeyOn: false,
+        isArrowNavOn: false,
         isInHistoryMode: false,
         gameState,
       }),
@@ -61,7 +61,7 @@ describe("validateInputEntry", () => {
       validateInputEntry({
         entryProp: 5,
         game,
-        isArrowKeyOn: false,
+        isArrowNavOn: false,
         isInHistoryMode: false,
         gameState,
       }),
@@ -75,7 +75,7 @@ describe("validateInputEntry", () => {
     validateInputEntry({
       entryProp: 5,
       game,
-      isArrowKeyOn: false,
+      isArrowNavOn: false,
       isInHistoryMode: false,
       gameState,
     });
@@ -94,7 +94,7 @@ describe("validateInputEntry", () => {
       validateInputEntry({
         entryProp: 2,
         game,
-        isArrowKeyOn: false,
+        isArrowNavOn: false,
         isInHistoryMode: true,
         gameState,
       }),
@@ -109,7 +109,7 @@ describe("validateInputEntry", () => {
       validateInputEntry({
         entryProp: 4,
         game,
-        isArrowKeyOn: true,
+        isArrowNavOn: true,
         isInHistoryMode: false,
         gameState,
       }),

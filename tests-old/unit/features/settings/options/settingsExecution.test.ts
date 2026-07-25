@@ -12,12 +12,12 @@ const createSettingsManager = (overrides: Partial<SettingsManager> = {}) => {
     getRuntimeSettings: vi.fn().mockReturnValue({
       beep: true,
       style: true,
-      arrowKeyNavigation: true,
+      arrowNav: true,
     }),
     resetSettings: vi.fn(),
     toggleBeep: vi.fn(),
     toggleStyle: vi.fn(),
-    toggleArrowKeyNavigation: vi.fn(),
+    togglearrowNav: vi.fn(),
     ...overrides,
   } as unknown as SettingsManager;
 };
@@ -49,12 +49,12 @@ describe("executeSettingsOption", () => {
       getRuntimeSettings: vi.fn().mockReturnValue({
         beep: true,
         style: false,
-        arrowKeyNavigation: false,
+        arrowNav: false,
       }),
     });
 
     expect(executeSettingsOption(3, manager)).toBe(false);
-    expect(manager.toggleArrowKeyNavigation).not.toHaveBeenCalled();
+    expect(manager.togglearrowNav).not.toHaveBeenCalled();
   });
 
   it("returns false for unknown id", () => {
