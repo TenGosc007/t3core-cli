@@ -1,14 +1,14 @@
 import { useInput } from "ink";
 import { useState } from "react";
 
-import { useSettingsStore } from "@/services/settings/useSettingsStore";
+import { useSettingsArrowNav } from "@/services/settings/useSettingsStore";
 
 import { MENU_OPTIONS } from "../constants/menuOptions";
 import { useMenuNavigation } from "./navigateToMenuOption";
 
 export const useMenuInput = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const arrowNav = useSettingsStore((s) => s.arrowNav);
+  const arrowNav = useSettingsArrowNav();
   const navigateToMenuOption = useMenuNavigation();
 
   useInput((_, key) => {

@@ -2,7 +2,7 @@ import { Box, Text } from "ink";
 import { useState } from "react";
 import z from "zod";
 
-import { beep, useSettingsStore } from "@/services/settings";
+import { beep } from "@/services/settings";
 
 import { TextInput } from "../TextInput";
 import { GlobalInputError } from "./GlobalInputError";
@@ -27,7 +27,6 @@ export const GlobalInput = ({
 }: Props) => {
   const [value, setValue] = useState("");
   const [error, setError] = useState<GlobalInputError>(errorProp);
-  const arrowNav = useSettingsStore((s) => s.arrowNav);
 
   const handleChange = (v: string) => {
     setValue(v);
@@ -54,10 +53,6 @@ export const GlobalInput = ({
     const resultError = z.flattenError(result.error);
     setError(resultError.formErrors);
   };
-
-  if (arrowNav) {
-    return null;
-  }
 
   return (
     <>

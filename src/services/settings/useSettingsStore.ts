@@ -46,3 +46,4 @@ const createSettingsStore = (
   }));
 
 export const useSettingsStore = createSettingsStore();
+export const useSettingsArrowNav = () => useSettingsStore((s) => s.arrowNav);

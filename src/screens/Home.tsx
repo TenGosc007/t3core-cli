@@ -24,6 +24,7 @@ export const Home = () => {
       <Footer
         onSubmit={handleOptionSelect}
         hints={[`Type 1-${MENU_OPTIONS.length} to select`, `q Quit`]}
+        arrowNavHints={["↑↓ Navigate", "Enter Select"]}
         validationSchema={menuInputSchema}
       />
     </>
