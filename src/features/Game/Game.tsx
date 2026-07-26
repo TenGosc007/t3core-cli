@@ -1,5 +1,6 @@
+import type { GameEngine } from "./engine/gameEngine";
+
 import { Box, Newline, Text } from "ink";
-import { useRef } from "react";
 
 import { Container } from "@/components/Container";
 
@@ -9,14 +10,16 @@ import { GameInfo } from "./components/GameInfo";
 import { GameStatus } from "./components/GameStatus";
 import { InputError } from "./components/InputError";
 import { PlayerPrompt } from "./components/PlayerPrompt";
-import { createGameEngine } from "./engine/gameEngine";
 import { useGameInput } from "./hooks/useGameInput";
 
-export const Game = () => {
-  const engineRef = useRef(createGameEngine());
-  const { gameState, ui, arrowNav } = useGameInput(engineRef.current);
+type GameProps = {
+  engine: GameEngine;
+};
 
-  const isRunning = engineRef.current.isRunning;
+export const Game = ({ engine }: GameProps) => {
+  const { gameState, ui, arrowNav } = useGameInput(engine);
+
+  const isRunning = engine.isRunning;
 
   return (
     <Box flexDirection="column" width="100%">
@@ -31,7 +34,7 @@ export const Game = () => {
           <>
             {ui.inputError ? <InputError error={ui.inputError} /> : <Newline />}
             <GameHint
-              movesCount={engineRef.current.movesCount}
+              movesCount={engine.movesCount}
               useArrowNavs={arrowNav && !ui.historyMode}
               isHistoryMode={ui.historyMode}
             />
