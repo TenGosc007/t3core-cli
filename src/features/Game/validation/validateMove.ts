@@ -1,6 +1,6 @@
 import type { GameEngine } from "../engine/gameEngine";
 
-import { BOARD_SIZE } from "@/features/Game/constants/gameConstants";
+import { BOARD_LENGTH } from "@/features/Game/constants/gameConstants";
 
 import { validateSelectedField } from "./validateSelectedField";
 
@@ -23,8 +23,8 @@ export const validateMove = ({
     return null;
   }
 
-  if (index < 0 || index >= BOARD_SIZE) {
-    return `Please enter a valid number (1-${BOARD_SIZE}) and press enter`;
+  if (index < 0 || index >= BOARD_LENGTH) {
+    return `Please enter a valid number (1-${BOARD_LENGTH}) and press enter`;
   }
 
   return validateSelectedField({ index, game, isHistoryMode });

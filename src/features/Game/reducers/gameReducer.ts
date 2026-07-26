@@ -1,6 +1,6 @@
 import {
-  BOARD_COLS,
-  BOARD_ROWS,
+  BOARD_SIZE,
+  BOARD_SIZE,
   INITIAL_BOARD_POSITION,
 } from "../constants/gameConstants";
 
@@ -28,18 +28,18 @@ export const createInitialUIState = (): UIState => ({
 });
 
 const navigate = (current: number, direction: Direction): number => {
-  const row = Math.floor(current / BOARD_COLS);
-  const col = current % BOARD_COLS;
+  const row = Math.floor(current / BOARD_SIZE);
+  const col = current % BOARD_SIZE;
 
   switch (direction) {
     case "up":
-      return ((row - 1 + BOARD_ROWS) % BOARD_ROWS) * BOARD_COLS + col;
+      return ((row - 1 + BOARD_SIZE) % BOARD_SIZE) * BOARD_SIZE + col;
     case "down":
-      return ((row + 1) % BOARD_ROWS) * BOARD_COLS + col;
+      return ((row + 1) % BOARD_SIZE) * BOARD_SIZE + col;
     case "left":
-      return row * BOARD_COLS + ((col - 1 + BOARD_COLS) % BOARD_COLS);
+      return row * BOARD_SIZE + ((col - 1 + BOARD_SIZE) % BOARD_SIZE);
     case "right":
-      return row * BOARD_COLS + ((col + 1) % BOARD_COLS);
+      return row * BOARD_SIZE + ((col + 1) % BOARD_SIZE);
   }
 };
 
