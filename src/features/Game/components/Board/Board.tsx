@@ -16,7 +16,7 @@ export const Board = ({ board, selectedCell }: BoardProps) => {
   const grid = toGrid(board, selectedCell);
 
   return (
-    <Box flexDirection="column" alignItems="center">
+    <Box flexDirection="column" alignSelf="center">
       <Border type="top" />
       {grid.map((cells, row) => (
         <Fragment key={row}>

@@ -25,9 +25,7 @@ export const Border = ({ type, cols = 3 }: Props) => {
   return (
     <Text color="gray">
       {chars.left}
-
       {middleChars}
-
       {dash}
       {chars.right}
     </Text>

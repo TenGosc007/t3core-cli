@@ -11,11 +11,11 @@ export const TopLayout = () => {
 
   return (
     <Text color={layoutStyles.color} backgroundColor={layoutStyles.background}>
-      ╭{"─".repeat(count / 2)}
+      ╭{"─".repeat(Math.floor(count / 2))}
       <Text bold color="yellowBright">
         {header}
       </Text>
-      {"─".repeat(count / 2)}╮
+      {"─".repeat(Math.floor(count / 2))}╮
     </Text>
   );
 };

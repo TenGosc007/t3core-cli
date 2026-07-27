@@ -12,11 +12,11 @@ export const BottomLayout = () => {
 
   return (
     <Text color={layoutStyles.color} backgroundColor={layoutStyles.background}>
-      ╰{"─".repeat(count * 0.98)}
+      ╰{"─".repeat(Math.floor(count * 0.98))}
       <Text dimColor color="white">
         {` v${appVersion} `}
       </Text>
-      {"─".repeat(count * 0.02)}╯
+      {"─".repeat(Math.floor(count * 0.02))}╯
     </Text>
   );
 };
