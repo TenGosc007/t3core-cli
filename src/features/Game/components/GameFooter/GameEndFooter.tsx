@@ -12,7 +12,7 @@ export const GameEndFooter = ({ onSubmit }: GameEndFooterProps) => {
   });
 
   return (
-    <Box padding={1}>
+    <Box padding={1} justifyContent="center">
       <Text dimColor>Enter: play again · q: back to menu</Text>
     </Box>
   );
