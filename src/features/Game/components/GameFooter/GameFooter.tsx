@@ -1,6 +1,7 @@
 import { Footer } from "@/components/Footer";
 
 import { gameInputSchema } from "../../validation/gameInputSchema";
+import { historyInputSchema } from "../../validation/historyInputSchema";
 import { GameEndFooter } from "./GameEndFooter";
 import { getGameFooterHints } from "./getGameFooterHints";
 
@@ -31,7 +32,11 @@ export const GameFooter = ({
       onSubmit={onSubmit}
       hints={hints}
       arrowNavHints={arrowNavHints}
-      validationSchema={gameInputSchema}
+      validationSchema={
+        isHistoryModeOn
+          ? historyInputSchema(historyMovesCount)
+          : gameInputSchema
+      }
     />
   );
 };

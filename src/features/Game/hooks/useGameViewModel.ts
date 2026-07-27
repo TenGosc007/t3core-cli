@@ -10,7 +10,7 @@ import { useReducer } from "react";
 import { beep } from "@/services/settings";
 
 import { createInitialUIState, uiReducer } from "../reducers/gameReducer";
-import { validateMove } from "../validation";
+import { validateMove } from "../validation/validateMove";
 import { useGameStore } from "./useGameStore";
 
 export type GameCommands = {

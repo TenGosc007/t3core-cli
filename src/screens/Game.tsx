@@ -12,7 +12,7 @@ export const Game = () => {
 
   const handleOptionSelect = (value: string) => {
     makeInteraction(value);
-    if (!isNaN(+value)) makeMove(+value - 1);
+    if (!isNaN(+value)) makeMove(ui.historyMode ? +value : +value - 1);
   };
 
   return (
