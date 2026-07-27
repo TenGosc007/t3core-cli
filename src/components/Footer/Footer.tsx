@@ -12,7 +12,7 @@ type Props = {
   onSubmit: (value: string) => void;
   hints?: string[];
   arrowNavHints?: string[];
-  validationSchema?: z.ZodCoercedNumber<unknown>;
+  validationSchema?: z.ZodType<unknown>;
 };
 
 export const Footer = ({

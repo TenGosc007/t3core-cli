@@ -1,6 +1,5 @@
 import type { GameEngine } from "../engine/gameEngine";
 import type { HistoryMoveResult } from "../engine/gameEngine";
-import type { UIState } from "../reducers/gameReducer";
 import type { GameCommands } from "./useGameViewModel";
 
 import { useInput, type Key } from "ink";
@@ -8,11 +7,17 @@ import { useInput, type Key } from "ink";
 import { beep } from "@/services/settings";
 import { useSettingsStore } from "@/services/settings/useSettingsStore";
 
+import { INTERACTION_KEYS } from "../constants/gameConstants";
 import { useGameViewModel } from "./useGameViewModel";
 
 export function useGameInput(engine: GameEngine) {
   const { gameState, ui, commands } = useGameViewModel(engine);
   const arrowNav = useSettingsStore((s) => s.arrowNav);
+
+  const makeInteraction = (input: string) => {
+    if (input === INTERACTION_KEYS.INFO) commands.toggleInfo();
+    if (input === INTERACTION_KEYS.HISTORY) commands.toggleHistory();
+  };
 
   useInput((input, key) => {
     if (!engine.isRunning) {
@@ -22,15 +27,7 @@ export function useGameInput(engine: GameEngine) {
 
     if (!arrowNav) return;
 
-    if (input === "i") {
-      commands.toggleInfo();
-      return;
-    }
-
-    if (input === "h" && engine.movesCount > 0) {
-      commands.toggleHistory();
-      return;
-    }
+    makeInteraction(input);
 
     if (ui.historyMode) {
       const status = parseHistoryInput(input, commands);
@@ -41,26 +38,21 @@ export function useGameInput(engine: GameEngine) {
       return;
     }
 
-    parseArrowInput(input, key, ui, commands);
+    parseArrowInput(key, commands);
+
+    if (key.return || input === " ") {
+      commands.makeMove(ui.selectedCell);
+    }
   });
 
-  return { gameState, ui, arrowNav, commands };
+  return { gameState, ui, arrowNav, commands, makeInteraction };
 }
 
-function parseArrowInput(
-  input: string,
-  key: Key,
-  ui: UIState,
-  commands: GameCommands,
-) {
+function parseArrowInput(key: Key, commands: GameCommands) {
   if (key.upArrow) return commands.navigate("up");
   if (key.downArrow) return commands.navigate("down");
   if (key.leftArrow) return commands.navigate("left");
   if (key.rightArrow) return commands.navigate("right");
-
-  if (key.return || input === " ") {
-    commands.makeMove(ui.selectedCell);
-  }
 }
 
 function parseHistoryInput(

@@ -13,7 +13,7 @@ type Props = {
   onChange?: (value: string) => void;
   placeholder?: string;
   hints?: string[];
-  validationSchema?: z.ZodCoercedNumber<unknown>;
+  validationSchema?: z.ZodType<unknown>;
   error?: GlobalInputError;
 };
 
@@ -45,7 +45,7 @@ export const GlobalInput = ({
 
     const result = validationSchema?.safeParse(value);
     if (result?.success) {
-      onSubmit?.(result.data.toString());
+      onSubmit?.(String(result.data));
       return;
     }
 
