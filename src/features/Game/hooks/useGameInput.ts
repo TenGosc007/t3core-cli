@@ -20,6 +20,8 @@ export function useGameInput(engine: GameEngine) {
       return;
     }
 
+    if (!arrowNav) return;
+
     if (input === "i") {
       commands.toggleInfo();
       return;
@@ -39,9 +41,7 @@ export function useGameInput(engine: GameEngine) {
       return;
     }
 
-    if (arrowNav) {
-      parseArrowInput(input, key, ui, commands);
-    }
+    parseArrowInput(input, key, ui, commands);
   });
 
   return { gameState, ui, arrowNav, commands };
