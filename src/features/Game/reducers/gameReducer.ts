@@ -1,13 +1,11 @@
-import {
-  BOARD_SIZE,
-  BOARD_SIZE,
-  INITIAL_BOARD_POSITION,
-} from "../constants/gameConstants";
+import { getArrowNavState } from "@/services/settings";
+
+import { BOARD_SIZE, INITIAL_BOARD_POSITION } from "../constants/gameConstants";
 
 export type Direction = "up" | "down" | "left" | "right";
 
 export type UIState = {
-  selectedCell: number;
+  selectedCell: number | null;
   showInfo: boolean;
   historyMode: boolean;
   inputError: string | null;
@@ -21,7 +19,7 @@ export type UIAction =
   | { type: "RESET" };
 
 export const createInitialUIState = (): UIState => ({
-  selectedCell: INITIAL_BOARD_POSITION,
+  selectedCell: getArrowNavState() ? INITIAL_BOARD_POSITION : null,
   showInfo: false,
   historyMode: false,
   inputError: null,
@@ -48,7 +46,10 @@ export const uiReducer = (state: UIState, action: UIAction): UIState => {
     case "NAVIGATE":
       return {
         ...state,
-        selectedCell: navigate(state.selectedCell, action.direction),
+        selectedCell: navigate(
+          state.selectedCell ?? INITIAL_BOARD_POSITION,
+          action.direction,
+        ),
         inputError: null,
       };
 

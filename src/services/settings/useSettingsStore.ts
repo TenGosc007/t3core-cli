@@ -46,4 +46,5 @@ const createSettingsStore = (
   }));
 
 export const useSettingsStore = createSettingsStore();
+export const getArrowNavState = () => useSettingsStore.getState().arrowNav;
 export const useSettingsArrowNav = () => useSettingsStore((s) => s.arrowNav);

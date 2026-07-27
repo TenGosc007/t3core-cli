@@ -1,9 +1,6 @@
 import type { BoardField } from "../../engine/gameEngine";
 
-import {
-  BOARD_SIZE,
-  BOARD_SIZE,
-} from "@/features/Game/constants/gameConstants";
+import { BOARD_SIZE } from "@/features/Game/constants/gameConstants";
 
 export type CellViewModel = {
   index: number;
