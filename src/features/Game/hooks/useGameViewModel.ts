@@ -43,15 +43,6 @@ export const useGameViewModel = (engine: GameEngine) => {
   };
 
   const backToMove = (index: number) => {
-    const error = validateMove({
-      index,
-      game: engine,
-      isHistoryMode: true,
-    });
-    if (error) {
-      dispatch({ type: "SET_ERROR", error });
-      return;
-    }
     const status = engine.backToMove(index);
     dispatch({ type: "SET_ERROR", error: null });
     return status;
