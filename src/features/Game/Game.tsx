@@ -2,7 +2,7 @@ import type { GameEngine } from "./engine/gameEngine";
 import type { GameSnapshot } from "./engine/gameEngine";
 import type { UIState } from "./reducers/gameReducer";
 
-import { Box, Newline } from "ink";
+import { Box } from "ink";
 
 import { Container } from "@/components/Container";
 
@@ -25,13 +25,12 @@ export const Game = ({ engine, gameState, ui }: GameProps) => {
     <Box flexDirection="column" width="100%">
       <GameInfo showInfo={ui.showInfo} />
 
-      <Container justifyContent="center">
+      <Container justifyContent="center" marginTop={1}>
         <PlayerPrompt currentPlayer={gameState.currentPlayer} />
         <Board board={gameState.board} selectedCell={ui.selectedCell} />
         <GameStatus gameStatus={gameState.gameStatus} />
 
-        {isRunning &&
-          (ui.inputError ? <InputError error={ui.inputError} /> : <Newline />)}
+        <InputError error={isRunning ? ui.inputError : null} />
       </Container>
     </Box>
   );

@@ -20,7 +20,7 @@ export const GameFooter = ({
 }: GameFooterProps) => {
   if (!isGameRunning) {
     return (
-      <Box marginTop={1}>
+      <Box padding={1}>
         <Text dimColor>Enter: play again · q: back to menu</Text>
       </Box>
     );
