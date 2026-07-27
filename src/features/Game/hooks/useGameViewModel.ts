@@ -63,11 +63,12 @@ export const useGameViewModel = (engine: GameEngine) => {
   const toggleInfo = () => dispatch({ type: "TOGGLE_INFO" });
 
   const toggleHistory = () => {
-    if (engine.movesCount < 1) {
-      dispatch({ type: "SET_ERROR", error: "No moves to view" });
+    if (engine.movesCount > 0) {
+      dispatch({ type: "TOGGLE_HISTORY" });
       return;
     }
-    dispatch({ type: "TOGGLE_HISTORY" });
+
+    dispatch({ type: "SET_ERROR", error: "No moves to view" });
   };
 
   const reset = () => {
