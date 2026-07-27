@@ -8,12 +8,11 @@ import { GameFooter } from "../features/Game/components/GameFooter";
 export const Game = () => {
   useGoBack();
   const engine = useGameEngine();
-  const { gameState, ui, commands, makeInteraction } = useGameInput(engine);
+  const { gameState, ui, makeInteraction, makeMove } = useGameInput(engine);
 
   const handleOptionSelect = (value: string) => {
     makeInteraction(value);
-    if (isNaN(+value)) return;
-    commands.makeMove(+value - 1);
+    if (!isNaN(+value)) makeMove(+value - 1);
   };
 
   return (

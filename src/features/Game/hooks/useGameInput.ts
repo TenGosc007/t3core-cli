@@ -14,17 +14,18 @@ export function useGameInput(engine: GameEngine) {
   const { gameState, ui, commands } = useGameViewModel(engine);
   const arrowNav = useSettingsStore((s) => s.arrowNav);
 
+  const makeMove = (input: number) => {
+    if (!engine.isRunning) return commands.reset();
+
+    commands.makeMove(input);
+  };
+
   const makeInteraction = (input: string) => {
     if (input === INTERACTION_KEYS.INFO) commands.toggleInfo();
     if (input === INTERACTION_KEYS.HISTORY) commands.toggleHistory();
   };
 
   useInput((input, key) => {
-    if (!engine.isRunning) {
-      if (key.return) commands.reset();
-      return;
-    }
-
     if (!arrowNav) return;
 
     makeInteraction(input);
@@ -41,11 +42,11 @@ export function useGameInput(engine: GameEngine) {
     parseArrowInput(key, commands);
 
     if (key.return || input === " ") {
-      commands.makeMove(ui.selectedCell);
+      makeMove(ui.selectedCell);
     }
   });
 
-  return { gameState, ui, arrowNav, commands, makeInteraction };
+  return { gameState, ui, arrowNav, commands, makeInteraction, makeMove };
 }
 
 function parseArrowInput(key: Key, commands: GameCommands) {

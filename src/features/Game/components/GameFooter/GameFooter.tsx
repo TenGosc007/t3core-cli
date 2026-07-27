@@ -1,8 +1,7 @@
-import { Box, Text } from "ink";
-
 import { Footer } from "@/components/Footer";
 
 import { gameInputSchema } from "../../validation/gameInputSchema";
+import { GameEndFooter } from "./GameEndFooter";
 import { getGameFooterHints } from "./getGameFooterHints";
 
 type GameFooterProps = {
@@ -19,11 +18,7 @@ export const GameFooter = ({
   onSubmit,
 }: GameFooterProps) => {
   if (!isGameRunning) {
-    return (
-      <Box padding={1}>
-        <Text dimColor>Enter: play again · q: back to menu</Text>
-      </Box>
-    );
+    return <GameEndFooter onSubmit={onSubmit} />;
   }
 
   const { hints, arrowNavHints } = getGameFooterHints(
