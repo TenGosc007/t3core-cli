@@ -3,7 +3,6 @@ import type { GameCommands } from "./useGameViewModel";
 
 import { useInput } from "ink";
 
-import { beep } from "@/services/settings";
 import { useSettingsStore } from "@/services/settings/useSettingsStore";
 
 import { INTERACTION_KEYS } from "../constants/gameConstants";
@@ -25,11 +24,7 @@ export const useArrowNavInput = ({ ui, commands }: Props) => {
     if (ui.historyMode) {
       const num = Number.parseInt(input, 10);
       if (!Number.isNaN(num)) {
-        const status = commands.backToMove(num);
-        if (status === "success") {
-          beep();
-          commands.toggleHistory();
-        }
+        commands.backToMove(num);
       }
       return;
     }

@@ -55,6 +55,10 @@ export const useGameViewModel = (engine: GameEngine) => {
 
   const backToMove = (index: number) => {
     const status = engine.backToMove(index);
+    if (status === "success") {
+      toggleHistory();
+      return status;
+    }
     dispatch({ type: "SET_ERROR", error: null });
     return status;
   };
@@ -62,10 +66,13 @@ export const useGameViewModel = (engine: GameEngine) => {
   const navigate = (direction: Direction) =>
     dispatch({ type: "NAVIGATE", direction });
 
-  const toggleInfo = () => dispatch({ type: "TOGGLE_INFO" });
+  const toggleInfo = () => {
+    dispatch({ type: "TOGGLE_INFO" });
+  };
 
   const toggleHistory = () => {
     if (engine.movesCount > 0) {
+      beep();
       dispatch({ type: "TOGGLE_HISTORY" });
       return;
     }
