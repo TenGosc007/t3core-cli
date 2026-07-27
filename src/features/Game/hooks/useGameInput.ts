@@ -41,12 +41,10 @@ export function useGameInput(engine: GameEngine) {
 
     if (arrowNav) {
       parseArrowInput(input, key, ui, commands);
-    } else {
-      parseNumberInput(input, commands);
     }
   });
 
-  return { gameState, ui, arrowNav };
+  return { gameState, ui, arrowNav, commands };
 }
 
 function parseArrowInput(
@@ -62,13 +60,6 @@ function parseArrowInput(
 
   if (key.return || input === " ") {
     commands.makeMove(ui.selectedCell);
-  }
-}
-
-function parseNumberInput(input: string, commands: GameCommands) {
-  const num = Number.parseInt(input, 10);
-  if (num >= 1 && num <= 9) {
-    commands.makeMove(num - 1);
   }
 }
 

@@ -1,24 +1,24 @@
 import type { GameEngine } from "./engine/gameEngine";
+import type { GameSnapshot } from "./engine/gameEngine";
+import type { UIState } from "./reducers/gameReducer";
 
-import { Box, Newline, Text } from "ink";
+import { Box, Newline } from "ink";
 
 import { Container } from "@/components/Container";
 
 import { Board } from "./components/Board";
-import { GameHint } from "./components/GameHint";
 import { GameInfo } from "./components/GameInfo";
 import { GameStatus } from "./components/GameStatus";
 import { InputError } from "./components/InputError";
 import { PlayerPrompt } from "./components/PlayerPrompt";
-import { useGameInput } from "./hooks/useGameInput";
 
 type GameProps = {
   engine: GameEngine;
+  gameState: GameSnapshot;
+  ui: UIState;
 };
 
-export const Game = ({ engine }: GameProps) => {
-  const { gameState, ui, arrowNav } = useGameInput(engine);
-
+export const Game = ({ engine, gameState, ui }: GameProps) => {
   const isRunning = engine.isRunning;
 
   return (
@@ -30,22 +30,8 @@ export const Game = ({ engine }: GameProps) => {
         <Board board={gameState.board} selectedCell={ui.selectedCell} />
         <GameStatus gameStatus={gameState.gameStatus} />
 
-        {isRunning && (
-          <>
-            {ui.inputError ? <InputError error={ui.inputError} /> : <Newline />}
-            <GameHint
-              movesCount={engine.movesCount}
-              useArrowNavs={arrowNav && !ui.historyMode}
-              isHistoryMode={ui.historyMode}
-            />
-          </>
-        )}
-
-        {!isRunning && (
-          <Box marginTop={1}>
-            <Text dimColor>Enter: play again · q: back to menu</Text>
-          </Box>
-        )}
+        {isRunning &&
+          (ui.inputError ? <InputError error={ui.inputError} /> : <Newline />)}
       </Container>
     </Box>
   );
