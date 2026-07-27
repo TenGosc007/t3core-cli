@@ -9,6 +9,7 @@ import { useReducer } from "react";
 
 import { beep } from "@/services/settings";
 
+import { INTERACTION_KEYS } from "../constants/gameConstants";
 import { createInitialUIState, uiReducer } from "../reducers/gameReducer";
 import { validateMove } from "../validation/validateMove";
 import { useGameStore } from "./useGameStore";
@@ -27,6 +28,11 @@ export const useGameViewModel = (engine: GameEngine) => {
   const [ui, dispatch] = useReducer(uiReducer, undefined, createInitialUIState);
 
   const makeMove = (index: number) => {
+    if (!engine.isRunning) {
+      reset();
+      return;
+    }
+
     const error = validateMove({
       index,
       game: engine,
@@ -40,6 +46,11 @@ export const useGameViewModel = (engine: GameEngine) => {
     dispatch({ type: "SET_ERROR", error: null });
     beep();
     return status;
+  };
+
+  const makeInteraction = (input: string) => {
+    if (input === INTERACTION_KEYS.INFO) toggleInfo();
+    if (input === INTERACTION_KEYS.HISTORY) toggleHistory();
   };
 
   const backToMove = (index: number) => {
@@ -76,5 +87,5 @@ export const useGameViewModel = (engine: GameEngine) => {
     reset,
   };
 
-  return { gameState, ui, commands };
+  return { gameState, ui, commands, makeInteraction };
 };

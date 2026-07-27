@@ -1,5 +1,6 @@
+import { useArrowNavInput } from "@/features/Game/hooks/useArrowNavInput";
 import { useGameEngine } from "@/features/Game/hooks/useGameEngine";
-import { useGameInput } from "@/features/Game/hooks/useGameInput";
+import { useGameViewModel } from "@/features/Game/hooks/useGameViewModel";
 import { useGoBack } from "@/hooks/useGoBack";
 
 import { Game as GameView } from "../features/Game";
@@ -8,11 +9,12 @@ import { GameFooter } from "../features/Game/components/GameFooter";
 export const Game = () => {
   useGoBack();
   const engine = useGameEngine();
-  const { gameState, ui, makeInteraction, makeMove } = useGameInput(engine);
+  const { gameState, ui, commands, makeInteraction } = useGameViewModel(engine);
+  useArrowNavInput({ ui, commands });
 
   const handleOptionSelect = (value: string) => {
     makeInteraction(value);
-    if (!isNaN(+value)) makeMove(ui.historyMode ? +value : +value - 1);
+    if (!isNaN(+value)) commands.makeMove(ui.historyMode ? +value : +value - 1);
   };
 
   return (
