@@ -59,7 +59,7 @@
     "jiti": "^2.6.1",
     "tsup": "^8.5.1",
     "tsx": "^4.22.4",
-    "typescript": "^6.0.3",
+    "typescript": "~5.8.2",
     "typescript-eslint": "^8.59.1",
     "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^4.1.9"

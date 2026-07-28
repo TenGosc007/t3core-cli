@@ -1,6 +1,7 @@
 import { useInput } from "ink";
 import { useState } from "react";
 
+import { useExitAppStore } from "@/services/app";
 import { useSettingsArrowNav } from "@/services/settings/useSettingsStore";
 
 import { MENU_OPTIONS } from "../constants/menuOptions";
@@ -10,9 +11,10 @@ export const useMenuInput = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const arrowNav = useSettingsArrowNav();
   const { navigateToMenuOption } = useMenuNavigation();
+  const { confirming } = useExitAppStore();
 
   useInput((_, key) => {
-    if (!arrowNav) {
+    if (!arrowNav || confirming) {
       return;
     }
 

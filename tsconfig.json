@@ -3,7 +3,6 @@
     "target": "ES2016",
     "module": "esnext",
     "moduleResolution": "bundler",
-    "ignoreDeprecations": "6.0",
     "baseUrl": ".",
     "types": ["node"],
     "strict": true,
