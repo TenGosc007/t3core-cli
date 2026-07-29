@@ -10,6 +10,7 @@
     "build": "rm -rf dist && tsup",
     "build:watch": "tsup --watch",
     "build:dev": "tsup --no-minify --sourcemap",
+    "prepublishOnly": "yarn build",
     "lint": "eslint src",
     "ts:check": "tsc --noEmit",
     "test": "vitest",
@@ -40,7 +41,7 @@
     "t3core-cli": "dist/index.js"
   },
   "files": [
-    "dist"
+    "dist/index.js"
   ],
   "devDependencies": {
     "@eslint/js": "^10.0.1",
