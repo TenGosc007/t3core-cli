@@ -68,6 +68,9 @@
   "resolutions": {
     "rollup": "npm:@rollup/wasm-node@^4"
   },
+  "overrides": {
+    "rollup": "npm:@rollup/wasm-node@^4"
+  },
   "dependencies": {
     "conf": "^15.1.0",
     "ink": "^7.1.0",
