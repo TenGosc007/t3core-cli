@@ -1,6 +1,6 @@
 import { Box, Text } from "ink";
 import { useState } from "react";
-import z from "zod";
+import { z } from "zod";
 
 import { beep } from "@/services/settings";
 

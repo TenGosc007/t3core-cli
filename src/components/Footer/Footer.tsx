@@ -1,6 +1,5 @@
-import type z from "zod";
-
 import { Box, Text } from "ink";
+import { type z } from "zod";
 
 import { useExitConfirm } from "@/hooks/useExitConfirm";
 import { useSettingsArrowNav } from "@/services/settings";
