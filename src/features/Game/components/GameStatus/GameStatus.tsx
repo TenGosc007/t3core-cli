@@ -1,6 +1,6 @@
 import type { GameStatus as GameStatusType } from "../../engine/gameEngine";
 
-import { Box, Text } from "ink";
+import { Text } from "ink";
 
 import { DEFAULT_SYMBOLS } from "../../engine/gameEngine";
 
@@ -15,11 +15,9 @@ export const GameStatus = ({ gameStatus }: GameStatusProps) => {
 
   if (gameStatus.status === "draw") {
     return (
-      <Box justifyContent="center" marginTop={1}>
-        <Text bold color="whiteBright">
-          The game is a draw 🤝
-        </Text>
-      </Box>
+      <Text bold color="whiteBright">
+        The game is a draw 🤝
+      </Text>
     );
   }
 
@@ -27,7 +25,7 @@ export const GameStatus = ({ gameStatus }: GameStatusProps) => {
   const color = isX ? "green" : "red";
 
   return (
-    <Box justifyContent="center" marginTop={1}>
+    <>
       <Text bold color="whiteBright">
         Player{" "}
       </Text>
@@ -38,6 +36,6 @@ export const GameStatus = ({ gameStatus }: GameStatusProps) => {
         {" "}
         wins! 🎉
       </Text>
-    </Box>
+    </>
   );
 };
