@@ -1,7 +1,7 @@
 import type { BoardField } from "../../engine/gameEngine";
 
 import { Box } from "ink";
-import { Fragment } from "react";
+import { Fragment, useMemo } from "react";
 
 import { toGrid } from "./boardAdapter";
 import { BoardRow } from "./components/BoardRow";
@@ -13,7 +13,10 @@ type BoardProps = {
 };
 
 export const Board = ({ board, selectedCell }: BoardProps) => {
-  const grid = toGrid(board, selectedCell);
+  const grid = useMemo(
+    () => toGrid(board, selectedCell),
+    [board, selectedCell],
+  );
 
   return (
     <Box flexDirection="column" alignSelf="center">

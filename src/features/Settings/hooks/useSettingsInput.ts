@@ -13,8 +13,9 @@ export const useSettingsInput = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const { toggleOption } = useSettingsToggleOption();
 
-  const settings = useSettingsStore();
+  const beep = useSettingsStore((s) => s.beep);
   const arrowNav = useSettingsArrowNav();
+  const settings = { beep, arrowNav };
 
   useInput((_, key) => {
     if (!arrowNav) {

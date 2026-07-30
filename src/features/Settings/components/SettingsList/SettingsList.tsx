@@ -1,4 +1,4 @@
-import type { SettingsStore } from "@/services/settings";
+import type { SettingsState } from "../../constants/settingsOptions";
 
 import { Box } from "ink";
 
@@ -7,7 +7,7 @@ import { SettingsItem } from "../SettingsItem";
 
 type Props = {
   selectedIndex: number;
-  settings: SettingsStore;
+  settings: SettingsState;
   arrowNav: boolean;
 };
 

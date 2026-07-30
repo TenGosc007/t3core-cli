@@ -4,10 +4,12 @@ import { useSettingsStore } from "@/services/settings";
 import { SETTINGS_OPTIONS } from "../constants/settingsOptions";
 
 export const useSettingsToggleOption = () => {
-  const settings = useSettingsStore();
+  const beep = useSettingsStore((s) => s.beep);
+  const arrowNav = useSettingsStore((s) => s.arrowNav);
   const navigate = useNavigate();
   const toggle = useSettingsStore((s) => s.toggle);
   const reset = useSettingsStore((s) => s.reset);
+  const settings = { beep, arrowNav };
 
   const toggleOption = (index: number) => {
     const option = SETTINGS_OPTIONS[index];

@@ -1,7 +1,7 @@
 import type { CellViewModel } from "../boardAdapter";
 
 import { Box, Text } from "ink";
-import { Fragment } from "react";
+import { Fragment, memo } from "react";
 
 import { BoardItem } from "./BoardItem";
 
@@ -11,7 +11,7 @@ type BoardRowProps = {
 
 const Separator = () => <Text color="gray">│</Text>;
 
-export const BoardRow = ({ cells }: BoardRowProps) => {
+export const BoardRow = memo(({ cells }: BoardRowProps) => {
   return (
     <Box>
       <Separator />
@@ -24,4 +24,4 @@ export const BoardRow = ({ cells }: BoardRowProps) => {
       <Separator />
     </Box>
   );
-};
+});

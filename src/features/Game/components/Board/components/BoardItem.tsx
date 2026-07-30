@@ -1,6 +1,7 @@
 import type { CellViewModel } from "../boardAdapter";
 
 import { Text } from "ink";
+import { memo } from "react";
 
 import { DEFAULT_SYMBOLS } from "../../../engine/gameEngine";
 
@@ -21,7 +22,7 @@ const getColor = (isSelected: boolean, value: CellViewModel["value"]) => {
   return "gray";
 };
 
-export const BoardItem = ({ cell }: BoardItemProps) => {
+export const BoardItem = memo(({ cell }: BoardItemProps) => {
   const isBold =
     cell.isSelected || DEFAULT_SYMBOLS.some((v) => v === cell.value);
   const color = getColor(cell.isSelected, cell.value);
@@ -32,4 +33,4 @@ export const BoardItem = ({ cell }: BoardItemProps) => {
       {content}
     </Text>
   );
-};
+});

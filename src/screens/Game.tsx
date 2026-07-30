@@ -1,3 +1,5 @@
+import { useCallback } from "react";
+
 import { useArrowNavInput } from "@/features/Game/hooks/useArrowNavInput";
 import { useGameEngine } from "@/features/Game/hooks/useGameEngine";
 import { useGameViewModel } from "@/features/Game/hooks/useGameViewModel";
@@ -12,12 +14,15 @@ export const Game = () => {
   const { gameState, ui, commands, makeInteraction } = useGameViewModel(engine);
   useArrowNavInput({ ui, commands });
 
-  const handleOptionSelect = (value: string) => {
-    makeInteraction(value);
-    if (isNaN(+value)) return;
-    if (ui.historyMode) commands.backToMove(+value);
-    else commands.makeMove(+value - 1);
-  };
+  const handleOptionSelect = useCallback(
+    (value: string) => {
+      makeInteraction(value);
+      if (isNaN(+value)) return;
+      if (ui.historyMode) commands.backToMove(+value);
+      else commands.makeMove(+value - 1);
+    },
+    [makeInteraction, ui.historyMode, commands],
+  );
 
   return (
     <>
