@@ -1,6 +1,6 @@
 import type { SettingsState } from "../../constants/settingsOptions";
 
-import { Box } from "ink";
+import { NavList } from "@/components/NavList";
 
 import { SETTINGS_OPTIONS } from "../../constants/settingsOptions";
 import { SettingsItem } from "../SettingsItem";
@@ -13,17 +13,20 @@ type Props = {
 
 export const SettingsList = ({ selectedIndex, settings, arrowNav }: Props) => {
   return (
-    <Box flexDirection="column" marginTop={1}>
-      {SETTINGS_OPTIONS.map((option, index) => (
+    <NavList
+      style={{ marginTop: 1 }}
+      arrowNav={arrowNav}
+      selectedIndex={selectedIndex}
+      color="magenta"
+      data={SETTINGS_OPTIONS}
+      keyExtractor={(option) => option.id}
+      renderItem={(option, index) => (
         <SettingsItem
-          key={option.id}
           option={option}
-          selected={arrowNav && selectedIndex === index}
+          selected={arrowNav && index === selectedIndex}
           settings={settings}
-          arrowNav={arrowNav}
-          index={index}
         />
-      ))}
-    </Box>
+      )}
+    />
   );
 };

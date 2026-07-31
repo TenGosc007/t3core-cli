@@ -15,9 +15,9 @@ export const MenuList = ({ selectedIndex, arrowNav }: Props) => {
       arrowNav={arrowNav}
       selectedIndex={selectedIndex}
       data={MENU_OPTIONS}
+      keyExtractor={(option) => option.label}
       renderItem={(option, index) => (
         <MenuItem
-          key={option.label}
           label={option.label}
           selected={arrowNav && index === selectedIndex}
           arrowNav={arrowNav}

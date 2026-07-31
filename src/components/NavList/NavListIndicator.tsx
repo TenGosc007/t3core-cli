@@ -4,18 +4,24 @@ type Props = {
   arrowNav?: boolean;
   selected?: boolean;
   number: number;
+  color?: string;
 };
 
-export const NavListIndicator = ({ arrowNav, selected, number }: Props) => {
+export const NavListIndicator = ({
+  arrowNav,
+  selected,
+  number,
+  color = "cyan",
+}: Props) => {
   if (arrowNav) {
     return (
-      <Text color={selected ? "cyan" : undefined}>{selected ? "❯" : " "}</Text>
+      <Text color={selected ? color : undefined}>{selected ? "❯" : " "}</Text>
     );
   }
 
   return (
     <Text>
-      [<Text color="cyan">{number}</Text>]
+      [<Text color={color}>{number}</Text>]
     </Text>
   );
 };

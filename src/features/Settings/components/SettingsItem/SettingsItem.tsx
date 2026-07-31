@@ -3,23 +3,15 @@ import type {
   SettingsState,
 } from "../../constants/settingsOptions";
 
-import { Box, Text } from "ink";
+import { Text } from "ink";
 
 type Props = {
   option: SettingsOption;
   settings: SettingsState;
   selected: boolean;
-  arrowNav: boolean;
-  index: number;
 };
 
-export const SettingsItem = ({
-  option,
-  selected,
-  settings,
-  arrowNav,
-  index,
-}: Props) => {
+export const SettingsItem = ({ option, selected, settings }: Props) => {
   const isDisabled = option.disabled?.(settings) ?? false;
 
   const getValueText = () => {
@@ -38,27 +30,12 @@ export const SettingsItem = ({
   };
 
   return (
-    <Box gap={1}>
-      {arrowNav ? (
-        <Text color={selected ? "magenta" : undefined}>
-          {selected ? "❯" : " "}
-        </Text>
-      ) : (
-        <Text>
-          [<Text color="magenta">{index + 1}</Text>]
-        </Text>
+    <Text bold={selected} color={getLabelColor()}>
+      {option.label}
+
+      {valueText !== null && (
+        <Text color={valueText === "ON" ? "green" : "red"}> - {valueText}</Text>
       )}
-
-      <Text bold={selected} color={getLabelColor()}>
-        {option.label}
-
-        {valueText !== null && (
-          <Text color={valueText === "ON" ? "green" : "red"}>
-            {" "}
-            - {valueText}
-          </Text>
-        )}
-      </Text>
-    </Box>
+    </Text>
   );
 };
