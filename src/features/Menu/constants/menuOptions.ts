@@ -6,3 +6,5 @@ export const MENU_OPTIONS = [
   { label: "About", route: ROUTES.about },
   { label: "Exit", route: null },
 ] as const;
+
+export type MenuOption = (typeof MENU_OPTIONS)[number];
