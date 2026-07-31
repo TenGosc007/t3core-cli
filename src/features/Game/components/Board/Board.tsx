@@ -10,9 +10,10 @@ import { Border } from "./components/Border";
 type BoardProps = {
   board: readonly BoardField[];
   selectedCell: number;
+  dimColor?: boolean;
 };
 
-export const Board = ({ board, selectedCell }: BoardProps) => {
+export const Board = ({ board, selectedCell, dimColor }: BoardProps) => {
   const grid = useMemo(
     () => toGrid(board, selectedCell),
     [board, selectedCell],
@@ -23,7 +24,7 @@ export const Board = ({ board, selectedCell }: BoardProps) => {
       <Border type="top" />
       {grid.map((cells, row) => (
         <Fragment key={row}>
-          <BoardRow cells={cells} />
+          <BoardRow cells={cells} dimColor={dimColor} />
           {row < grid.length - 1 && <Border type="mid" />}
         </Fragment>
       ))}

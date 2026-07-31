@@ -26,7 +26,11 @@ export const Game = ({ engine, gameState, ui }: GameProps) => {
 
       <Container justifyContent="center" marginTop={1} paddingBottom={0}>
         <PlayerPrompt currentPlayer={gameState.currentPlayer} />
-        <Board board={gameState.board} selectedCell={ui.selectedCell} />
+        <Board
+          board={gameState.board}
+          selectedCell={ui.selectedCell}
+          dimColor={ui.historyMode}
+        />
         <GameMessages
           gameStatus={gameState.gameStatus}
           inputError={isRunning ? ui.inputError : null}
