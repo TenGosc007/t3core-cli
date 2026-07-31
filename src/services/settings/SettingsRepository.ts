@@ -30,10 +30,12 @@ export const createSettingsRepository = (
     load: () => ({
       beep: store.get(SETTINGS_KEYS.beep) as boolean,
       arrowNav: store.get(SETTINGS_KEYS.arrowNav) as boolean,
+      showHistory: store.get(SETTINGS_KEYS.showHistory) as boolean,
     }),
     save: (settings) => {
       store.set(SETTINGS_KEYS.beep, settings.beep);
       store.set(SETTINGS_KEYS.arrowNav, settings.arrowNav);
+      store.set(SETTINGS_KEYS.showHistory, settings.showHistory);
     },
     clear: () => store.clear(),
   };

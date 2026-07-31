@@ -12,6 +12,9 @@ export const appInit = () => {
   if (flags.arrowNav !== undefined) {
     useSettingsStore.setState({ arrowNav: flags.arrowNav });
   }
+  if (flags.showHistory !== undefined) {
+    useSettingsStore.setState({ showHistory: flags.showHistory });
+  }
   if (flags.mobile) {
     useSettingsStore.setState({ arrowNav: false });
   }

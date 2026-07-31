@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import {
   useSettingsArrowNav,
+  useSettingsShowHistory,
   useSettingsStore,
 } from "@/services/settings/useSettingsStore";
 
@@ -15,7 +16,8 @@ export const useSettingsInput = () => {
 
   const beep = useSettingsStore((s) => s.beep);
   const arrowNav = useSettingsArrowNav();
-  const settings = { beep, arrowNav };
+  const showHistory = useSettingsShowHistory();
+  const settings = { beep, arrowNav, showHistory };
 
   useInput((_, key) => {
     if (!arrowNav) {

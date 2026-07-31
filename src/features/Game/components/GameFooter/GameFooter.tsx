@@ -10,12 +10,14 @@ type GameFooterProps = {
   historyMovesCount: number;
   isGameRunning?: boolean;
   isHistoryModeOn?: boolean;
+  showHistory?: boolean;
 };
 
 export const GameFooter = ({
   isGameRunning,
   isHistoryModeOn,
   historyMovesCount,
+  showHistory,
   onSubmit,
 }: GameFooterProps) => {
   if (!isGameRunning) {
@@ -25,6 +27,7 @@ export const GameFooter = ({
   const { hints, arrowNavHints } = getGameFooterHints(
     historyMovesCount,
     isHistoryModeOn,
+    showHistory,
   );
 
   return (

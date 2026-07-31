@@ -8,6 +8,7 @@ import type { Direction } from "../reducers/gameReducer";
 import { useCallback, useMemo, useReducer } from "react";
 
 import { beep } from "@/services/settings";
+import { useSettingsStore } from "@/services/settings/useSettingsStore";
 
 import { INTERACTION_KEYS } from "../constants/gameConstants";
 import { createInitialUIState, uiReducer } from "../reducers/gameReducer";
@@ -34,6 +35,7 @@ export const useGameViewModel = (engine: GameEngine) => {
   }, [engine]);
 
   const toggleHistory = useCallback(() => {
+    if (!useSettingsStore.getState().showHistory) return;
     if (engine.movesCount > 0) {
       beep();
       dispatch({ type: "TOGGLE_HISTORY" });
