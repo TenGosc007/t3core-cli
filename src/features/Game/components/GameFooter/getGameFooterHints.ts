@@ -22,7 +22,12 @@ export const getGameFooterHints = (
   ];
 
   const arrowNavHints = isHistoryModeOn
-    ? hints
+    ? [
+        "↑↓ Navigate history",
+        ...(toggleHistoryHint ? [toggleHistoryHint] : []),
+        "Enter Select move",
+        exitHint,
+      ]
     : [
         "↑↓ Use arrow keys to navigate",
         ...(toggleHistoryHint ? [toggleHistoryHint] : []),

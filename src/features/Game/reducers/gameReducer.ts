@@ -9,10 +9,12 @@ export type UIState = {
   showInfo: boolean;
   historyMode: boolean;
   inputError: string | null;
+  historySelectedIndex: number;
 };
 
 export type UIAction =
   | { type: "NAVIGATE"; direction: Direction }
+  | { type: "NAVIGATE_HISTORY"; direction: Direction; count: number }
   | { type: "TOGGLE_INFO" }
   | { type: "TOGGLE_HISTORY" }
   | { type: "SET_ERROR"; error: string | null }
@@ -23,6 +25,7 @@ export const createInitialUIState = (): UIState => ({
   showInfo: false,
   historyMode: false,
   inputError: null,
+  historySelectedIndex: 0,
 });
 
 const navigate = (current: number, direction: Direction): number => {
@@ -54,7 +57,22 @@ export const uiReducer = (state: UIState, action: UIAction): UIState => {
       return { ...state, showInfo: !state.showInfo, inputError: null };
 
     case "TOGGLE_HISTORY":
-      return { ...state, historyMode: !state.historyMode, inputError: null };
+      return {
+        ...state,
+        historyMode: !state.historyMode,
+        inputError: null,
+        historySelectedIndex: 0,
+      };
+
+    case "NAVIGATE_HISTORY": {
+      const { direction, count } = action;
+      if (direction !== "up" && direction !== "down") return state;
+      const next =
+        direction === "up"
+          ? (state.historySelectedIndex - 1 + count) % count
+          : (state.historySelectedIndex + 1) % count;
+      return { ...state, historySelectedIndex: next };
+    }
 
     case "SET_ERROR":
       return { ...state, inputError: action.error };

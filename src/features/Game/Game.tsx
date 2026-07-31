@@ -32,6 +32,7 @@ export const Game = ({ engine, gameState, ui }: GameProps) => {
           inputError={isRunning ? ui.inputError : null}
           movesCount={engine.movesCount}
           isInHistoryMode={ui.historyMode}
+          historySelectedIndex={ui.historySelectedIndex}
         />
       </Container>
     </Box>

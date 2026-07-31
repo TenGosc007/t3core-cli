@@ -11,6 +11,7 @@ type Props = {
   inputError: string | null;
   movesCount: number;
   isInHistoryMode: boolean;
+  historySelectedIndex: number;
 };
 
 export const GameMessages = ({
@@ -18,11 +19,18 @@ export const GameMessages = ({
   inputError,
   movesCount,
   isInHistoryMode,
+  historySelectedIndex,
 }: Props) => {
   const renderMessage = () => {
     const isRunning = gameStatus.status === "running";
 
-    if (isInHistoryMode) return <HistoryList movesCount={movesCount} />;
+    if (isInHistoryMode)
+      return (
+        <HistoryList
+          movesCount={movesCount}
+          selectedIndex={historySelectedIndex}
+        />
+      );
     if (!isRunning) return <GameStatus gameStatus={gameStatus} />;
     if (inputError) return <InputError error={inputError} />;
 

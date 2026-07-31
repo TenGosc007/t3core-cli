@@ -1,33 +1,38 @@
 import { Text } from "ink";
+import { useMemo } from "react";
 
 import { NavList } from "@/components/NavList";
 import { useSettingsArrowNav } from "@/services/settings";
 
 type Props = {
   movesCount: number;
+  selectedIndex?: number;
 };
 
-export const HistoryList = ({ movesCount }: Props) => {
+export const HistoryList = ({ movesCount, selectedIndex = 0 }: Props) => {
   const arrowNav = useSettingsArrowNav();
-  const moves = getMoves(movesCount);
+  const moves = useHistoryMoves(movesCount);
 
   return (
     <NavList
+      style={{ marginLeft: -2 }}
       data={moves}
       keyExtractor={(item) => item}
       arrowNav={arrowNav}
-      selectedIndex={0}
+      selectedIndex={selectedIndex}
       renderItem={(item) => <Text>{item}</Text>}
     />
   );
 };
 
-function getMoves(movesCount: number) {
-  const moves = ["Go to game start"];
+const useHistoryMoves = (movesCount: number) => {
+  return useMemo(() => {
+    const moves = ["Start"];
 
-  for (let i = 1; i <= movesCount; i++) {
-    moves.push(`Go to move ${i}`);
-  }
+    for (let i = 1; i <= movesCount; i++) {
+      moves.push(`Move ${i}`);
+    }
 
-  return moves;
-}
+    return moves;
+  }, [movesCount]);
+};

@@ -18,6 +18,7 @@ export type GameCommands = {
   makeMove: (index: number) => MoveResult | undefined;
   backToMove: (index: number) => HistoryMoveResult | undefined;
   navigate: (direction: Direction) => void;
+  navigateHistory: (direction: Direction) => void;
   toggleInfo: () => void;
   toggleHistory: () => void;
   reset: () => void;
@@ -88,6 +89,16 @@ export const useGameViewModel = (engine: GameEngine) => {
     [],
   );
 
+  const navigateHistory = useCallback(
+    (direction: Direction) =>
+      dispatch({
+        type: "NAVIGATE_HISTORY",
+        direction,
+        count: engine.movesCount + 1,
+      }),
+    [engine.movesCount],
+  );
+
   const makeInteraction = useCallback(
     (input: string) => {
       if (input === INTERACTION_KEYS.INFO) toggleInfo();
@@ -101,11 +112,20 @@ export const useGameViewModel = (engine: GameEngine) => {
       makeMove,
       backToMove,
       navigate,
+      navigateHistory,
       toggleInfo,
       toggleHistory,
       reset,
     }),
-    [makeMove, backToMove, navigate, toggleInfo, toggleHistory, reset],
+    [
+      makeMove,
+      backToMove,
+      navigate,
+      navigateHistory,
+      toggleInfo,
+      toggleHistory,
+      reset,
+    ],
   );
 
   return { gameState, ui, commands, makeInteraction };

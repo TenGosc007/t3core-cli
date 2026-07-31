@@ -22,10 +22,10 @@ export const useArrowNavInput = ({ ui, commands }: Props) => {
     if (input === INTERACTION_KEYS.HISTORY) commands.toggleHistory();
 
     if (ui.historyMode) {
-      const num = Number.parseInt(input, 10);
-      if (!Number.isNaN(num)) {
-        commands.backToMove(num);
-      }
+      if (key.upArrow) return commands.navigateHistory("up");
+      if (key.downArrow) return commands.navigateHistory("down");
+      if (key.return || input === " ")
+        return commands.backToMove(ui.historySelectedIndex);
       return;
     }
 
