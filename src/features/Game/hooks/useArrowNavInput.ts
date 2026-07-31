@@ -14,14 +14,12 @@ type Props = {
 
 export const useArrowNavInput = ({ ui, commands }: Props) => {
   const arrowNav = useSettingsStore((s) => s.arrowNav);
-  const showHistory = useSettingsStore((s) => s.showHistory);
 
   useInput((input, key) => {
     if (!arrowNav) return;
 
     if (input === INTERACTION_KEYS.INFO) commands.toggleInfo();
-    if (showHistory && input === INTERACTION_KEYS.HISTORY)
-      commands.toggleHistory();
+    if (input === INTERACTION_KEYS.HISTORY) commands.toggleHistory();
 
     if (ui.historyMode) {
       if (key.upArrow) return commands.navigateHistory("up");

@@ -35,7 +35,10 @@ export const useGameViewModel = (engine: GameEngine) => {
   }, [engine]);
 
   const toggleHistory = useCallback(() => {
-    if (!useSettingsStore.getState().showHistory) return;
+    if (!useSettingsStore.getState().showHistory) {
+      dispatch({ type: "SET_ERROR", error: "History is disabled" });
+      return;
+    }
     if (engine.movesCount > 0) {
       beep();
       dispatch({ type: "TOGGLE_HISTORY" });
