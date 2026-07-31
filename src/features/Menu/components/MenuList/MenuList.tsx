@@ -1,4 +1,4 @@
-import { Box } from "ink";
+import { NavList } from "@/components/NavList";
 
 import { MENU_OPTIONS } from "../../constants/menuOptions";
 import { MenuItem } from "../MenuItem/MenuItem";
@@ -10,8 +10,12 @@ type Props = {
 
 export const MenuList = ({ selectedIndex, arrowNav }: Props) => {
   return (
-    <Box flexDirection="column" marginTop={1}>
-      {MENU_OPTIONS.map((option, index) => (
+    <NavList
+      style={{ marginTop: 1 }}
+      arrowNav={arrowNav}
+      selectedIndex={selectedIndex}
+      data={MENU_OPTIONS}
+      renderItem={(option, index) => (
         <MenuItem
           key={option.label}
           label={option.label}
@@ -19,7 +23,7 @@ export const MenuList = ({ selectedIndex, arrowNav }: Props) => {
           arrowNav={arrowNav}
           index={index}
         />
-      ))}
-    </Box>
+      )}
+    />
   );
 };
