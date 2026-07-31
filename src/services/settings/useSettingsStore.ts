@@ -23,7 +23,7 @@ const persist = (state: SettingsState, repository: SettingsRepository) => {
   });
 };
 
-const createSettingsStore = (
+export const createSettingsStore = (
   repository: SettingsRepository = createSettingsRepository(),
 ) =>
   create<SettingsStore>((set) => ({
