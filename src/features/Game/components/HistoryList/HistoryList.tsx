@@ -20,6 +20,7 @@ export const HistoryList = ({ movesCount, selectedIndex = 0 }: Props) => {
       keyExtractor={(item) => item}
       arrowNav={arrowNav}
       selectedIndex={selectedIndex}
+      numberOffset={0}
       renderItem={(item) => <Text>{item}</Text>}
     />
   );

@@ -10,6 +10,7 @@ type Props<T> = ListProps<T> & {
   selectedIndex?: number;
   color?: string;
   keyExtractor?: (item: T, index: number) => string | number;
+  numberOffset?: number;
 };
 
 export const NavList = <T,>({
@@ -17,6 +18,7 @@ export const NavList = <T,>({
   selectedIndex = 0,
   color,
   keyExtractor,
+  numberOffset = 1,
   ...props
 }: Props<T>) => {
   const handleRenderItem = (item: T, index: number) => {
@@ -25,7 +27,7 @@ export const NavList = <T,>({
         <NavListIndicator
           arrowNav={arrowNav}
           selected={selectedIndex === index}
-          number={index + 1}
+          number={index + numberOffset}
           color={color}
         />
         {props.renderItem(item, index)}
