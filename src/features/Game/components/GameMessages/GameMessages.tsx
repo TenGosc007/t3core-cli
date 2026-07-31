@@ -19,19 +19,19 @@ export const GameMessages = ({
   movesCount,
   isInHistoryMode,
 }: Props) => {
-  if (gameStatus.status === "running" && !inputError && !isInHistoryMode) {
-    return (
-      <Box justifyContent="center" marginTop={1}>
-        <Text dimColor>...</Text>
-      </Box>
-    );
-  }
+  const renderMessage = () => {
+    const isRunning = gameStatus.status === "running";
+
+    if (isInHistoryMode) return <HistoryList movesCount={movesCount} />;
+    if (!isRunning) return <GameStatus gameStatus={gameStatus} />;
+    if (inputError) return <InputError error={inputError} />;
+
+    return <Text dimColor>...</Text>;
+  };
 
   return (
     <Box justifyContent="center" marginTop={1}>
-      <GameStatus gameStatus={gameStatus} />
-      <InputError error={inputError} />
-      <HistoryList movesCount={movesCount} />
+      {renderMessage()}
     </Box>
   );
 };

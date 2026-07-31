@@ -16,8 +16,6 @@ export const Menu = () => {
       <MenuItem
         label={option.label}
         selected={arrowNav && index === selectedIndex}
-        arrowNav={arrowNav}
-        index={index}
       />
     ),
     [arrowNav, selectedIndex],

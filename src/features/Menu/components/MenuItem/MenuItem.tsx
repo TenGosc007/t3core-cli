@@ -3,8 +3,6 @@ import { Text } from "ink";
 type Props = {
   label: string;
   selected: boolean;
-  arrowNav: boolean;
-  index: number;
 };
 
 export const MenuItem = ({ label, selected }: Props) => {

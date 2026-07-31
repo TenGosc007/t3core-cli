@@ -7,4 +7,4 @@ export const ROUTES = {
 
 export type RoutePath = (typeof ROUTES)[keyof typeof ROUTES];
 
-export type RouteName = keyof typeof ROUTES;
+// export type RouteName = keyof typeof ROUTES;
