@@ -28,6 +28,7 @@ type ToggleSettingsOption = BaseSettingsOption & {
 
 type CommandSettingsOption = BaseSettingsOption & {
   type: "command";
+  command: "reset" | "back";
 };
 
 export type SettingsOption = ToggleSettingsOption | CommandSettingsOption;
@@ -55,11 +56,13 @@ export const SETTINGS_OPTIONS: readonly SettingsOption[] = [
     id: 4,
     label: "Reset to default",
     type: "command",
+    command: "reset",
   },
   {
     id: 5,
     label: "Back to Menu",
     type: "command",
+    command: "back",
     emphasis: true,
   },
 ];
