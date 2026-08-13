@@ -9,7 +9,7 @@ export const Header = ({ label }: Props) => {
     <Box borderLeft={false} borderRight={false} borderDimColor>
       <Text>
         <Text color="cyan" bold>
-          ❯
+          ●
         </Text>{" "}
         <Text underline>{label}</Text>
       </Text>
