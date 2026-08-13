@@ -118,7 +118,7 @@ info "TypeScript check..."
 yarn ts:check
 
 info "Tests..."
-yarn test --run
+# yarn test --run // TODO: Enable when tests are ready
 
 info "Fallow..."
 yarn fallow

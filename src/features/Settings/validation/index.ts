@@ -1,0 +1,1 @@
+export { settingsInputSchema } from "./settingsInputSchema";

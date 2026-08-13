@@ -1,6 +1,7 @@
 import js from "@eslint/js";
 import { importX } from "eslint-plugin-import-x";
 import perfectionist from "eslint-plugin-perfectionist";
+import reactHooks from "eslint-plugin-react-hooks";
 import { defineConfig } from "eslint/config";
 import globals from "globals";
 import path from "path";
@@ -22,7 +23,7 @@ export default defineConfig([
     },
   },
   {
-    files: ["**/*.{js,mjs,cjs,ts,mts,cts}"],
+    files: ["**/*.{js,mjs,cjs,ts,mts,cts,tsx}"],
     plugins: { js },
     extends: ["js/recommended"],
     languageOptions: {
@@ -64,6 +65,18 @@ export default defineConfig([
         },
       ],
       "no-console": "off",
+      "no-restricted-imports": [
+        "error",
+        {
+          paths: [
+            {
+              name: "react-router",
+              importNames: ["useNavigate"],
+              message: "Please import it from '@navigation'",
+            },
+          ],
+        },
+      ],
       "perfectionist/sort-imports": [
         "error",
         {
@@ -90,6 +103,14 @@ export default defineConfig([
           maxDepth: 10,
         },
       ],
+    },
+  },
+  {
+    files: ["**/*.tsx"],
+    plugins: { "react-hooks": reactHooks as never },
+    rules: {
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn",
     },
   },
 ]);

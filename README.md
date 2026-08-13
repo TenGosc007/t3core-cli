@@ -17,48 +17,57 @@ t3core-cli
 
 ## Screenshots
 
-![Menu](docs/menu.png)
-![Game](docs/game.png)
+![Menu](docs/menuv2.png)
+![Game](docs/gamev2.png)
 
 ## Features
 
 - Two-player Tic Tac Toe in the terminal
-- Interactive menu with settings
+- Interactive menu with settings and an About screen
 - Optional arrow-key navigation in interactive terminals
-- Colored symbols and styled board, with styling toggle
-- Sound toggle and reset-to-default settings
-- Move history view and rollback support
+- Colored symbols and styled board
+- Sound toggle, game history toggle, and reset-to-default settings
+- Move history view with navigation and rollback support (opt-in via settings)
 - Optional game info panel
 - Win and draw detection
 - Play again prompt
+- Exit confirmation prompt on the home screen
+- CLI flags for overriding settings and choosing the initial screen
 
 ## Controls
-
-### Menu
-
-- `1` starts a new game.
-- `2` opens settings.
-- `3` exits.
 
 ### Game
 
 - Enter a field number from `1` to `9` to place a move.
 - When arrow-key navigation is enabled, use arrow keys to choose a field and `Enter` to confirm.
-- Press `h` to show or hide move history after at least one move.
+- Press `h` to show or hide move history after at least one move (only when Show Game History is enabled).
+- In history mode, use `↑`/`↓` to navigate moves and `Enter` to roll back to the selected move. Enter `0` to start from the beginning.
 - Press `i` to show or hide game info.
-- Press `q` to return to the main menu. In arrow-key mode, `Esc` and `Backspace` also return to the menu.
+- Press `q` or `Esc` to return to the main menu.
 
-### Settings
+## CLI flags
 
-- `1` toggles sound.
-- `2` toggles styling.
-- `3` toggles arrow-key navigation when the terminal supports it and styling is enabled.
-- `4` resets settings to default.
-- Press `q` to return to the main menu. In arrow-key mode, `Esc` and `Backspace` also return to the menu.
+```bash
+t3core-cli [options]
+```
+
+- `--screen` — initial screen to show (`home`, `settings`, `game`, `about`). Defaults to `home`.
+- `--sound` — enable or disable sound (`true`/`false`). Defaults to `true`.
+- `--arrowNav` — enable or disable arrow-key navigation (`true`/`false`). Defaults to `true`.
+- `--showHistory` — enable or disable the game history feature (`true`/`false`). Defaults to `false`.
+- `--mobile` — mobile mode, disables arrow-key navigation.
+
+Examples:
+
+```bash
+t3core-cli --screen=settings
+t3core-cli --sound=false --arrowNav=false --showHistory=true
+t3core-cli --mobile
+```
 
 ## Requirements
 
-- Node.js >= 16.0.0
+- Node.js >= 20.0.0
 
 ## Related
 

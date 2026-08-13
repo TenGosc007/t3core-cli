@@ -1,6 +1,12 @@
 #!/usr/bin/env node
-// fallow-ignore-file coverage-gaps
-import { app } from "./src/app";
+import { render } from "ink";
+import { createElement } from "react";
+
+import { App } from "./src/App";
+import { appInit } from "./src/utils/appInit";
+import { getInitialScreen } from "./src/utils/cli";
 
 console.clear();
-app();
+appInit();
+
+render(createElement(App, { initialScreen: getInitialScreen() }));
