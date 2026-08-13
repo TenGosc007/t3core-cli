@@ -1,10 +1,13 @@
-import type { SettingsState } from "../constants/settingsOptions";
-import type { SettingsOption } from "../constants/settingsOptions";
+import type {
+  SettingsKey,
+  SettingsOption,
+  SettingsState,
+} from "../../constants/settingsOptions";
 
 import { ROUTES } from "@/navigation";
 
 export type SettingsCommands = {
-  toggle: (key: keyof SettingsState) => void;
+  toggle: (key: SettingsKey) => void;
   reset: () => void;
   navigate: (path: (typeof ROUTES)[keyof typeof ROUTES]) => void;
 };

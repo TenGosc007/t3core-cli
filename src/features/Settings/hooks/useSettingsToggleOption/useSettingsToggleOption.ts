@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import { useNavigate } from "@/navigation";
 import { useSettingsStore } from "@/services/settings";
 
-import { SETTINGS_OPTIONS } from "../constants/settingsOptions";
+import { SETTINGS_OPTIONS } from "../../constants/settingsOptions";
 import { handleSettingsOption } from "./handleSettingsOption";
 
 export const useSettingsToggleOption = () => {

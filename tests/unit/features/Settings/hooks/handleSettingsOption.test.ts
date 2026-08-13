@@ -1,8 +1,11 @@
 import { describe, expect, it, vi } from "vitest";
 
-import type { SettingsOption, SettingsState } from "@/features/Settings/constants/settingsOptions";
+import type {
+  SettingsOption,
+  SettingsState,
+} from "@/features/Settings/constants/settingsOptions";
 
-import { handleSettingsOption } from "@/features/Settings/hooks/handleSettingsOption";
+import { handleSettingsOption } from "@/features/Settings/hooks/useSettingsToggleOption/handleSettingsOption";
 
 const makeCommands = () => ({
   toggle: vi.fn(),
@@ -96,7 +99,11 @@ describe("handleSettingsOption", () => {
       key: "arrowNav",
       disabled: (s) => !s.arrowNav,
     };
-    handleSettingsOption(conditionalDisabled, { ...defaultSettings, arrowNav: false }, commands);
+    handleSettingsOption(
+      conditionalDisabled,
+      { ...defaultSettings, arrowNav: false },
+      commands,
+    );
     expect(commands.toggle).not.toHaveBeenCalled();
   });
 
