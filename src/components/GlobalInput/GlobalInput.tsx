@@ -1,12 +1,12 @@
+import type { z } from "zod";
+
 import { Box, Text } from "ink";
 import { useState } from "react";
-import { z } from "zod";
-
-import { beep } from "@/services/settings";
 
 import { TextInput } from "../TextInput";
 import { GlobalInputError } from "./GlobalInputError";
 import { GlobalInputHint } from "./GlobalInputHint";
+import { validateSubmission } from "./validateSubmission";
 
 type Props = {
   onSubmit?: (value: string) => void;
@@ -38,20 +38,9 @@ export const GlobalInput = ({
     setValue("");
     setError("");
 
-    if (!validationSchema) {
-      onSubmit?.(v);
-      return;
-    }
-
-    const result = validationSchema?.safeParse(value);
-    if (result?.success) {
-      onSubmit?.(String(result.data));
-      return;
-    }
-
-    beep();
-    const resultError = z.flattenError(result.error);
-    setError(resultError.formErrors);
+    const result = validateSubmission(v, validationSchema);
+    if (result.type === "success") onSubmit?.(result.value);
+    if (result.type === "error") setError(result.errors);
   };
 
   return (
