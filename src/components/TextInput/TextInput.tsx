@@ -3,6 +3,9 @@ import type { ComponentProps } from "react";
 import { Text, useInput } from "ink";
 import { useState } from "react";
 
+import { getRenderSegments } from "./getRenderSegments";
+import { handleTextInputInput } from "./handleTextInputInput";
+
 export type TextInputProps = Omit<ComponentProps<typeof Text>, "children"> & {
   value: string;
   onChange: (value: string) => void;
@@ -24,59 +27,35 @@ export const TextInput = ({
 
   useInput(
     (input, key) => {
-      if (key.return) {
-        onSubmit?.(value);
-        return;
-      }
-
-      if (key.leftArrow) {
-        setCursorIndex((index) => Math.max(0, index - 1));
-        return;
-      }
-
-      if (key.rightArrow) {
-        setCursorIndex((index) => Math.min(value.length, index + 1));
-        return;
-      }
-
-      if (key.delete) {
-        onChange(value.slice(0, cursor) + value.slice(cursor + 1));
-        return;
-      }
-
-      if (key.backspace) {
-        if (cursor === 0) return;
-
-        onChange(value.slice(0, cursor - 1) + value.slice(cursor));
-        setCursorIndex(cursor - 1);
-        return;
-      }
-
-      if (input && !key.ctrl && !key.meta) {
-        onChange(value.slice(0, cursor) + input + value.slice(cursor));
-        setCursorIndex(cursor + input.length);
+      const result = handleTextInputInput(input, key, { value, cursor });
+      if (result.type === "submit") onSubmit?.(value);
+      else if (result.type === "update") {
+        onChange(result.state.value);
+        setCursorIndex(result.state.cursor);
       }
     },
     { isActive: focus },
   );
 
-  const beforeCursor = value.slice(0, cursor);
-  const afterCursor = value.slice(cursor);
-  const displayValue = value || placeholder;
-
   if (!focus) {
     return (
       <Text dimColor={!value} {...textProps}>
-        {displayValue}
+        {value || placeholder}
       </Text>
     );
   }
 
+  const { before, cursorChar, after, isPlaceholder } = getRenderSegments(
+    value,
+    cursor,
+    placeholder,
+  );
+
   return (
-    <Text dimColor={!value} {...textProps}>
-      {beforeCursor}
-      <Text inverse>{afterCursor[0] ?? " "}</Text>
-      {afterCursor.slice(1) || (!value ? placeholder : "")}
+    <Text dimColor={isPlaceholder} {...textProps}>
+      {before}
+      <Text inverse>{cursorChar}</Text>
+      {after}
     </Text>
   );
 };
