@@ -4,31 +4,24 @@ import { useState } from "react";
 import { useExitAppStore } from "@/services/app";
 import { useSettingsArrowNav } from "@/services/settings/useSettingsStore";
 
-import { MENU_OPTIONS } from "../constants/menuOptions";
-import { useMenuNavigation } from "./useMenuNavigation";
+import { MENU_OPTIONS } from "../../constants/menuOptions";
+import { useMenuNavigation } from "../useMenuNavigation";
+import { handleMenuInput, wrapIndex } from "./handleMenuInput";
 
 export const useMenuInput = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const arrowNav = useSettingsArrowNav();
   const { navigateToMenuOption } = useMenuNavigation();
-  const { confirming } = useExitAppStore();
+  const confirming = useExitAppStore((s) => s.confirming);
 
   useInput((_, key) => {
-    if (!arrowNav || confirming) {
-      return;
-    }
-
-    if (key.upArrow) {
-      setSelectedIndex(
-        (prev) => (prev - 1 + MENU_OPTIONS.length) % MENU_OPTIONS.length,
+    const result = handleMenuInput(key, arrowNav && !confirming);
+    if (result.type === "navigate") {
+      setSelectedIndex((prev) =>
+        wrapIndex(prev, MENU_OPTIONS.length, result.direction),
       );
     }
-
-    if (key.downArrow) {
-      setSelectedIndex((prev) => (prev + 1) % MENU_OPTIONS.length);
-    }
-
-    if (key.return) {
+    if (result.type === "select") {
       navigateToMenuOption(selectedIndex);
     }
   });
