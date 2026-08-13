@@ -1,5 +1,4 @@
 import type { UIState } from "@/features/Game/reducers/gameReducer";
-import type { Key } from "ink";
 
 import { describe, expect, it, vi } from "vitest";
 
@@ -10,26 +9,7 @@ import {
   handleInteractionKeys,
 } from "@/features/Game/hooks/useArrowNavInput/handleArrowNavInput";
 
-const makeKey = (overrides: Partial<Key> = {}): Key =>
-  ({
-    upArrow: false,
-    downArrow: false,
-    leftArrow: false,
-    rightArrow: false,
-    pageDown: false,
-    pageUp: false,
-    home: false,
-    end: false,
-    return: false,
-    escape: false,
-    ctrl: false,
-    shift: false,
-    tab: false,
-    backspace: false,
-    delete: false,
-    meta: false,
-    ...overrides,
-  }) as Key;
+import { makeKey } from "../../../helpers/makeKey";
 
 const makeCommands = () => ({
   toggleInfo: vi.fn(),

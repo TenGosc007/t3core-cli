@@ -1,5 +1,3 @@
-import type { Key } from "ink";
-
 import { describe, expect, it } from "vitest";
 
 import {
@@ -11,26 +9,7 @@ import {
   moveRight,
 } from "@/components/TextInput/handleTextInputInput";
 
-const makeKey = (overrides: Partial<Key> = {}): Key =>
-  ({
-    upArrow: false,
-    downArrow: false,
-    leftArrow: false,
-    rightArrow: false,
-    pageDown: false,
-    pageUp: false,
-    home: false,
-    end: false,
-    return: false,
-    escape: false,
-    ctrl: false,
-    shift: false,
-    tab: false,
-    backspace: false,
-    delete: false,
-    meta: false,
-    ...overrides,
-  }) as Key;
+import { makeKey } from "../../helpers/makeKey";
 
 describe("moveLeft", () => {
   it("decrements cursor", () => {
@@ -127,7 +106,10 @@ describe("handleTextInputInput", () => {
       value: "abc",
       cursor: 2,
     });
-    expect(result).toEqual({ type: "update", state: { value: "abc", cursor: 1 } });
+    expect(result).toEqual({
+      type: "update",
+      state: { value: "abc", cursor: 1 },
+    });
   });
 
   it("moves cursor right on rightArrow", () => {
@@ -135,7 +117,10 @@ describe("handleTextInputInput", () => {
       value: "abc",
       cursor: 1,
     });
-    expect(result).toEqual({ type: "update", state: { value: "abc", cursor: 2 } });
+    expect(result).toEqual({
+      type: "update",
+      state: { value: "abc", cursor: 2 },
+    });
   });
 
   it("deletes char on delete key", () => {
@@ -143,7 +128,10 @@ describe("handleTextInputInput", () => {
       value: "abc",
       cursor: 1,
     });
-    expect(result).toEqual({ type: "update", state: { value: "ac", cursor: 1 } });
+    expect(result).toEqual({
+      type: "update",
+      state: { value: "ac", cursor: 1 },
+    });
   });
 
   it("backspaces char before cursor", () => {
@@ -151,7 +139,10 @@ describe("handleTextInputInput", () => {
       value: "abc",
       cursor: 2,
     });
-    expect(result).toEqual({ type: "update", state: { value: "ac", cursor: 1 } });
+    expect(result).toEqual({
+      type: "update",
+      state: { value: "ac", cursor: 1 },
+    });
   });
 
   it("returns noop when backspacing at cursor 0", () => {
@@ -167,7 +158,10 @@ describe("handleTextInputInput", () => {
       value: "abc",
       cursor: 1,
     });
-    expect(result).toEqual({ type: "update", state: { value: "aXbc", cursor: 2 } });
+    expect(result).toEqual({
+      type: "update",
+      state: { value: "aXbc", cursor: 2 },
+    });
   });
 
   it("returns noop on ctrl+char", () => {

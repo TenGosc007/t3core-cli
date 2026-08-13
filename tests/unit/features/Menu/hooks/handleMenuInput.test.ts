@@ -1,33 +1,12 @@
-import type { Key } from "ink";
-
 import { describe, expect, it } from "vitest";
 
+import { MENU_OPTIONS } from "@/features/Menu/constants/menuOptions";
 import {
   handleMenuInput,
   wrapIndex,
 } from "@/features/Menu/hooks/useMenuInput/handleMenuInput";
-import { MENU_OPTIONS } from "@/features/Menu/constants/menuOptions";
 
-const makeKey = (overrides: Partial<Key> = {}): Key =>
-  ({
-    upArrow: false,
-    downArrow: false,
-    leftArrow: false,
-    rightArrow: false,
-    pageDown: false,
-    pageUp: false,
-    home: false,
-    end: false,
-    return: false,
-    escape: false,
-    ctrl: false,
-    shift: false,
-    tab: false,
-    backspace: false,
-    delete: false,
-    meta: false,
-    ...overrides,
-  }) as Key;
+import { makeKey } from "../../../helpers/makeKey";
 
 describe("wrapIndex", () => {
   it("increments on down", () => {

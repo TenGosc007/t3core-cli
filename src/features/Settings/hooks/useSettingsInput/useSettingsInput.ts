@@ -7,8 +7,9 @@ import {
   useSettingsStore,
 } from "@/services/settings/useSettingsStore";
 
-import { SETTINGS_OPTIONS } from "../constants/settingsOptions";
-import { useSettingsToggleOption } from "./useSettingsToggleOption";
+import { SETTINGS_OPTIONS } from "../../constants/settingsOptions";
+import { useSettingsToggleOption } from "../useSettingsToggleOption";
+import { handleSettingsInput, wrapIndex } from "./handleSettingsInput";
 
 export const useSettingsInput = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -20,22 +21,12 @@ export const useSettingsInput = () => {
   const settings = { beep, arrowNav, showHistory };
 
   useInput((_, key) => {
-    if (!arrowNav) {
-      return;
-    }
-
-    if (key.upArrow) {
-      setSelectedIndex(
-        (prev) =>
-          (prev - 1 + SETTINGS_OPTIONS.length) % SETTINGS_OPTIONS.length,
+    const result = handleSettingsInput(key, arrowNav);
+    if (result.type === "navigate") {
+      setSelectedIndex((prev) =>
+        wrapIndex(prev, SETTINGS_OPTIONS.length, result.direction),
       );
-    }
-
-    if (key.downArrow) {
-      setSelectedIndex((prev) => (prev + 1) % SETTINGS_OPTIONS.length);
-    }
-
-    if (key.return) {
+    } else if (result.type === "select") {
       toggleOption(selectedIndex);
     }
   });

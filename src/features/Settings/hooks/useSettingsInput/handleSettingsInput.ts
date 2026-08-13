@@ -1,24 +1,21 @@
 import type { Key } from "ink";
 
-export type MenuInputResult =
+import { wrapIndex } from "@/features/Menu/hooks/useMenuInput/handleMenuInput";
+
+export type SettingsInputResult =
   | { type: "noop" }
   | { type: "navigate"; direction: "up" | "down" }
   | { type: "select" };
 
-export const wrapIndex = (
-  index: number,
-  length: number,
-  direction: "up" | "down",
-): number =>
-  direction === "up" ? (index - 1 + length) % length : (index + 1) % length;
-
-export const handleMenuInput = (
+export const handleSettingsInput = (
   key: Key,
   isActive: boolean,
-): MenuInputResult => {
+): SettingsInputResult => {
   if (!isActive) return { type: "noop" };
   if (key.upArrow) return { type: "navigate", direction: "up" };
   if (key.downArrow) return { type: "navigate", direction: "down" };
   if (key.return) return { type: "select" };
   return { type: "noop" };
 };
+
+export { wrapIndex };
