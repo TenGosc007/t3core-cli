@@ -1,5 +1,5 @@
 import type { UIState } from "../../reducers/gameReducer";
-import type { GameCommands } from "../useGameViewModel";
+import type { GameCommands } from "../useGameViewModel/types";
 import type { Key } from "ink";
 
 import { INTERACTION_KEYS } from "../../constants/gameConstants";
