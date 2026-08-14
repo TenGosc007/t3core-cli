@@ -1,6 +1,6 @@
 {
   "name": "t3core-cli",
-  "version": "1.6.0",
+  "version": "1.6.2",
   "description": "Interactive Tic Tac Toe CLI — play in your terminal via npx t3core-cli",
   "main": "dist/index.js",
   "preferGlobal": true,
@@ -70,7 +70,7 @@
     "meow": "^14.1.0",
     "react": "^19.2.7",
     "react-router": "^8.0.1",
-    "t3core": "^1.5.0",
+    "t3core": "^1.6.0",
     "zod": "^4.4.3",
     "zustand": "^5.0.14"
   }
