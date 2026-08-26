@@ -54,5 +54,6 @@ export const handleArrowNavInput = (
 ) => {
   handleInteractionKeys(input, commands);
   if (ui.historyMode) return handleHistoryNav(input, key, ui, commands);
+
   handleBoardNav(input, key, ui, commands);
 };
