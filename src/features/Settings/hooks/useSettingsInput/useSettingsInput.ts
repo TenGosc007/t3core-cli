@@ -6,10 +6,10 @@ import {
   useSettingsShowHistory,
   useSettingsStore,
 } from "@/services/settings/useSettingsStore";
+import { handleArrowNavInput, wrapIndex } from "@/utils/arrowNav";
 
 import { SETTINGS_OPTIONS } from "../../constants/settingsOptions";
 import { useSettingsToggleOption } from "../useSettingsToggleOption";
-import { handleSettingsInput, wrapIndex } from "./handleSettingsInput";
 
 export const useSettingsInput = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -21,7 +21,7 @@ export const useSettingsInput = () => {
   const settings = { beep, arrowNav, showHistory };
 
   useInput((_, key) => {
-    const result = handleSettingsInput(key, arrowNav);
+    const result = handleArrowNavInput(key, arrowNav);
     if (result.type === "navigate") {
       setSelectedIndex((prev) =>
         wrapIndex(prev, SETTINGS_OPTIONS.length, result.direction),

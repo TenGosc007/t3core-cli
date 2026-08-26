@@ -1,12 +1,8 @@
 import { describe, expect, it } from "vitest";
 
-import { MENU_OPTIONS } from "@/features/Menu/constants/menuOptions";
-import {
-  handleMenuInput,
-  wrapIndex,
-} from "@/features/Menu/hooks/useMenuInput/handleMenuInput";
+import { handleArrowNavInput, wrapIndex } from "@/utils/arrowNav";
 
-import { makeKey } from "../../../helpers/makeKey";
+import { makeKey } from "../helpers/makeKey";
 
 describe("wrapIndex", () => {
   it("increments on down", () => {
@@ -31,46 +27,40 @@ describe("wrapIndex", () => {
   });
 });
 
-describe("handleMenuInput", () => {
+describe("handleArrowNavInput", () => {
   it("returns noop when inactive", () => {
-    expect(handleMenuInput(makeKey({ upArrow: true }), false)).toEqual({
+    expect(handleArrowNavInput(makeKey({ upArrow: true }), false)).toEqual({
       type: "noop",
     });
   });
 
   it("returns navigate up on upArrow", () => {
-    expect(handleMenuInput(makeKey({ upArrow: true }), true)).toEqual({
+    expect(handleArrowNavInput(makeKey({ upArrow: true }), true)).toEqual({
       type: "navigate",
       direction: "up",
     });
   });
 
   it("returns navigate down on downArrow", () => {
-    expect(handleMenuInput(makeKey({ downArrow: true }), true)).toEqual({
+    expect(handleArrowNavInput(makeKey({ downArrow: true }), true)).toEqual({
       type: "navigate",
       direction: "down",
     });
   });
 
   it("returns select on Enter", () => {
-    expect(handleMenuInput(makeKey({ return: true }), true)).toEqual({
+    expect(handleArrowNavInput(makeKey({ return: true }), true)).toEqual({
       type: "select",
     });
   });
 
   it("returns noop on other keys", () => {
-    expect(handleMenuInput(makeKey(), true)).toEqual({ type: "noop" });
+    expect(handleArrowNavInput(makeKey(), true)).toEqual({ type: "noop" });
   });
 
   it("returns noop on leftArrow", () => {
-    expect(handleMenuInput(makeKey({ leftArrow: true }), true)).toEqual({
+    expect(handleArrowNavInput(makeKey({ leftArrow: true }), true)).toEqual({
       type: "noop",
     });
-  });
-});
-
-describe("MENU_OPTIONS length", () => {
-  it("has 4 options", () => {
-    expect(MENU_OPTIONS.length).toBe(4);
   });
 });

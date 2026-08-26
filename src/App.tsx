@@ -4,6 +4,7 @@ import { Layout } from "./components/Layout";
 import { ROUTES, type RoutePath } from "./navigation";
 import { About } from "./screens/About";
 import { Game } from "./screens/Game";
+import { GameMode } from "./screens/GameMode";
 import { Home } from "./screens/Home";
 import { Settings } from "./screens/Settings";
 
@@ -18,6 +19,7 @@ export const App = ({ initialScreen = ROUTES.home }: AppProps) => {
         <Routes>
           <Route path={ROUTES.home} element={<Home />} />
           <Route path={ROUTES.settings} element={<Settings />} />
+          <Route path={ROUTES.gameMode} element={<GameMode />} />
           <Route path={ROUTES.game} element={<Game />} />
           <Route path={ROUTES.about} element={<About />} />
         </Routes>

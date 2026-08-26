@@ -2,27 +2,27 @@ import { useInput } from "ink";
 import { useState } from "react";
 
 import { useExitAppStore } from "@/services/app";
-import { useSettingsArrowNav } from "@/services/settings/useSettingsStore";
+import { useSettingsArrowNav } from "@/services/settings";
 import { handleArrowNavInput, wrapIndex } from "@/utils/arrowNav";
 
-import { MENU_OPTIONS } from "../../constants/menuOptions";
-import { useMenuNavigation } from "../useMenuNavigation";
+import { GAME_MODE_OPTIONS } from "../../constants/gameModeOptions";
+import { useGameModeNavigation } from "../useGameModeNavigation";
 
-export const useMenuInput = () => {
+export const useGameModeInput = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const arrowNav = useSettingsArrowNav();
-  const { navigateToMenuOption } = useMenuNavigation();
+  const { navigateToGameMode } = useGameModeNavigation();
   const confirming = useExitAppStore((s) => s.confirming);
 
   useInput((_, key) => {
     const result = handleArrowNavInput(key, arrowNav && !confirming);
     if (result.type === "navigate") {
       setSelectedIndex((prev) =>
-        wrapIndex(prev, MENU_OPTIONS.length, result.direction),
+        wrapIndex(prev, GAME_MODE_OPTIONS.length, result.direction),
       );
     }
     if (result.type === "select") {
-      navigateToMenuOption(selectedIndex);
+      navigateToGameMode(selectedIndex);
     }
   });
 
